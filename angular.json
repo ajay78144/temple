@@ -46,8 +46,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public",
-                "dot": true
+                "input": "public"
               }
             ],
             "styles": ["src/styles.css"]
