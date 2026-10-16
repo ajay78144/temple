@@ -1,0 +1,590 @@
+<section class="booking-hero-header">
+  <div class="container text-center">
+    <span class="section-subtitle">🗓️ Online Appointment & Puja Booking</span>
+    <h1 class="page-main-title">Book Your Temple Slot</h1>
+    <p class="page-main-desc">
+      Schedule a dedicated time slot for Kundali analysis, Tarot card predictions, Vedic Havan, Tarpan Shradh, or Family & Vehicle Puja. Choose your preferred day and time just like Calendly.
+    </p>
+
+    <!-- STEP PROGRESS INDICATOR -->
+    <div class="steps-progress-bar">
+      <div class="step-progress-item" [class.step-active]="currentStep() >= 1" [class.step-current]="currentStep() === 1">
+        <span class="step-num">1</span>
+        <span class="step-label">Select Service</span>
+      </div>
+      <div class="step-line" [class.line-filled]="currentStep() >= 2"></div>
+      <div class="step-progress-item" [class.step-active]="currentStep() >= 2" [class.step-current]="currentStep() === 2">
+        <span class="step-num">2</span>
+        <span class="step-label">Day & Time Slot</span>
+      </div>
+      <div class="step-line" [class.line-filled]="currentStep() >= 3"></div>
+      <div class="step-progress-item" [class.step-active]="currentStep() >= 3" [class.step-current]="currentStep() === 3">
+        <span class="step-num">3</span>
+        <span class="step-label">Devotee Sankalpa</span>
+      </div>
+      <div class="step-line" [class.line-filled]="currentStep() >= 4"></div>
+      <div class="step-progress-item" [class.step-active]="currentStep() === 4" [class.step-current]="currentStep() === 4">
+        <span class="step-num">4</span>
+        <span class="step-label">Confirmation Pass</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding booking-form-section">
+  <div class="container">
+    
+    <!-- STEP 1: SELECT SERVICE -->
+    @if (currentStep() === 1) {
+      <div class="step-card-box">
+        <div class="step-box-header text-center">
+          <span class="box-tag">Step 1 of 3</span>
+          <h2 class="box-title">Choose Sacred Service or Consultation</h2>
+          <p class="box-sub">Select the ritual or astrological session you wish to book at Sakoon Temple.</p>
+        </div>
+
+        <div class="services-selection-grid">
+          @for (svc of services; track svc.id) {
+            <div 
+              class="glass-card service-pick-card"
+              [class.picked]="selectedService()?.id === svc.id"
+              (click)="selectService(svc)">
+              <div class="pick-image">
+                <img [src]="svc.image" [alt]="svc.title" />
+                <div class="pick-icon">{{ svc.icon }}</div>
+              </div>
+              <div class="pick-body">
+                <div class="pick-badge">{{ svc.badge }}</div>
+                <h3 class="pick-title">{{ svc.title }}</h3>
+                <p class="pick-sub">{{ svc.hindiTitle }}</p>
+                <div class="pick-meta">
+                  <span>⏱️ {{ svc.duration }}</span>
+                  <span>🪔 {{ svc.dakshinaSuggested }}</span>
+                </div>
+                <button type="button" class="btn-primary pick-btn">
+                  Select This Service →
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- STEP 2: CHOOSE DAY & TIME SLOT (CALENDLY STYLE) -->
+    @if (currentStep() === 2) {
+      <div class="step-card-box">
+        <div class="step-box-header">
+          <div class="step-nav-back">
+            <button class="back-link-btn" (click)="currentStep.set(1)">← Back to Services</button>
+            <span class="box-tag">Step 2 of 4</span>
+          </div>
+          <h2 class="box-title">Pick Date & Time Slot</h2>
+          <p class="box-sub">
+            Booking for: <strong>{{ selectedService()?.title }}</strong> ({{ selectedService()?.duration }})
+          </p>
+        </div>
+
+        <div class="calendly-dual-wrapper glass-card">
+          
+          <!-- Left: Calendar Date Picker -->
+          <div class="calendly-left-col">
+            <h3 class="col-title">
+              <span>📅</span> 1. Select Preferred Day
+            </h3>
+
+            <div class="date-input-field-wrap">
+              <label for="booking-date" class="field-label">Choose Date:</label>
+              <input 
+                id="booking-date" 
+                type="date" 
+                class="form-input date-picker-input"
+                [min]="minDate"
+                [value]="selectedDateStr()"
+                (change)="loadSlotsForDate($any($event.target).value)" />
+            </div>
+
+            <div class="date-preview-card">
+              <div class="date-preview-label">Selected Booking Day</div>
+              <div class="date-preview-value">
+                {{ selectedDateStr() }}
+              </div>
+              <div class="date-preview-note">
+                Vedic Muhurat is checked prior to every scheduled ceremony.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Dynamic Time Slots Grid -->
+          <div class="calendly-right-col">
+            <div class="slots-header-row">
+              <h3 class="col-title">
+                <span>⏰</span> 2. Select Time Window
+              </h3>
+              <div class="period-filter-tabs">
+                <button type="button" class="period-tab" [class.tab-active]="slotPeriodFilter() === 'All'" (click)="slotPeriodFilter.set('All')">All</button>
+                <button type="button" class="period-tab" [class.tab-active]="slotPeriodFilter() === 'Morning'" (click)="slotPeriodFilter.set('Morning')">Morning</button>
+                <button type="button" class="period-tab" [class.tab-active]="slotPeriodFilter() === 'Afternoon'" (click)="slotPeriodFilter.set('Afternoon')">Afternoon</button>
+                <button type="button" class="period-tab" [class.tab-active]="slotPeriodFilter() === 'Evening'" (click)="slotPeriodFilter.set('Evening')">Evening</button>
+              </div>
+            </div>
+            <p class="slots-subtext">Times shown in Indian Standard Time (IST).</p>
+
+            <div class="slots-list-grid">
+              @for (slot of filteredSlots(); track slot.id) {
+                <button 
+                  type="button" 
+                  class="slot-button"
+                  [class.slot-selected]="selectedSlot()?.id === slot.id"
+                  [class.slot-disabled]="!slot.available"
+                  (click)="selectSlot(slot)">
+                  <span class="slot-time">{{ slot.time }}</span>
+                  <div class="slot-footer-info">
+                    <span class="slot-period-tag">{{ slot.period }}</span>
+                    <span class="slot-seats">{{ slot.seatsLeft }} slots available</span>
+                  </div>
+                </button>
+              }
+            </div>
+
+            @if (selectedSlot(); as sl) {
+              <div class="slot-confirmed-pill">
+                <span>✓ Selected Slot: <strong>{{ sl.time }}</strong> on <strong>{{ selectedDateStr() }}</strong></span>
+              </div>
+            }
+
+            <div class="calendly-action-row">
+              <button 
+                type="button" 
+                class="btn-primary proceed-btn" 
+                [disabled]="!selectedSlot()"
+                (click)="proceedToDetails()">
+                Proceed to Devotee Details →
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    }
+
+    <!-- STEP 3: DEVOTEE DETAILS & SANKALPA FORM -->
+    @if (currentStep() === 3) {
+      <div class="step-card-box">
+        <div class="step-box-header">
+          <div class="step-nav-back">
+            <button class="back-link-btn" (click)="currentStep.set(2)">← Back to Time Slot</button>
+            <span class="box-tag">Step 3 of 4</span>
+          </div>
+          <h2 class="box-title">Devotee Information & Sacred Sankalpa</h2>
+          <p class="box-sub">
+            Please enter devotee details, Gotra, and prayer intention for the Vedic Acharya's Sankalpa.
+          </p>
+        </div>
+
+        <div class="glass-card form-wrapper-card">
+          <form (ngSubmit)="submitBooking()" class="booking-form" novalidate>
+            
+            <!-- Summary Banner of Selected Service and Time -->
+            <div class="booking-selection-bar">
+              <div class="bar-item">
+                <span class="bar-lbl">Selected Service:</span>
+                <strong class="bar-val">{{ selectedService()?.title }}</strong>
+              </div>
+              <div class="bar-item">
+                <span class="bar-lbl">Date:</span>
+                <strong class="bar-val">{{ selectedDateStr() }}</strong>
+              </div>
+              <div class="bar-item">
+                <span class="bar-lbl">Time Window:</span>
+                <strong class="bar-val">{{ selectedSlot()?.time }}</strong>
+              </div>
+            </div>
+
+            <div class="form-section-header">
+              <span class="section-badge-icon">👤</span>
+              <h3 class="section-title-text">1. Devotee Personal & Contact Details</h3>
+            </div>
+
+            <div class="form-row-grid">
+              <!-- Devotee Full Name -->
+              <div class="form-group" [class.has-error]="touched().name && !isNameValid()">
+                <label for="devotee-name" class="field-label">
+                  Devotee Full Name <span class="req-star">*</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">👤</span>
+                  <input 
+                    id="devotee-name" 
+                    type="text" 
+                    name="devoteeName" 
+                    [(ngModel)]="devoteeName" 
+                    (blur)="markTouched('name')"
+                    placeholder="e.g. Ramesh Chandra Sharma" 
+                    required 
+                    class="form-input with-prefix" />
+                </div>
+                @if (touched().name && !isNameValid()) {
+                  <span class="field-error-msg">⚠️ Please enter devotee full name (minimum 3 characters).</span>
+                }
+              </div>
+
+              <!-- Phone / WhatsApp -->
+              <div class="form-group" [class.has-error]="touched().phone && !isPhoneValid()">
+                <label for="devotee-phone" class="field-label">
+                  WhatsApp / Phone Number <span class="req-star">*</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-badge">+91</span>
+                  <input 
+                    id="devotee-phone" 
+                    type="tel" 
+                    name="phone" 
+                    [(ngModel)]="phone" 
+                    (blur)="markTouched('phone')"
+                    placeholder="98765 43210" 
+                    required 
+                    class="form-input with-country-prefix" />
+                </div>
+                @if (touched().phone && !isPhoneValid()) {
+                  <span class="field-error-msg">⚠️ Please enter a valid 10-digit mobile number.</span>
+                }
+              </div>
+
+              <!-- Email Address -->
+              <div class="form-group" [class.has-error]="touched().email && !isEmailValid()">
+                <label for="devotee-email" class="field-label">
+                  Email Address <span class="opt-tag">(Optional)</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">✉️</span>
+                  <input 
+                    id="devotee-email" 
+                    type="email" 
+                    name="email" 
+                    [(ngModel)]="email" 
+                    (blur)="markTouched('email')"
+                    placeholder="devotee@example.com" 
+                    class="form-input with-prefix" />
+                </div>
+                @if (touched().email && !isEmailValid()) {
+                  <span class="field-error-msg">⚠️ Please enter a valid email address.</span>
+                }
+              </div>
+
+              <!-- City / State of Residence -->
+              <div class="form-group">
+                <label for="devotee-city" class="field-label">
+                  City & State of Residence <span class="opt-tag">(Optional)</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">📍</span>
+                  <input 
+                    id="devotee-city" 
+                    type="text" 
+                    name="city" 
+                    [(ngModel)]="city" 
+                    placeholder="e.g. Haridwar, Delhi NCR, Mumbai, Jaipur" 
+                    class="form-input with-prefix" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Sacred Lineage & Vedic Details -->
+            <div class="form-section-header">
+              <span class="section-badge-icon">🪷</span>
+              <h3 class="section-title-text">2. Sacred Gotra, Rashi & Attendance Mode</h3>
+            </div>
+
+            <div class="form-row-grid">
+              <!-- Gotra -->
+              <div class="form-group">
+                <label for="devotee-gotra" class="field-label">
+                  Gotra (गोत्र) / Rishi Lineage <span class="opt-tag">(Optional)</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">🪷</span>
+                  <input 
+                    id="devotee-gotra" 
+                    type="text" 
+                    name="gotra" 
+                    [(ngModel)]="gotra" 
+                    placeholder="e.g. Kashyap, Bhardwaj, Vashishtha or Shiva" 
+                    class="form-input with-prefix" />
+                </div>
+                <span class="field-hint-text">Leave blank if unknown; Shiva Gotra is recited as universal lineage.</span>
+              </div>
+
+              <!-- Rashi / Moon Sign -->
+              <div class="form-group">
+                <label for="devotee-rashi" class="field-label">
+                  Rashi (राशि • Moon Sign)
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">🌟</span>
+                  <select id="devotee-rashi" name="rashi" [(ngModel)]="rashi" class="form-input with-prefix form-select">
+                    @for (r of rashisList; track r) {
+                      <option [value]="r">{{ r }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <!-- Attendees Count -->
+              <div class="form-group">
+                <label for="attendees-count" class="field-label">
+                  Family Members Attending
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">👥</span>
+                  <select id="attendees-count" name="attendeesCount" [(ngModel)]="attendeesCount" class="form-input with-prefix form-select">
+                    <option [value]="1">1 Person (Individual)</option>
+                    <option [value]="2">2 Persons (Couple)</option>
+                    <option [value]="4">3 - 5 Persons (Family)</option>
+                    <option [value]="8">More than 5 Persons (Group)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Priest Preference -->
+              <div class="form-group">
+                <label for="priest-pref" class="field-label">
+                  Priest / Acharya Preference
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">🛕</span>
+                  <select id="priest-pref" name="priestPreference" [(ngModel)]="priestPreference" class="form-input with-prefix form-select">
+                    <option value="Any Available Learned Vedic Priest">Any Available Learned Vedic Priest</option>
+                    <option value="Senior Head Priest (Acharya Vidyadhar Ji)">Senior Head Priest (Acharya Vidyadhar Ji)</option>
+                    <option value="Jyotish Ratna (Acharya Devendra Shastri)">Jyotish Ratna (Acharya Devendra Shastri)</option>
+                    <option value="Ritual Specialist (Pandit Radhakant Ji)">Ritual Specialist (Pandit Radhakant Ji)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Attendance Mode Selector -->
+            <div class="form-group full-width">
+              <label class="field-label">Mode of Ceremony Attendance</label>
+              <div class="attendance-options-grid">
+                <label class="attendance-card-opt" [class.opt-selected]="attendanceMode === 'In-Person Sanctum Visit'">
+                  <input type="radio" name="attendanceMode" [(ngModel)]="attendanceMode" value="In-Person Sanctum Visit" class="sr-only" />
+                  <div class="opt-icon">🏛️</div>
+                  <div class="opt-text">
+                    <strong>In-Person Sanctum Visit (Haridwar)</strong>
+                    <p>Attend physically at Sakoon Temple sanctum with holy Ganga charanamrit and direct darshan.</p>
+                  </div>
+                </label>
+
+                <label class="attendance-card-opt" [class.opt-selected]="attendanceMode === 'Online Live Video Sankalpa'">
+                  <input type="radio" name="attendanceMode" [(ngModel)]="attendanceMode" value="Online Live Video Sankalpa" class="sr-only" />
+                  <div class="opt-icon">🌐</div>
+                  <div class="opt-text">
+                    <strong>Online Live Video Sankalpa</strong>
+                    <p>Live stream via private link with live Gotra recital; blessed Mahaprasad couriered to your home.</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Conditional Details for Astrology / Tarot -->
+            @if (selectedService()?.category === 'astrology') {
+              <div class="astrology-details-box">
+                <h4 class="astro-box-title">
+                  <span>✨</span> Birth Details for Kundali / Astrological Analysis
+                </h4>
+                <div class="form-row-grid">
+                  <div class="form-group">
+                    <label class="field-label">Date of Birth</label>
+                    <div class="input-icon-wrap">
+                      <span class="input-prefix-icon">📅</span>
+                      <input type="date" name="birthDate" [(ngModel)]="birthDate" class="form-input with-prefix" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="field-label">Exact Time of Birth</label>
+                    <div class="input-icon-wrap">
+                      <span class="input-prefix-icon">⏰</span>
+                      <input type="time" name="birthTime" [(ngModel)]="birthTime" class="form-input with-prefix" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="field-label">City & State of Birth</label>
+                    <div class="input-icon-wrap">
+                      <span class="input-prefix-icon">📍</span>
+                      <input type="text" name="birthPlace" [(ngModel)]="birthPlace" placeholder="e.g. Haridwar, Uttarakhand" class="form-input with-prefix" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Special Sankalpa / Prayer Textarea -->
+            <div class="form-group full-width">
+              <label for="sankalpa-text" class="field-label">
+                Special Sankalpa Intention / Reason for Puja <span class="opt-tag">(Optional)</span>
+              </label>
+              <textarea 
+                id="sankalpa-text" 
+                name="specialSankalpa" 
+                [(ngModel)]="specialSankalpa" 
+                rows="3" 
+                placeholder="Mention specific prayers e.g., Child's 1st Birthday, New Car Vahan Puja, Health recovery, Shani Dosha removal, Ancestral peace, Griha Pravesh..."
+                class="form-input textarea-input">
+              </textarea>
+            </div>
+
+            <div class="form-submit-row">
+              <button 
+                type="submit" 
+                class="btn-gold confirm-submit-btn" 
+                [disabled]="isSubmitting()">
+                @if (isSubmitting()) {
+                  <span class="submit-spinner"></span>
+                  <span>Registering Devotee Sankalpa...</span>
+                } @else {
+                  <span class="btn-diya-icon">
+                    <img src="assets/icons/diya-lamp.svg" alt="Diya" class="btn-svg-diya" />
+                  </span>
+                  <span>Confirm & Generate Booking Pass</span>
+                }
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- STEP 4: CONFIRMATION PASS / SLIP -->
+    @if (currentStep() === 4 && confirmedBooking(); as bk) {
+      <div class="step-card-box print-pass-box">
+        <div class="confirmation-pass glass-card">
+          
+          <div class="pass-header-gold">
+            <div class="pass-temple-brand">
+              <span class="pass-om">🕉️</span>
+              <div>
+                <h2 class="pass-temple-name">Sakoon Temple</h2>
+                <div class="pass-temple-tag">श्री सुकून मन्दिर • Sacred Appointment Confirmation Pass</div>
+              </div>
+            </div>
+            <div class="pass-id-badge">
+              <span class="id-label">Booking Reference:</span>
+              <strong class="id-code">{{ bk.bookingRef }}</strong>
+              <button type="button" class="btn-copy-mini" (click)="copyBookingRef(bk.bookingRef || '')">
+                {{ isPassCopied() ? '✓ Copied' : '📋 Copy' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="pass-body">
+            <div class="pass-greeting-banner">
+              <span class="greet-icon">🪷</span>
+              <div>
+                <h3>॥ हरिः ॐ तत्सत् • जय श्री राम ॥</h3>
+                <p>Blessed Greetings, <strong>{{ bk.devoteeName }}</strong>. Your sacred appointment is confirmed at Sakoon Temple.</p>
+              </div>
+            </div>
+
+            <div class="pass-summary-grid">
+              <div class="pass-cell">
+                <span class="p-cell-label">Sacred Service</span>
+                <strong class="p-cell-val">{{ bk.serviceName }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Scheduled Date</span>
+                <strong class="p-cell-val">{{ bk.date }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Time Window</span>
+                <strong class="p-cell-val">{{ bk.timeSlot }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Devotee Phone</span>
+                <strong class="p-cell-val">{{ bk.phone }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Gotra (गोत्र)</span>
+                <strong class="p-cell-val">{{ bk.gotra || 'Kashyap (Sarva Deva)' }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Vedic Rashi</span>
+                <strong class="p-cell-val">{{ bk.rashi || 'Not Specified' }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Priest Assigned</span>
+                <strong class="p-cell-val">{{ bk.priestPreference }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Attendance Mode</span>
+                <strong class="p-cell-val highlight-mode">{{ bk.attendanceMode || 'In-Person Sanctum Visit' }}</strong>
+              </div>
+              <div class="pass-cell">
+                <span class="p-cell-label">Attendees Count</span>
+                <strong class="p-cell-val">{{ bk.attendeesCount }} Devotees</strong>
+              </div>
+              @if (bk.city) {
+                <div class="pass-cell">
+                  <span class="p-cell-label">Home City</span>
+                  <strong class="p-cell-val">{{ bk.city }}</strong>
+                </div>
+              }
+            </div>
+
+            @if (bk.specialSankalpa) {
+              <div class="pass-sankalpa-box">
+                <span class="sankalpa-tag">Sacred Sankalpa Intention:</span>
+                <p class="sankalpa-content">"{{ bk.specialSankalpa }}"</p>
+              </div>
+            }
+
+            <div class="pass-guidelines">
+              <h4>Devotee Instructions & Sanctum Protocol:</h4>
+              <ul>
+                <li>Please arrive at the temple sanctum 15 minutes before your scheduled slot.</li>
+                <li>Wear modest traditional attire (Dhoti/Kurta/Saree recommended).</li>
+                <li>Show this confirmation reference code <strong>{{ bk.bookingRef }}</strong> at the Temple Seva Counter.</li>
+                <li>Free parking and safe footwear counters are available near the main gate.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pass-footer-actions">
+            <a [href]="getWhatsAppShareUrl(bk)" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-chat">
+              <span>💬</span> Send Pass to WhatsApp
+            </a>
+            <button type="button" class="btn-primary print-btn" (click)="printReceipt()">
+              <span>🖨️</span> Print / Save Pass (PDF)
+            </button>
+            <button type="button" class="btn-secondary new-booking-btn" (click)="startNewBooking()">
+              <span>➕</span> Book Another Slot
+            </button>
+          </div>
+
+        </div>
+      </div>
+    }
+
+    <!-- RECENT BOOKINGS DISPLAY (IF ANY) -->
+    @if (recentBookings().length > 0 && currentStep() !== 4) {
+      <div class="recent-bookings-drawer glass-card">
+        <h4 class="recent-title">
+          <span>📋</span> Your Previously Scheduled Bookings
+        </h4>
+        <div class="recent-list">
+          @for (b of recentBookings().slice(0, 3); track b.id) {
+            <div class="recent-item">
+              <div>
+                <strong>{{ b.serviceName }}</strong> — 
+                <span>{{ b.date }} ({{ b.timeSlot }})</span>
+              </div>
+              <span class="recent-badge">{{ b.bookingRef }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+  </div>
+</section>

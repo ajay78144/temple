@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Sacred Gold Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3C4" />
+      <stop offset="30%" stop-color="#F5D061" />
+      <stop offset="70%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#997316" />
+    </linearGradient>
+
+    <!-- Deep Sanctum Gradient -->
+    <linearGradient id="sanctumBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3D205E" />
+      <stop offset="50%" stop-color="#24133B" />
+      <stop offset="100%" stop-color="#150824" />
+    </linearGradient>
+
+    <!-- Divine Glow Effect -->
+    <radialGradient id="divineGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FDE68A" stop-opacity="0.4" />
+      <stop offset="60%" stop-color="#D4AF37" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0" />
+    </radialGradient>
+    
+    <!-- Saffron Accent Gradient -->
+    <linearGradient id="saffronGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9800" />
+      <stop offset="100%" stop-color="#E65100" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Divine Aura Glow -->
+  <circle cx="60" cy="60" r="58" fill="url(#divineGlow)" />
+
+  <!-- Outer Sacred Star Rays (12 Rays of Surya) -->
+  <g stroke="url(#goldGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+    <line x1="60" y1="4" x2="60" y2="10" />
+    <line x1="60" y1="110" x2="60" y2="116" />
+    <line x1="4" y1="60" x2="10" y2="60" />
+    <line x1="110" y1="60" x2="116" y2="60" />
+    <line x1="20.4" y1="20.4" x2="24.6" y2="24.6" />
+    <line x1="95.4" y1="95.4" x2="99.6" y2="99.6" />
+    <line x1="20.4" y1="99.6" x2="24.6" y2="95.4" />
+    <line x1="95.4" y1="24.6" x2="99.6" y2="20.4" />
+  </g>
+
+  <!-- Outer Beaded Circle -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="url(#goldGrad)" stroke-width="1.8" stroke-dasharray="2 3" opacity="0.85" />
+  <circle cx="60" cy="60" r="46" fill="url(#sanctumBg)" stroke="url(#goldGrad)" stroke-width="2" />
+
+  <!-- Inner Sacred Lotus Petal Base -->
+  <path d="M30 84 C40 76, 50 82, 60 84 C70 82, 80 76, 90 84 C85 92, 75 94, 60 94 C45 94, 35 92, 30 84 Z" 
+        fill="url(#saffronGrad)" opacity="0.3" stroke="url(#goldGrad)" stroke-width="1" />
+  
+  <path d="M36 86 C44 80, 52 84, 60 85 C68 84, 76 80, 84 86 C80 91, 72 93, 60 93 C48 93, 40 91, 36 86 Z" 
+        fill="url(#goldGrad)" opacity="0.4" />
+
+  <!-- Temple Spire (Shikhar) Background Arch -->
+  <path d="M42 82 L42 64 C42 46, 60 30, 60 30 C60 30, 78 46, 78 64 L78 82 Z" 
+        fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="1 2" opacity="0.5" />
+
+  <!-- Sacred Kalash & Dhwaja (Flag) on Apex -->
+  <!-- Temple Flagpole & Saffron Dhwaja -->
+  <line x1="60" y1="16" x2="60" y2="28" stroke="url(#goldGrad)" stroke-width="1.8" stroke-linecap="round" />
+  <path d="M60 17 L72 22 L60 27 Z" fill="url(#saffronGrad)" stroke="url(#goldGrad)" stroke-width="0.8" />
+  
+  <!-- Kalash Pot & Coconut -->
+  <circle cx="60" cy="29" r="2.5" fill="url(#goldGrad)" />
+  <path d="M57 33 C57 31, 63 31, 63 33 C64 35, 56 35, 57 33 Z" fill="url(#goldGrad)" />
+
+  <!-- Central Sacred Calligraphic OM (ॐ) -->
+  <g fill="url(#goldGrad)">
+    <!-- Main 3 Shape of Om -->
+    <path d="M47.5 48 C44.5 48, 41.5 50.5, 41.5 54 C41.5 57.5, 44 60, 48 61.5 C43 63.5, 40 68, 40 73 C40 78.5, 44.5 83, 51.5 83 C58 83, 62.5 78.5, 62.5 72.5 C62.5 68, 59.5 64.5, 55 63 C58.5 61 60.5 57.5, 60.5 54 C60.5 49.5, 56 46, 50.5 46 C49.2 46, 48.2 46.5, 47.5 47 L47.5 48 Z
+             M50 51 C53.5 51, 56 52.8, 56 55.5 C56 58.2, 53.5 60, 49.5 60 C46.5 60, 45.5 58, 45.5 55.5 C45.5 53, 47.5 51, 50 51 Z
+             M51.5 66 C56 66, 58 68.8, 58 72.5 C58 76.5, 55 78.5, 51.5 78.5 C46.5 78.5, 44.5 75.5, 44.5 72.5 C44.5 69, 47 66, 51.5 66 Z" />
+    
+    <!-- Om Right Loop / Tail -->
+    <path d="M56 62.5 C61 63, 68 64.5, 73 60 C78 55.5, 79 48, 79 44 C76 45, 74 48, 73.5 51 C73 54, 70 57, 65 57.5 C61 58, 57.5 59.5, 56 62.5 Z" />
+    
+    <!-- Chandrabindu (Crescent Moon) -->
+    <path d="M68 43 C72 43, 76 45, 78 48 C77 46.5, 73.5 45.5, 70 45.5 C66.5 45.5, 63 46.5, 62 48 C64 45, 68 43, 68 43 Z" />
+    
+    <!-- Bindu (Divine Dot) -->
+    <circle cx="70" cy="39" r="2.2" />
+  </g>
+
+  <!-- Sanctum Diya / Light Flares at Base -->
+  <circle cx="48" cy="88" r="1.2" fill="#FDE68A" />
+  <circle cx="60" cy="90" r="1.5" fill="#FFE082" />
+  <circle cx="72" cy="88" r="1.2" fill="#FDE68A" />
+</svg>

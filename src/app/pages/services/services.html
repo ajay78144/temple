@@ -1,0 +1,64 @@
+<section class="services-hero-header">
+  <div class="container text-center">
+    <span class="section-subtitle">🕉️ Divine Rites & Guidance</span>
+    <h1 class="page-main-title">Sacred Temple Services</h1>
+    <p class="page-main-desc">
+      Discover our five pillar sacred services conducted by learned Vedic Acharyas and intuitive spiritual readers. Click on any card below to read the complete Vidhi, scriptural significance, samagri requirements, and reserve your date and slot.
+    </p>
+  </div>
+</section>
+
+<section class="section-padding services-main-section">
+  <div class="container">
+    <div class="services-full-list">
+      @for (service of services; track service.id) {
+        <a [routerLink]="['/services', service.slug]" class="glass-card service-list-card">
+          <div class="service-media-side">
+            <img [src]="service.image" [alt]="service.title" class="service-cover-img" />
+            <div class="badge-overlay">{{ service.badge }}</div>
+            <div class="icon-stamp">
+              @if (service.id === 'kundali') {
+                <svg viewBox="0 0 24 24" class="stamp-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              } @else if (service.id === 'tarot') {
+                <svg viewBox="0 0 24 24" class="stamp-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              } @else if (service.id === 'havan') {
+                <img src="assets/icons/diya-lamp.svg" alt="Havan" class="stamp-img" />
+              } @else if (service.id === 'tarpan') {
+                <svg viewBox="0 0 24 24" class="stamp-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              } @else {
+                <img src="assets/icons/temple-shikhar.svg" alt="Puja" class="stamp-img" />
+              }
+            </div>
+          </div>
+
+          <div class="service-details-side">
+            <div class="hindi-tag">{{ service.hindiTitle }}</div>
+            <h2 class="card-service-title">{{ service.title }}</h2>
+            <p class="service-card-sub">{{ service.subtitle }}</p>
+            <p class="service-desc-snippet">{{ service.shortDesc }}</p>
+
+            <div class="key-points-preview">
+              @for (point of service.significance.slice(0, 3); track point) {
+                <div class="point-item">
+                  <span class="point-bullet">✦</span>
+                  <span>{{ point }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="card-bottom-bar">
+              <div class="timing-dakshina">
+                <span>⏱️ {{ service.duration }}</span>
+                <span>•</span>
+                <span>🪔 {{ service.dakshinaSuggested }}</span>
+              </div>
+              <span class="view-full-page-btn">
+                Read Complete Vidhi & Book Slot →
+              </span>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>

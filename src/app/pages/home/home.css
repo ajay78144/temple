@@ -1,0 +1,983 @@
+/* ==========================================================================
+   HOME PAGE STYLES
+   ========================================================================== */
+
+/* Hero Slider Section */
+.hero-slider-section {
+  position: relative;
+  width: 100%;
+  height: 82vh;
+  min-height: 580px;
+  max-height: 780px;
+  overflow: hidden;
+  background-color: #2E1A47;
+}
+
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+  animation: heroSlideFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes heroSlideFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.slide-image-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  transition: transform 7s ease-out;
+}
+
+.slide-item.active-slide .slide-image-backdrop {
+  transform: scale(1);
+}
+
+.slide-overlay-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(36, 18, 54, 0.88) 0%,
+    rgba(46, 26, 71, 0.65) 50%,
+    rgba(230, 81, 0, 0.35) 100%
+  );
+  backdrop-filter: blur(2px);
+}
+
+.slide-content-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+}
+
+.slide-content {
+  max-width: 720px;
+  color: #FFFFFF;
+}
+
+.slide-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.slide-badge {
+  background: linear-gradient(135deg, #E65100 0%, #D4AF37 100%);
+  color: #FFFFFF;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.35);
+}
+
+.slide-motto {
+  font-family: var(--font-sanskrit);
+  color: #FDE68A;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.slide-subtitle {
+  font-size: 1.18rem;
+  color: #F4EEFB;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  max-width: 650px;
+}
+
+.slide-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  padding: 0.95rem 2.2rem;
+  font-size: 1.05rem;
+}
+
+.hero-secondary-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  backdrop-filter: blur(8px);
+}
+
+.hero-secondary-btn:hover {
+  background: #FFFFFF;
+  color: var(--divine-purple-deep);
+}
+
+/* Slider Controls (Authentic Glassmorphic Left & Right Buttons) */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(46, 26, 71, 0.45);
+  border: 1.5px solid rgba(253, 230, 138, 0.55);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  padding: 0;
+}
+
+.slider-arrow:hover {
+  background: linear-gradient(135deg, #E65100 0%, #D4AF37 100%);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 8px 25px rgba(230, 81, 0, 0.45);
+}
+
+.arrow-svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  stroke: currentColor;
+}
+
+.prev-arrow {
+  left: 1.5rem;
+}
+
+.next-arrow {
+  right: 1.5rem;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.dot-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.dot-indicator.active-dot {
+  width: 38px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #E65100, #D4AF37);
+  border-color: #FFFFFF;
+}
+
+/* Quick Status Strip */
+.quick-status-strip {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 4px 20px rgba(74, 48, 109, 0.06);
+  position: relative;
+  z-index: 10;
+  margin-top: -24px;
+  border-radius: var(--radius-lg);
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.strip-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.strip-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.strip-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(240, 234, 248, 0.8);
+  border: 1px solid rgba(74, 48, 109, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(74, 48, 109, 0.08);
+}
+
+.strip-icon-svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.btn-icon-svg {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.strip-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.strip-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mono-clock {
+  font-family: monospace;
+  font-size: 1.15rem;
+  color: var(--sacred-saffron);
+}
+
+.strip-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(74, 48, 109, 0.12);
+}
+
+.strip-btn {
+  padding: 0.65rem 1.4rem;
+  font-size: 0.9rem;
+}
+
+/* Today Panchang Section */
+.today-panchang-section {
+  padding-top: 2.5rem;
+  padding-bottom: 1rem;
+}
+
+.panchang-banner-card {
+  padding: 1.8rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 234, 248, 0.95) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.panchang-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.panchang-date-box {
+  background: linear-gradient(135deg, #2E1A47 0%, #4A306D 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.4rem;
+  text-align: center;
+  min-width: 140px;
+  box-shadow: 0 4px 15px rgba(46, 26, 71, 0.25);
+}
+
+.panchang-day-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #FDE68A;
+}
+
+.panchang-month-year {
+  font-size: 0.76rem;
+  color: #E2D9F3;
+  margin-top: 4px;
+}
+
+.panchang-tithi-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.samvat-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.tithi-heading {
+  font-size: 1.45rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.4rem;
+}
+
+.tithi-paksha {
+  color: var(--divine-purple-light);
+}
+
+.nakshatra-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.today-festivals-row {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.fest-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+}
+
+.fest-chips {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.fest-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  background: #FFF8E1;
+  border: 1px solid #FFE082;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  color: #B3861B;
+}
+
+/* Services Grid Section */
+.section-intro {
+  margin-bottom: 3.5rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius-lg);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(74, 48, 109, 0.16);
+  border-color: var(--sacred-gold);
+}
+
+.service-image-box {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.service-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.service-card:hover .service-image-box img {
+  transform: scale(1.08);
+}
+
+.service-badge-pill {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(36, 18, 54, 0.82);
+  color: #FDE68A;
+  backdrop-filter: blur(8px);
+  padding: 0.28rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.service-icon-floating {
+  position: absolute;
+  bottom: -18px;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FDE68A 0%, #D4AF37 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+  border: 2px solid #FFFFFF;
+}
+
+.service-content {
+  padding: 1.8rem 1.5rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.service-hindi-title {
+  font-family: var(--font-sanskrit);
+  font-size: 0.85rem;
+  color: var(--sacred-saffron);
+  margin-bottom: 0.35rem;
+}
+
+.service-card-title {
+  font-size: 1.35rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.4rem;
+  line-height: 1.25;
+}
+
+.service-subtitle-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--divine-purple-light);
+  margin-bottom: 0.75rem;
+}
+
+.service-short-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.2rem;
+  flex-grow: 1;
+}
+
+.service-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+  border-top: 1px solid rgba(74, 48, 109, 0.1);
+  border-bottom: 1px solid rgba(74, 48, 109, 0.1);
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.service-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.view-vidhi-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+  transition: transform 0.2s ease;
+}
+
+.service-card:hover .view-vidhi-text {
+  transform: translateX(4px);
+}
+
+/* About Teaser Section */
+.about-teaser-section {
+  background: linear-gradient(180deg, transparent 0%, rgba(240, 234, 248, 0.5) 100%);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.about-main-img {
+  width: 100%;
+  border-radius: calc(var(--radius-xl) - 6px);
+  object-fit: cover;
+}
+
+.about-stat-badge {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(46, 26, 71, 0.9);
+  color: #FFFFFF;
+  backdrop-filter: blur(12px);
+  padding: 1rem 1.4rem;
+  border-radius: var(--radius-lg);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #FDE68A;
+  line-height: 1;
+}
+
+.stat-text {
+  font-size: 0.74rem;
+  color: #E2D9F3;
+  margin-top: 4px;
+}
+
+.about-text-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+.about-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.pillar-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(230, 81, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.pillar-item h4 {
+  font-size: 1.05rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.2rem;
+}
+
+.pillar-item p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.about-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Timings Quick Section */
+.timings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.timing-feature-card {
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timing-badge {
+  padding: 0.35rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.timing-badge.morning {
+  background: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #A5D6A7;
+}
+
+.timing-badge.vishram {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 1px solid #FFCC80;
+}
+
+.timing-badge.evening {
+  background: #EDE7F6;
+  color: #512DA8;
+  border: 1px solid #D1C4E9;
+}
+
+.timing-hours {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--divine-purple-deep);
+  margin-bottom: 1.2rem;
+}
+
+.timing-events {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.timing-events li {
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed rgba(74, 48, 109, 0.1);
+}
+
+.highlight-vishram {
+  background: rgba(255, 248, 240, 0.9);
+  border-color: rgba(230, 81, 0, 0.3);
+}
+
+.vishram-note {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.timings-cta-box {
+  margin-top: 2.5rem;
+}
+
+/* Booking CTA Banner */
+.booking-cta-section {
+  padding: 3.5rem 0;
+}
+
+.booking-cta-card {
+  background: linear-gradient(135deg, #2E1A47 0%, #4A306D 60%, #E65100 100%);
+  color: #FFFFFF;
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 16px 45px rgba(46, 26, 71, 0.25);
+  border: 2px solid rgba(212, 175, 55, 0.35);
+}
+
+.cta-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.cta-icon-box {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  border: 1.5px solid #FDE68A;
+}
+
+.cta-text-box {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cta-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FDE68A;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+
+.cta-heading {
+  font-size: 1.85rem;
+  color: #FFFFFF;
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+
+.cta-p {
+  font-size: 0.96rem;
+  color: #E2D9F3;
+  line-height: 1.6;
+}
+
+.cta-action-btn {
+  padding: 1rem 2.4rem;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+/* Testimonials */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.testimonial-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.testi-stars {
+  color: #FFB300;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2em;
+}
+
+.testi-text {
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  font-style: italic;
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-top: 1px solid rgba(74, 48, 109, 0.1);
+  padding-top: 1rem;
+}
+
+.author-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(240, 234, 248, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.author-name {
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  font-size: 0.95rem;
+}
+
+.author-city {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-slider-section {
+    height: 70vh;
+    min-height: 480px;
+  }
+  .slide-title {
+    font-size: 2.2rem;
+  }
+  .slide-subtitle {
+    font-size: 1rem;
+  }
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .strip-divider {
+    display: none;
+  }
+  .strip-content {
+    justify-content: center;
+    text-align: center;
+  }
+  .strip-item {
+    flex-direction: column;
+  }
+  .cta-card-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .cta-icon-box {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-slider-section {
+    height: 75vh;
+    min-height: 450px;
+  }
+  .slide-title {
+    font-size: 1.75rem;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .service-image-box {
+    height: 190px;
+  }
+  .service-content {
+    padding: 1.4rem 1.2rem 1.2rem;
+  }
+  .panchang-header-row {
+    flex-direction: column;
+    text-align: center;
+  }
+  .panchang-date-box {
+    width: 100%;
+  }
+  .panchang-tithi-info {
+    width: 100%;
+    text-align: center;
+  }
+  .panchang-meta-tags {
+    justify-content: center;
+  }
+  .today-strip-section {
+    padding: 0 0.5rem;
+  }
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}

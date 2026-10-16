@@ -1,0 +1,176 @@
+<div class="site-header-wrapper" [class.is-scrolled]="isScrolled()">
+  <!-- TOP STATUS BAR (HEADER UPPER SECTION) -->
+  <div class="top-status-bar">
+    <div class="container top-bar-content">
+      
+      <!-- Left: Live Clock & Dynamic Temple Status -->
+      <div class="status-left">
+        <!-- Live Clock -->
+        <div class="live-clock-badge">
+          <span class="clock-icon">
+            <svg viewBox="0 0 24 24" class="svg-inline-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </span>
+          <span class="clock-text">{{ liveStatus().currentTimeStr }}</span>
+        </div>
+
+        <!-- Dynamic Open/Closed Status Badge -->
+        <div [ngClass]="liveStatus().isOpen ? 'status-badge-open' : 'status-badge-closed'">
+          <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
+          <span class="status-title">{{ liveStatus().statusText }}</span>
+        </div>
+      </div>
+
+      <!-- Right: Next Upcoming Event & Quick Helpline -->
+      <div class="status-right">
+        <div class="next-event-pill">
+          <span class="next-label">Next:</span>
+          <span class="next-name">{{ liveStatus().nextEvent }}</span>
+          <span class="next-time">({{ liveStatus().nextEventTime }})</span>
+        </div>
+        <div class="helpline-pill">
+          <span class="phone-icon">
+            <svg viewBox="0 0 24 24" class="svg-inline-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </span>
+          <span>Temple Helpline: <strong>+91 98765 43210</strong></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="main-header">
+    <div class="container header-container">
+      
+      <!-- Logo & Brand Name -->
+      <a routerLink="/" class="brand-logo" (click)="closeMobileMenu()">
+        <div class="logo-emblem">
+          <img src="assets/icons/temple-logo.svg" alt="Sakoon Temple Official Emblem" class="brand-logo-img" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Sakoon Temple</span>
+          <span class="brand-tagline">श्री सुकून मन्दिर • Vedic Peace & Spiritual Sanctum</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="desktop-nav">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
+        <a routerLink="/about" routerLinkActive="active" class="nav-link">About Us</a>
+        <a routerLink="/services" routerLinkActive="active" class="nav-link">Services</a>
+        <a routerLink="/calendar" routerLinkActive="active" class="nav-link">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" class="svg-inline-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </span>
+          Hindu Panchang
+        </a>
+        <a routerLink="/timings" routerLinkActive="active" class="nav-link">Temple Timings</a>
+        <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a routerLink="/booking" class="btn-primary header-book-btn">
+          <span class="btn-diya-icon">
+            <img src="assets/icons/diya-lamp.svg" alt="Puja" class="btn-svg-diya" />
+          </span>
+          <span>Book Puja / Slot</span>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn" (click)="toggleMobileMenu()" aria-label="Toggle Navigation Menu">
+          <span class="bar" [class.bar-open-1]="isMobileMenuOpen()"></span>
+          <span class="bar" [class.bar-open-2]="isMobileMenuOpen()"></span>
+          <span class="bar" [class.bar-open-3]="isMobileMenuOpen()"></span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Animated Divine Shimmer Light Beam -->
+    <div class="header-shimmer-beam"></div>
+  </header>
+</div>
+
+<!-- MOBILE SIDEBAR DRAWER -->
+<div class="mobile-drawer-backdrop" [class.show]="isMobileMenuOpen()" (click)="closeMobileMenu()"></div>
+
+<aside class="mobile-drawer" [class.drawer-open]="isMobileMenuOpen()">
+  <div class="drawer-header">
+    <div class="drawer-brand">
+      <div class="drawer-logo-emblem">
+        <img src="assets/icons/temple-logo.svg" alt="Sakoon Temple Emblem" class="drawer-logo-img" />
+      </div>
+      <div>
+        <div class="drawer-title">Sakoon Temple</div>
+        <div class="drawer-sub">श्री सुकून मन्दिर • Peace & Devotion</div>
+      </div>
+    </div>
+    <button class="drawer-close-btn" (click)="closeMobileMenu()" aria-label="Close menu">✕</button>
+  </div>
+
+  <!-- Live Status in Mobile Drawer -->
+  <div class="drawer-status-card" [ngClass]="liveStatus().isOpen ? 'drawer-open-status' : 'drawer-closed-status'">
+    <div class="drawer-clock-row">
+      <span>Live Time: <strong>{{ liveStatus().currentTimeStr }}</strong></span>
+      <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
+    </div>
+    <div class="drawer-status-line">
+      {{ liveStatus().statusText }}
+    </div>
+    <div class="drawer-next-event">
+      Next: <strong>{{ liveStatus().nextEvent }}</strong> ({{ liveStatus().nextEventTime }})
+    </div>
+  </div>
+
+  <nav class="drawer-nav">
+    <a routerLink="/" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">🏠</span> Home
+    </a>
+    <a routerLink="/about" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">🪷</span> About Sakoon Temple
+    </a>
+    <a routerLink="/services" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">✨</span> Sacred Services
+    </a>
+    <div class="drawer-sublinks">
+      <a routerLink="/services/kundali-jyotish" (click)="closeMobileMenu()" class="drawer-sublink">• Kundali & Jyotish Paramarsh</a>
+      <a routerLink="/services/tarot-prediction" (click)="closeMobileMenu()" class="drawer-sublink">• Tarot Card Prediction</a>
+      <a routerLink="/services/vedic-havan-yagya" (click)="closeMobileMenu()" class="drawer-sublink">• Vedic Havan & Yagya</a>
+      <a routerLink="/services/tarpan-pitru-shradh" (click)="closeMobileMenu()" class="drawer-sublink">• Tarpan & Pitru Shradh</a>
+      <a routerLink="/services/family-birthday-vahan-puja" (click)="closeMobileMenu()" class="drawer-sublink">• Family & Vehicle Puja</a>
+    </div>
+    <a routerLink="/calendar" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">📅</span> Hindu Panchang & Calendar
+    </a>
+    <a routerLink="/timings" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">⏰</span> Darshan & Aarti Timings
+    </a>
+    <a routerLink="/booking" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">🗓️</span> Book Slot / Appointment
+    </a>
+    <a routerLink="/contact" (click)="closeMobileMenu()" class="drawer-link">
+      <span class="drawer-icon">📍</span> Temple Contact & Reach Us
+    </a>
+  </nav>
+
+  <div class="drawer-footer">
+    <a routerLink="/booking" (click)="closeMobileMenu()" class="btn-gold drawer-cta-btn">
+      <span>🪔</span> Book Puja / Consultation
+    </a>
+    <div class="drawer-contact-info">
+      <div>📞 Helpline: +91 98765 43210</div>
+      <div>📍 Sakoon Marg, Divine Nagar, Haridwar</div>
+    </div>
+  </div>
+</aside>

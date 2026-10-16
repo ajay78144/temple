@@ -1,0 +1,976 @@
+/* ==========================================================================
+   CALENDLY BOOKING SYSTEM STYLES
+   ========================================================================== */
+
+.booking-hero-header {
+  padding: 4.5rem 0 2.5rem;
+  background: linear-gradient(180deg, rgba(240, 234, 248, 0.7) 0%, transparent 100%);
+}
+
+/* Steps Progress Indicator */
+.steps-progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 720px;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+}
+
+.step-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(74, 48, 109, 0.1);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border: 1.5px solid rgba(74, 48, 109, 0.2);
+  transition: all 0.3s ease;
+}
+
+.step-progress-item.step-active .step-num {
+  background: linear-gradient(135deg, #E65100 0%, #D4AF37 100%);
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.3);
+}
+
+.step-progress-item.step-active {
+  color: var(--divine-purple-deep);
+  font-weight: 700;
+}
+
+.step-line {
+  flex: 1;
+  height: 3px;
+  background: rgba(74, 48, 109, 0.12);
+  margin: 0 0.8rem;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.step-line.line-filled {
+  background: linear-gradient(90deg, #E65100, #D4AF37);
+}
+
+/* Step Card Box */
+.step-card-box {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.step-box-header {
+  margin-bottom: 2.2rem;
+}
+
+.step-nav-back {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.back-link-btn {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+}
+
+.box-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--sacred-saffron);
+  letter-spacing: 0.08em;
+  background: rgba(230, 81, 0, 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.box-title {
+  font-size: 2.2rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.4rem;
+}
+
+.box-sub {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+}
+
+/* Step 1: Services Grid */
+.services-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+}
+
+.service-pick-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.service-pick-card:hover {
+  border-color: var(--sacred-gold);
+  transform: translateY(-5px);
+}
+
+.service-pick-card.picked {
+  border-color: var(--sacred-saffron);
+  box-shadow: 0 8px 25px rgba(230, 81, 0, 0.2);
+}
+
+.pick-image {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+}
+
+.pick-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pick-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.pick-body {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pick-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.pick-title {
+  font-size: 1.25rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.3rem;
+}
+
+.pick-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.pick-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 0.6rem 0;
+  border-top: 1px solid rgba(74, 48, 109, 0.1);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.pick-btn {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+}
+
+/* Step 2: Calendly Dual Wrapper */
+.calendly-dual-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  padding: 2.5rem;
+  gap: 3rem;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.col-title {
+  font-size: 1.35rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(74, 48, 109, 0.1);
+}
+
+.date-input-field-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.4rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(74, 48, 109, 0.2);
+  background: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: var(--sacred-saffron);
+  box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.12);
+}
+
+.date-preview-card {
+  background: #FFF8E1;
+  border: 1px solid #FFE082;
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+}
+
+.date-preview-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--sacred-saffron);
+  margin-bottom: 0.3rem;
+}
+
+.date-preview-value {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--divine-purple-deep);
+}
+
+.date-preview-note {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.slots-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.period-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(74, 48, 109, 0.08);
+  padding: 0.25rem;
+  border-radius: var(--radius-full);
+}
+
+.period-tab {
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.period-tab.tab-active {
+  background: #FFFFFF;
+  color: var(--divine-purple-deep);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slots-subtext {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.slots-list-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.slot-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.2rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(74, 48, 109, 0.15);
+  border-radius: var(--radius-md);
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.slot-button:hover:not(.slot-disabled) {
+  border-color: var(--sacred-saffron);
+  background: #FFFFFF;
+  transform: translateX(4px);
+}
+
+.slot-button.slot-selected {
+  background: #EDE7F6;
+  border-color: var(--sacred-saffron);
+  box-shadow: 0 0 0 2px var(--sacred-saffron);
+}
+
+.slot-time {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+}
+
+.slot-footer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.78rem;
+}
+
+.slot-period-tag {
+  background: rgba(74, 48, 109, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--divine-purple);
+  font-weight: 600;
+}
+
+.slot-seats {
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+.slot-confirmed-pill {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  background: #E8F5E9;
+  border: 1px solid #A5D6A7;
+  color: #1B5E20;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+.calendly-action-row {
+  margin-top: 1.8rem;
+}
+
+.proceed-btn {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+}
+
+.proceed-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Step 3: Form Wrapper */
+.form-wrapper-card {
+  padding: 2.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 12px 35px rgba(74, 48, 109, 0.08);
+}
+
+/* Selection Bar */
+.booking-selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #FFF9EB 0%, #F5EEFC 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.4rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bar-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-lbl {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.bar-val {
+  font-size: 1.05rem;
+  color: var(--divine-purple-deep);
+}
+
+.form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1.5px solid rgba(74, 48, 109, 0.1);
+  margin-bottom: 1.4rem;
+  margin-top: 1rem;
+}
+
+.section-badge-icon {
+  font-size: 1.25rem;
+}
+
+.section-title-text {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--divine-purple-deep);
+  font-weight: 700;
+}
+
+.form-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.req-star {
+  color: #C0392B;
+  font-weight: 700;
+}
+
+.opt-tag {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: normal;
+}
+
+.field-hint-text {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* Input icon prefix */
+.input-icon-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-wrap .form-input {
+  width: 100% !important;
+}
+
+.input-prefix-icon {
+  position: absolute;
+  left: 0.9rem;
+  font-size: 1.05rem;
+  pointer-events: none;
+  z-index: 2;
+  color: var(--divine-purple);
+  display: inline-flex;
+  align-items: center;
+}
+
+.input-prefix-badge {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  background: rgba(74, 48, 109, 0.08);
+  padding: 0.22rem 0.5rem;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+}
+
+.form-input.with-prefix {
+  padding-left: 2.75rem !important;
+}
+
+.form-input.with-country-prefix {
+  padding-left: 3.75rem !important;
+}
+
+.form-select {
+  appearance: auto;
+  cursor: pointer;
+}
+
+/* Error States */
+.form-group.has-error .form-input {
+  border-color: #E53935;
+  background-color: #FFF8F8;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.12);
+}
+
+.field-error-msg {
+  display: block;
+  font-size: 0.78rem;
+  color: #D32F2F;
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+/* Attendance Mode Selector */
+.attendance-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.attendance-card-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1.1rem;
+  border: 1.5px solid rgba(74, 48, 109, 0.15);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.attendance-card-opt:hover {
+  border-color: var(--sacred-gold);
+  background: #FFFDF8;
+}
+
+.attendance-card-opt.opt-selected {
+  border-color: var(--sacred-saffron);
+  background: linear-gradient(135deg, rgba(230, 81, 0, 0.06) 0%, rgba(212, 175, 55, 0.1) 100%);
+  box-shadow: 0 4px 14px rgba(230, 81, 0, 0.12);
+}
+
+.opt-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.opt-text strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.25rem;
+}
+
+.opt-text p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.astrology-details-box {
+  background: #FFF8E1;
+  border: 1px solid #FFE082;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.astro-box-title {
+  font-size: 1.05rem;
+  color: #B3861B;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.textarea-input {
+  resize: vertical;
+}
+
+.form-submit-row {
+  text-align: center;
+  margin-top: 1.8rem;
+}
+
+.confirm-submit-btn {
+  padding: 1.05rem 3rem;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.submit-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spinnerRotate 0.8s linear infinite;
+}
+
+@keyframes spinnerRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Step 4: Confirmation Pass */
+.confirmation-pass {
+  background: #FFFFFF;
+  border: 2px solid var(--sacred-gold);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sacred);
+}
+
+.pass-header-gold {
+  background: linear-gradient(135deg, #2E1A47 0%, #4A306D 100%);
+  color: #FFFFFF;
+  padding: 1.8rem 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  border-bottom: 2px solid var(--sacred-gold);
+}
+
+.pass-temple-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.pass-om {
+  font-size: 2.2rem;
+}
+
+.pass-temple-name {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: #FDE68A;
+  line-height: 1.1;
+}
+
+.pass-temple-tag {
+  font-size: 0.78rem;
+  color: #E2D9F3;
+}
+
+.pass-id-badge {
+  text-align: right;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(253, 230, 138, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.id-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #E2D9F3;
+  text-transform: uppercase;
+}
+
+.id-code {
+  font-family: monospace;
+  font-size: 1.3rem;
+  color: #FDE68A;
+  letter-spacing: 0.05em;
+}
+
+.btn-copy-mini {
+  background: #FFFFFF;
+  border: 1px solid var(--sacred-gold);
+  color: var(--divine-purple-deep);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-copy-mini:hover {
+  background: #FFF8E1;
+}
+
+.pass-body {
+  padding: 2.2rem;
+}
+
+.pass-greeting-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #F4EEFB;
+  border-left: 4px solid var(--sacred-saffron);
+  padding: 1.2rem 1.5rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: 2rem;
+}
+
+.greet-icon {
+  font-size: 2rem;
+}
+
+.pass-greeting-banner h3 {
+  font-family: var(--font-sanskrit);
+  color: var(--sacred-saffron);
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.pass-greeting-banner p {
+  font-size: 0.95rem;
+  color: var(--divine-purple-deep);
+}
+
+.pass-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 1.8rem;
+  background: #FAFAFD;
+  border: 1px solid rgba(74, 48, 109, 0.1);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.8rem;
+}
+
+.pass-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-cell-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.p-cell-val {
+  font-size: 1.05rem;
+  color: var(--divine-purple-deep);
+}
+
+.highlight-mode {
+  color: #2E7D32;
+  font-weight: 700;
+}
+
+.pass-sankalpa-box {
+  background: #FFFDE7;
+  border: 1px solid #FFF59D;
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.sankalpa-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #F57F17;
+  text-transform: uppercase;
+}
+
+.sankalpa-content {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.pass-guidelines {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.pass-guidelines h4 {
+  font-size: 0.95rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.5rem;
+}
+
+.pass-guidelines ul {
+  padding-left: 1.5rem;
+}
+
+.pass-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 1.8rem;
+  background: #F4EEFB;
+  border-top: 1px solid rgba(74, 48, 109, 0.1);
+  flex-wrap: wrap;
+}
+
+.btn-whatsapp-chat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #25D366;
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-whatsapp-chat:hover {
+  background: #1EBE5D;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+}
+
+/* Recent Bookings */
+.recent-bookings-drawer {
+  margin-top: 3.5rem;
+  padding: 1.5rem 2rem;
+  border: 1px dashed rgba(74, 48, 109, 0.2);
+}
+
+.recent-title {
+  font-size: 1.1rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-sm);
+}
+
+.recent-badge {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .calendly-dual-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+  .form-row-grid {
+    grid-template-columns: 1fr;
+  }
+  .attendance-options-grid {
+    grid-template-columns: 1fr;
+  }
+  .steps-progress-bar {
+    display: none;
+  }
+  .pass-header-gold {
+    flex-direction: column;
+    text-align: center;
+  }
+  .pass-id-badge {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-wrapper-card {
+    padding: 1.5rem 1.2rem;
+  }
+  .booking-selection-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .confirm-submit-btn {
+    width: 100%;
+    padding: 1rem;
+  }
+  .pass-footer-actions {
+    flex-direction: column;
+  }
+  .btn-whatsapp-chat,
+  .print-btn,
+  .new-booking-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

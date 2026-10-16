@@ -1,0 +1,194 @@
+/* ==========================================================================
+   ABOUT SAKOON TEMPLE STYLES
+   ========================================================================== */
+
+.about-hero-header {
+  padding: 4.5rem 0 3rem;
+  background: linear-gradient(180deg, rgba(240, 234, 248, 0.7) 0%, transparent 100%);
+}
+
+.about-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.about-card-frame {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  padding: 0.6rem;
+}
+
+.about-img-full {
+  width: 100%;
+  border-radius: calc(var(--radius-xl) - 6px);
+  object-fit: cover;
+}
+
+.quote-overlay-badge {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  background: rgba(36, 18, 54, 0.88);
+  color: #FDE68A;
+  backdrop-filter: blur(10px);
+  padding: 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  font-family: var(--font-sanskrit);
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.column-title {
+  font-size: 2.2rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 1.2rem;
+}
+
+.body-p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 1.2rem;
+}
+
+.values-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.value-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.value-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(230, 81, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.value-item h4 {
+  font-size: 1.1rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.2rem;
+}
+
+.value-item p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Acharyas Grid */
+.acharyas-section {
+  margin-bottom: 4.5rem;
+}
+
+.acharyas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.acharya-card {
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.acharya-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FDE68A 0%, #D4AF37 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+  border: 2px solid #FFFFFF;
+}
+
+.acharya-name {
+  font-size: 1.35rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.25rem;
+}
+
+.acharya-role {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.acharya-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Seva Banner */
+.seva-banner {
+  padding: 2.5rem 3rem;
+  background: linear-gradient(135deg, #2E1A47 0%, #4A306D 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.seva-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.seva-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.seva-content h3 {
+  font-size: 1.5rem;
+  color: #FDE68A;
+  margin-bottom: 0.5rem;
+}
+
+.seva-content p {
+  font-size: 0.95rem;
+  color: #E2D9F3;
+  line-height: 1.6;
+  max-width: 650px;
+}
+
+@media (max-width: 900px) {
+  .about-dual-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .seva-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,0 +1,204 @@
+@if (service(); as s) {
+  <!-- SERVICE HERO BANNER -->
+  <section class="service-detail-hero">
+    <div class="hero-bg-image" [style.background-image]="'url(' + s.image + ')'"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content-box">
+      <div class="breadcrumb-nav">
+        <a routerLink="/">Home</a>
+        <span>›</span>
+        <a routerLink="/services">Services</a>
+        <span>›</span>
+        <span class="active-crumb">{{ s.title }}</span>
+      </div>
+
+      <div class="hero-badge-tag">{{ s.badge }} • {{ s.scripturalRef }}</div>
+      <div class="hero-hindi-title">{{ s.hindiTitle }}</div>
+      <h1 class="hero-main-title">{{ s.title }}</h1>
+      <p class="hero-subtitle-text">{{ s.subtitle }}</p>
+
+      <div class="hero-cta-bar">
+        <a [routerLink]="['/booking']" [queryParams]="{service: s.id}" class="btn-primary detail-book-btn">
+          <span>🗓️</span> Book Slot for {{ s.title }}
+        </a>
+        <a routerLink="/timings" class="btn-secondary hero-timing-btn">
+          <span>⏰</span> Temple Timings
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE DETAIL BODY -->
+  <section class="section-padding detail-body-section">
+    <div class="container detail-layout">
+      
+      <!-- Left Column: Comprehensive Details -->
+      <div class="detail-main-content">
+        
+        <!-- Sacred Overview -->
+        <div class="glass-card content-card">
+          <h2 class="card-section-title">
+            <span>🪷</span> Sacred Spiritual Overview
+          </h2>
+          <p class="card-lead-text">{{ s.fullDesc }}</p>
+
+          <div class="scripture-quote-box">
+            <span class="quote-icon">📜</span>
+            <div>
+              <div class="quote-source">Scriptural Authority: {{ s.scripturalRef }}</div>
+              <p class="quote-text">
+                "Rituals performed with pure sankalpa, Vedic pronunciation, and unconditional surrender bestow unending spiritual peace and remove worldly afflictions."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Significance & Blessings -->
+        <div class="glass-card content-card">
+          <h2 class="card-section-title">
+            <span>✨</span> Spiritual Significance & Blessings
+          </h2>
+          <ul class="significance-list">
+            @for (sig of s.significance; track sig) {
+              <li class="significance-item">
+                <span class="check-icon">✓</span>
+                <span>{{ sig }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Step-by-Step Vidhi / Procedure -->
+        <div class="glass-card content-card">
+          <h2 class="card-section-title">
+            <span>🕉️</span> Step-by-Step Vidhi & Ritual Procedure
+          </h2>
+          <p class="section-mini-desc">
+            All rituals are strictly conducted according to authentic Sanatana Shastra parampara under the guidance of Acharyas.
+          </p>
+
+          <div class="vidhi-timeline">
+            @for (step of s.vidhiSteps; track step.step) {
+              <div class="vidhi-step-card">
+                <div class="step-number-circle">{{ step.step }}</div>
+                <div class="step-text-wrap">
+                  <h4 class="step-title">{{ step.title }}</h4>
+                  <p class="step-desc">{{ step.desc }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Samagri Checklist (Included vs Bring) -->
+        <div class="glass-card content-card">
+          <h2 class="card-section-title">
+            <span>🌿</span> Samagri & Devotee Guidelines
+          </h2>
+
+          <div class="samagri-dual-grid">
+            <div class="samagri-box included-box">
+              <h4 class="box-subheading">
+                <span>🎁</span> Provided by Sakoon Temple:
+              </h4>
+              <ul class="samagri-checklist">
+                @for (item of s.samagriIncluded; track item) {
+                  <li>✦ {{ item }}</li>
+                }
+              </ul>
+            </div>
+
+            <div class="samagri-box devotee-box">
+              <h4 class="box-subheading">
+                <span>🙏</span> Devotee Guidelines & Items:
+              </h4>
+              <ul class="samagri-checklist">
+                @for (req of s.devoteeRequirements; track req) {
+                  <li>• {{ req }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Quick Booking Sticky Sidebar -->
+      <aside class="detail-sidebar">
+        <div class="glass-card sticky-booking-card">
+          <div class="sidebar-card-header">
+            <div class="sidebar-icon">{{ s.icon }}</div>
+            <div>
+              <div class="sidebar-badge">{{ s.badge }}</div>
+              <h3 class="sidebar-title">{{ s.title }}</h3>
+            </div>
+          </div>
+
+          <div class="sidebar-meta-list">
+            <div class="sidebar-meta-row">
+              <span class="meta-label">⏱️ Duration:</span>
+              <span class="meta-val">{{ s.duration }}</span>
+            </div>
+            <div class="sidebar-meta-row">
+              <span class="meta-label">🪔 Suggested Dakshina:</span>
+              <span class="meta-val dakshina-highlight">{{ s.dakshinaSuggested }}</span>
+            </div>
+            <div class="sidebar-meta-row">
+              <span class="meta-label">📅 Ideal Muhurat:</span>
+              <span class="meta-val">{{ s.idealMuhurat }}</span>
+            </div>
+            <div class="sidebar-meta-row">
+              <span class="meta-label">📍 Venue:</span>
+              <span class="meta-val">Sakoon Temple Sanctum / Courtyard</span>
+            </div>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <div class="booking-prompt-box">
+            <p class="prompt-text">
+              Slots are scheduled on an appointment basis to ensure individual attention and serenity.
+            </p>
+            <a [routerLink]="['/booking']" [queryParams]="{service: s.id}" class="btn-primary sidebar-action-btn">
+              <span>🗓️</span> Book Slot for This Puja
+            </a>
+          </div>
+
+          <div class="temple-priest-helpline">
+            <span>Need advice on selecting the right Muhurat?</span>
+            <a href="tel:+919876543210" class="helpline-link">📞 Call Temple Acharya: +91 98765 43210</a>
+          </div>
+        </div>
+
+        <!-- Other Services Widget -->
+        <div class="glass-card other-services-widget">
+          <h4 class="widget-title">Explore Other Services</h4>
+          <div class="other-links-list">
+            @for (other of allServices; track other.id) {
+              @if (other.id !== s.id) {
+                <a [routerLink]="['/services', other.slug]" class="other-link-item">
+                  <span class="other-icon">{{ other.icon }}</span>
+                  <div class="other-info">
+                    <span class="other-name">{{ other.title }}</span>
+                    <span class="other-duration">{{ other.duration }}</span>
+                  </div>
+                  <span class="arrow-symbol">›</span>
+                </a>
+              }
+            }
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+} @else {
+  <section class="section-padding text-center">
+    <div class="container">
+      <h2>Service Not Found</h2>
+      <p>The requested sacred service could not be located.</p>
+      <a routerLink="/services" class="btn-primary" style="margin-top: 1rem;">View All Services</a>
+    </div>
+  </section>
+}

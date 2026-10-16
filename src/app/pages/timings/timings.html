@@ -1,0 +1,92 @@
+<section class="timings-hero-header">
+  <div class="container text-center">
+    <span class="section-subtitle">⏰ Daily Temple Routine & Darshan</span>
+    <h1 class="page-main-title">Temple Timings & Aarti Schedule</h1>
+    <p class="page-main-desc">
+      Sakoon Temple is open daily for devotees. The temple observes morning darshan, afternoon sanctum vishram (gates rest), evening darshan, and five profound daily aartis.
+    </p>
+
+    <!-- LIVE STATUS BADGE BANNER -->
+    <div class="live-status-hero-card glass-card">
+      <div class="status-indicator-col">
+        <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
+        <div>
+          <div class="status-title-lg">{{ liveStatus().statusText }}</div>
+          <div class="current-running-time">
+            Live Clock: <strong>{{ liveStatus().currentTimeStr }}</strong> • {{ liveStatus().currentDateStr }}
+          </div>
+        </div>
+      </div>
+      <div class="next-event-col">
+        <span class="event-tag">Next Occurrence:</span>
+        <strong class="event-val">{{ liveStatus().nextEvent }} at {{ liveStatus().nextEventTime }}</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-padding timings-main-section">
+  <div class="container">
+    
+    <!-- SCHEDULE TIMELINE CARDS -->
+    <div class="schedule-timeline">
+      @for (slot of timingSlots; track slot.name) {
+        <div 
+          class="glass-card schedule-slot-card"
+          [class.aarti-card]="slot.type === 'aarti'"
+          [class.vishram-card]="slot.type === 'vishram'">
+          
+          <div class="slot-time-col">
+            <span class="slot-time-text">{{ slot.timeRange }}</span>
+            <span class="slot-type-badge">{{ slot.type | uppercase }}</span>
+          </div>
+
+          <div class="slot-info-col">
+            <div class="slot-hi-title">{{ slot.hindiName }}</div>
+            <h3 class="slot-en-title">{{ slot.name }}</h3>
+            <p class="slot-desc-text">{{ slot.description }}</p>
+          </div>
+
+          <div class="slot-action-col">
+            @if (slot.type === 'darshan') {
+              <a routerLink="/booking" class="btn-primary slot-book-btn">Book Archana</a>
+            } @else if (slot.type === 'aarti') {
+              <span class="aarti-tag">🔔 Ghee Deepam Aarti</span>
+            } @else {
+              <span class="vishram-tag">🌙 Vishram (Rest)</span>
+            }
+          </div>
+
+        </div>
+      }
+    </div>
+
+    <!-- TEMPLE RULES & DRESS CODE -->
+    <div class="temple-rules-grid">
+      <div class="glass-card rule-box">
+        <div class="rule-icon">👔</div>
+        <div>
+          <h4>Sacred Dress Code</h4>
+          <p>Traditional Indian attire is encouraged. Devotees are requested to dress modestly. Footwear must be deposited at the free footwear counter.</p>
+        </div>
+      </div>
+
+      <div class="glass-card rule-box">
+        <div class="rule-icon">📱</div>
+        <div>
+          <h4>Mobile & Photography</h4>
+          <p>Photography inside the inner sanctum (Garbha Griha) is prohibited to preserve sanctity. Please keep phones on silent mode.</p>
+        </div>
+      </div>
+
+      <div class="glass-card rule-box">
+        <div class="rule-icon">🪔</div>
+        <div>
+          <h4>Prasad Distribution</h4>
+          <p>Satvik Charanamrit and blessed dry fruit prasad is distributed after every morning Rajbhog Aarti and evening Sandhya Aarti.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,499 @@
+/* ==========================================================================
+   SAKOON TEMPLE - DIVINE DESIGN SYSTEM & STYLES
+   Theme: linear-gradient(90deg, #E5EBFA 0%, #F0EAF8 50%, #FBE5F5 100%)
+   ========================================================================== */
+
+:root {
+  /* Requested Theme Gradient */
+  --bg-gradient: linear-gradient(90deg, #E5EBFA 0%, #F0EAF8 50%, #FBE5F5 100%);
+  --bg-gradient-soft: linear-gradient(135deg, #EBF0FC 0%, #F4EEFB 50%, #FCEAF7 100%);
+  --bg-gradient-reverse: linear-gradient(90deg, #FBE5F5 0%, #F0EAF8 50%, #E5EBFA 100%);
+  
+  /* Primary Spiritual Palette */
+  --sacred-gold: #D4AF37;
+  --sacred-gold-deep: #B3861B;
+  --sacred-gold-light: #F9E79F;
+  --sacred-saffron: #E65100;
+  --sacred-saffron-light: #FF9800;
+  --sacred-vermilion: #C0392B;
+  
+  /* Deep Divine Purples & Lavenders */
+  --divine-purple: #4A306D;
+  --divine-purple-deep: #2E1A47;
+  --divine-purple-light: #6A4C93;
+  --divine-lavender: #8B78A5;
+  --divine-indigo: #3D348B;
+  
+  /* Soft Backgrounds & Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-bg-card: rgba(255, 255, 255, 0.84);
+  --glass-bg-dark: rgba(46, 26, 71, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.65);
+  --glass-border-gold: rgba(212, 175, 55, 0.35);
+  --glass-blur: blur(14px);
+  
+  /* Neutral & Text */
+  --text-primary: #241E2F;
+  --text-secondary: #5C5468;
+  --text-muted: #827A91;
+  --text-light: #FDFBF7;
+  
+  /* Status Colors */
+  --status-open-bg: #E8F5E9;
+  --status-open-text: #2E7D32;
+  --status-open-dot: #4CAF50;
+  --status-closed-bg: #FFF3E0;
+  --status-closed-text: #E65100;
+  --status-closed-dot: #FF9800;
+  
+  /* Elevation Shadows */
+  --shadow-sm: 0 4px 12px rgba(74, 48, 109, 0.06);
+  --shadow-md: 0 8px 24px rgba(74, 48, 109, 0.09);
+  --shadow-lg: 0 16px 40px rgba(74, 48, 109, 0.12);
+  --shadow-gold: 0 8px 25px rgba(212, 175, 55, 0.25);
+  --shadow-sacred: 0 12px 35px rgba(106, 76, 147, 0.18);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-serif: 'Cinzel', serif;
+  --font-sanskrit: 'Rozha One', serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  /* Bottom nav height */
+  --bottom-bar-height: 64px;
+}
+
+/* Base Reset & Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle sacred aura overlay pattern */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 15% 20%, rgba(255, 230, 245, 0.45) 0%, transparent 40%),
+                    radial-gradient(circle at 85% 70%, rgba(229, 235, 250, 0.5) 0%, transparent 45%),
+                    radial-gradient(circle at 50% 50%, rgba(240, 234, 248, 0.3) 0%, transparent 60%);
+  z-index: 0;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--divine-purple-deep);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-sans);
+  border: none;
+  background: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Layout Utilities */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Section Header Typography */
+.section-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sacred-saffron);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.9rem;
+  background: rgba(230, 81, 0, 0.08);
+  border: 1px solid rgba(230, 81, 0, 0.18);
+  border-radius: var(--radius-full);
+}
+
+.section-title {
+  font-size: 2.35rem;
+  color: var(--divine-purple-deep);
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--glass-bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-gold);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #E65100 0%, #D4AF37 100%);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: 0.6s ease;
+  z-index: -1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(230, 81, 0, 0.42);
+}
+
+.btn-primary:hover::after {
+  left: 100%;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.82rem 1.75rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--divine-purple-deep);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid rgba(74, 48, 109, 0.2);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #FFFFFF;
+  border-color: var(--divine-purple);
+  color: var(--divine-purple);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #2E1A47;
+  background: linear-gradient(135deg, #FDE68A 0%, #D4AF37 50%, #B3861B 100%);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-gold);
+  transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.45);
+}
+
+/* Badges */
+.badge-status-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--status-open-bg);
+  color: var(--status-open-text);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.badge-status-closed {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--status-closed-bg);
+  color: var(--status-closed-text);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.pulse-dot-green {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--status-open-dot);
+  box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+  animation: pulse-green 1.8s infinite;
+}
+
+.pulse-dot-orange {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--status-closed-dot);
+  box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7);
+  animation: pulse-orange 1.8s infinite;
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+@keyframes pulse-orange {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(255, 152, 0, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+}
+
+/* Animations */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+/* Mobile responsive padding for bottom bar */
+@media (max-width: 900px) {
+  body {
+    padding-bottom: calc(var(--bottom-bar-height) + 12px);
+  }
+  .section-padding {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+  .section-title {
+    font-size: 1.85rem;
+  }
+}
+
+/* Sacred Vector Emblem Styles */
+.svc-svg-emblem,
+.stamp-svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--divine-purple-deep);
+  display: block;
+}
+
+.svc-img-emblem,
+.stamp-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ==========================================================================
+   UNIVERSAL FORM CONTROLS & STYLING
+   ========================================================================== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.01em;
+}
+
+.form-input {
+  width: 100% !important;
+  display: block !important;
+  padding: 0.82rem 1.1rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(74, 48, 109, 0.22);
+  background: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.form-input:focus {
+  border-color: var(--sacred-saffron);
+  box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.14);
+  background: #FFFFFF;
+}
+
+.form-input::placeholder {
+  color: #9E97A9;
+  font-size: 0.9rem;
+}
+
+.input-icon-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-wrap .form-input {
+  width: 100% !important;
+}
+
+.input-prefix-icon {
+  position: absolute;
+  left: 0.9rem;
+  font-size: 1.05rem;
+  pointer-events: none;
+  z-index: 2;
+  color: var(--divine-purple);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-prefix-badge {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  background: rgba(74, 48, 109, 0.08);
+  padding: 0.22rem 0.5rem;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+}
+
+.form-input.with-prefix {
+  padding-left: 2.75rem !important;
+}
+
+.form-input.with-country-prefix {
+  padding-left: 3.75rem !important;
+}
+
+.textarea-input {
+  width: 100% !important;
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+  font-family: var(--font-sans);
+  padding: 0.82rem 1.1rem;
+}
+
+.form-select {
+  appearance: auto;
+  cursor: pointer;
+}
+
+

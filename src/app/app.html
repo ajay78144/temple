@@ -1,0 +1,15 @@
+<div class="temple-app-shell">
+  <!-- Header with Live Timing Status and Navigation -->
+  <app-header #header></app-header>
+
+  <!-- Main Routed Content -->
+  <main class="temple-main-body">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Global Footer with Shanti Mantra and Links -->
+  <app-footer></app-footer>
+
+  <!-- App-like Mobile Bottom Navigation Bar -->
+  <app-mobile-bottom-bar (openMenu)="header.toggleMobileMenu()"></app-mobile-bottom-bar>
+</div>

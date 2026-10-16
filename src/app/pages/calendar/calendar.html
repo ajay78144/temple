@@ -1,0 +1,359 @@
+<section class="calendar-hero-header">
+  <div class="container text-center">
+    <span class="section-subtitle">🕉️ Vedic Panchang & Astronomical Calendar</span>
+    <h1 class="page-main-title">Combined Hindu & English Calendar</h1>
+    <p class="page-main-desc">
+      Experience our synchronized calendar uniting the traditional <strong>Desi Hindu Panchang</strong> (Vikram Samvat, Tithi, Paksha, Nakshatra, Purnima, Amavasya & Ekadashi) with the <strong>English Gregorian Calendar</strong>. Navigate through multiple years, discover auspicious festival dates, and view detailed daily Shubh Muhurats.
+    </p>
+  </div>
+</section>
+
+<section class="section-padding calendar-main-section">
+  <div class="container">
+    
+    <!-- CALENDAR CONTROLS & HEADER BAR -->
+    <div class="glass-card calendar-control-card">
+      <div class="calendar-top-row">
+        
+        <!-- Left: Month & Vikram Samvat Title -->
+        <div class="month-title-wrap">
+          <div class="samvat-badge">{{ currentMonthHeader().samvat }} • {{ currentMonthHeader().hinduMasa }}</div>
+          <h2 class="current-month-heading">{{ currentMonthHeader().english }}</h2>
+          <div class="month-hindi-sub">{{ currentMonthHeader().hindi }}</div>
+        </div>
+
+        <!-- Center: Quick Filters -->
+        <div class="filter-pills-row">
+          <button 
+            type="button" 
+            class="filter-pill" 
+            [class.active-pill]="activeFilter() === 'all'"
+            (click)="setFilter('all')">
+            All Days
+          </button>
+          <button 
+            type="button" 
+            class="filter-pill" 
+            [class.active-pill]="activeFilter() === 'festivals'"
+            (click)="setFilter('festivals')">
+            🪔 Festivals
+          </button>
+          <button 
+            type="button" 
+            class="filter-pill" 
+            [class.active-pill]="activeFilter() === 'ekadashi'"
+            (click)="setFilter('ekadashi')">
+            🪷 Ekadashi
+          </button>
+          <button 
+            type="button" 
+            class="filter-pill" 
+            [class.active-pill]="activeFilter() === 'purnima-amavasya'"
+            (click)="setFilter('purnima-amavasya')">
+            🌕 Purnima / Amavasya
+          </button>
+        </div>
+
+        <!-- Right: Multi-Year & Navigation Selectors -->
+        <div class="nav-actions-group">
+          <!-- Step Year Backward -->
+          <button class="nav-btn year-step-btn" (click)="prevYear()" title="Previous Year (पिछला वर्ष)" aria-label="Previous Year">
+            <svg viewBox="0 0 24 24" class="cal-nav-svg" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/>
+            </svg>
+          </button>
+
+          <!-- Step Month Backward -->
+          <button class="nav-btn prev-btn" (click)="prevMonth()" title="Previous Month (पिछला महीना)" aria-label="Previous Month">
+            <svg viewBox="0 0 24 24" class="cal-nav-svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          
+          <!-- Month Selector -->
+          <select class="custom-select month-select" [value]="currentMonth()" (change)="onMonthChange($event)">
+            @for (m of monthNames; track $index) {
+              <option [value]="$index">{{ m.name }} ({{ m.hindi }})</option>
+            }
+          </select>
+
+          <!-- Multi-Year Selector -->
+          <select class="custom-select year-select" [value]="currentYear()" (change)="onYearChange($event)">
+            @for (y of availableYears; track y) {
+              <option [value]="y">{{ y }} संवत्</option>
+            }
+          </select>
+
+          <!-- Step Month Forward -->
+          <button class="nav-btn next-btn" (click)="nextMonth()" title="Next Month (अगला महीना)" aria-label="Next Month">
+            <svg viewBox="0 0 24 24" class="cal-nav-svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+
+          <!-- Step Year Forward -->
+          <button class="nav-btn year-step-btn" (click)="nextYear()" title="Next Year (अगला वर्ष)" aria-label="Next Year">
+            <svg viewBox="0 0 24 24" class="cal-nav-svg" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 17l5-5-5-5M6 17l5-5-5-5"/>
+            </svg>
+          </button>
+          
+          <button class="btn-secondary today-btn" (click)="jumpToToday()" title="Jump to Today">
+            Today
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MOBILE HORIZONTAL SWIPE GUIDE (Appears on Mobile & Tablet) -->
+    <div class="calendar-mobile-swipe-guide">
+      <span class="guide-icon">👆</span>
+      <span class="guide-text">दायें-बायें स्वाइप करें • Swipe sideways to view all 7 days (सोमवार — रविवार)</span>
+    </div>
+
+    <!-- CALENDAR GRID BOARD -->
+    <div class="glass-card calendar-board-card">
+      <div class="calendar-scroll-viewport">
+        
+        <!-- Weekday Headers (Dual English + Hindi) -->
+        <div class="calendar-weekdays-row">
+          @for (w of weekDays; track w.en) {
+            <div class="weekday-cell" [class.sunday-cell]="$index === 0">
+              <span class="weekday-hi">{{ w.hi }}</span>
+              <span class="weekday-en">{{ w.en }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Days Grid (All cards equal uniform size) -->
+        <div class="calendar-days-grid">
+          @for (d of daysInView(); track d.dateObj.toISOString()) {
+            <div 
+              class="calendar-day-cell"
+              [class.other-month]="!d.isCurrentMonth"
+              [class.is-today]="d.isToday"
+              [class.selected-cell]="selectedDay()?.dateObj?.getTime() === d.dateObj.getTime()"
+              [class.highlighted-filter]="shouldHighlightDay(d)"
+              (click)="selectDay(d)">
+              
+              <!-- TOP SECTION: DESI HINDU PANCHANG TITHI -->
+              <div class="cell-top-panchang">
+                <span class="tithi-desi-name" [class.purnima-tithi]="d.isPurnima" [class.amavasya-tithi]="d.isAmavasya" [class.ekadashi-tithi]="d.isEkadashi">
+                  {{ d.tithiHindi }}
+                </span>
+                <span class="paksha-desi-abbr">
+                  {{ d.paksha === 'Shukla' ? 'शुक्ल' : 'कृष्ण' }}
+                </span>
+              </div>
+
+              <!-- CENTER/BOTTOM SECTION: GREGORIAN / ENGLISH DATE -->
+              <div class="cell-bottom-gregorian">
+                <span class="gregorian-date-num">{{ d.dayNumber }}</span>
+                @if (d.isToday) {
+                  <span class="today-indicator-dot">Today</span>
+                }
+              </div>
+
+              <!-- FESTIVAL & SPECIAL TITHI BADGES -->
+              <div class="cell-badges-wrap">
+                @if (d.isPurnima) {
+                  <span class="badge-mini purnima-badge" title="Purnima (Full Moon)">🌕 पूर्णिमा</span>
+                } @else if (d.isAmavasya) {
+                  <span class="badge-mini amavasya-badge" title="Amavasya (New Moon)">🌑 अमावस्या</span>
+                } @else if (d.isEkadashi) {
+                  <span class="badge-mini ekadashi-badge" title="Ekadashi Vrat">🪷 एकादशी</span>
+                } @else if (d.isPradosh) {
+                  <span class="badge-mini pradosh-badge" title="Pradosh Vrat">🔱 प्रदोष</span>
+                }
+
+                <!-- Major Festival Tags -->
+                @for (fest of d.festivals; track fest.name) {
+                  @if (fest.type === 'major') {
+                    <span class="badge-mini festival-badge" [title]="fest.significance">
+                      <span>{{ fest.icon }}</span> {{ fest.hindiName }}
+                    </span>
+                  }
+                }
+              </div>
+
+              <!-- BOTTOM NAKSHATRA FOOTER -->
+              <div class="cell-nakshatra-foot">
+                <span class="nakshatra-foot-text">⭐ {{ d.nakshatraHindi }}</span>
+              </div>
+
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CALENDAR LEGEND -->
+    <div class="calendar-legend-bar">
+      <div class="legend-item">
+        <span class="legend-box purnima-box"></span>
+        <span>🌕 Purnima (Full Moon / Satyanarayan Puja)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-box amavasya-box"></span>
+        <span>🌑 Amavasya (Pitru Tarpan / Ancestral Shradh)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-box ekadashi-box"></span>
+        <span>🪷 Ekadashi Vrat (Lord Vishnu Fast)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-box fest-box"></span>
+        <span>🪔 Sanatana Festival / Parva</span>
+      </div>
+    </div>
+
+    <!-- SELECTED DAY PANCHANG INSPECTOR (DRAWER / MODAL) -->
+    @if (selectedDay(); as sd) {
+      <div class="panchang-inspector-card glass-card">
+        <div class="inspector-header">
+          <div class="inspector-date-display">
+            <div class="inspector-large-num">{{ sd.dayNumber }}</div>
+            <div>
+              <div class="inspector-greg-date">
+                {{ sd.dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) }}
+              </div>
+              <div class="inspector-samvat-title">
+                विक्रम संवत {{ sd.vikramSamvat }} • {{ sd.hinduMonthHindi }} मास ({{ sd.hinduMonth }})
+              </div>
+            </div>
+          </div>
+
+          <div class="inspector-actions">
+            <a [routerLink]="['/booking']" [queryParams]="{date: sd.dateObj.toISOString().split('T')[0]}" class="btn-primary inspector-book-btn">
+              <span>🪔</span> Book Puja for this Day
+            </a>
+            <button class="close-inspector-btn" (click)="closeModal()" aria-label="Close Inspector">✕</button>
+          </div>
+        </div>
+
+        <!-- Inspector Grid Details -->
+        <div class="inspector-grid">
+          
+          <div class="inspector-metric-card">
+            <span class="metric-icon">🌙</span>
+            <div class="metric-content">
+              <span class="metric-label">Tithi & Paksha</span>
+              <span class="metric-val">{{ sd.pakshaHindi }} • {{ sd.tithiHindi }}</span>
+              <span class="metric-sub">{{ sd.paksha }} Paksha {{ sd.tithiName }}</span>
+            </div>
+          </div>
+
+          <div class="inspector-metric-card">
+            <span class="metric-icon">✨</span>
+            <div class="metric-content">
+              <span class="metric-label">Nakshatra</span>
+              <span class="metric-val">{{ sd.nakshatraHindi }}</span>
+              <span class="metric-sub">{{ sd.nakshatra }} (All Day)</span>
+            </div>
+          </div>
+
+          <div class="inspector-metric-card">
+            <span class="metric-icon">☀️</span>
+            <div class="metric-content">
+              <span class="metric-label">Sun Timings</span>
+              <span class="metric-val">Sunrise: {{ sd.sunrise }}</span>
+              <span class="metric-sub">Sunset: {{ sd.sunset }}</span>
+            </div>
+          </div>
+
+          <div class="inspector-metric-card">
+            <span class="metric-icon">🕉️</span>
+            <div class="metric-content">
+              <span class="metric-label">Shubh Abhijit Muhurat</span>
+              <span class="metric-val shubh-text">{{ sd.abhijitMuhurat }}</span>
+              <span class="metric-sub">Auspicious for all new beginnings</span>
+            </div>
+          </div>
+
+          <div class="inspector-metric-card">
+            <span class="metric-icon">⚠️</span>
+            <div class="metric-content">
+              <span class="metric-label">Rahu Kaal (Avoid)</span>
+              <span class="metric-val rahu-text">{{ sd.rahuKaal }}</span>
+              <span class="metric-sub">Inauspicious window</span>
+            </div>
+          </div>
+
+          <div class="inspector-metric-card">
+            <span class="metric-icon">🪷</span>
+            <div class="metric-content">
+              <span class="metric-label">Yoga & Karana</span>
+              <span class="metric-val">{{ sd.yoga }}</span>
+              <span class="metric-sub">{{ sd.karana }}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Today's Festivals in Inspector -->
+        @if (sd.festivals.length > 0) {
+          <div class="inspector-festivals-list">
+            <h4 class="fest-list-heading">Festivals & Sacred Observances on this Day:</h4>
+            <div class="fest-detail-cards">
+              @for (f of sd.festivals; track f.name) {
+                <div class="fest-detail-box">
+                  <div class="fest-title-row">
+                    <span class="fest-icon-lg">{{ f.icon }}</span>
+                    <div>
+                      <div class="fest-hi-name">{{ f.hindiName }}</div>
+                      <div class="fest-en-name">{{ f.name }}</div>
+                    </div>
+                  </div>
+                  <p class="fest-significance-text">{{ f.significance }}</p>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Vrat & Sadhana Advice -->
+        <div class="inspector-advice-box">
+          <span class="advice-icon">🪔</span>
+          <div>
+            <strong>Daily Sadhana Recommendation:</strong>
+            <p>{{ sd.vratAdvice }}</p>
+          </div>
+        </div>
+
+      </div>
+    }
+
+    <!-- MAJOR FESTIVALS THIS MONTH LIST -->
+    <div class="glass-card month-festivals-summary">
+      <h3 class="summary-heading">
+        <span>🚩</span> Sacred Festivals & Fasts in {{ currentMonthHeader().english }}
+      </h3>
+      
+      @if (majorEventsThisMonth().length > 0) {
+        <div class="events-summary-grid">
+          @for (item of majorEventsThisMonth(); track item.festival.name + item.day.dayNumber) {
+            <div class="event-summary-item" (click)="selectDay(item.day)">
+              <div class="event-date-chip">
+                <span class="chip-day">{{ item.day.dayNumber }}</span>
+                <span class="chip-month">{{ monthNames[currentMonth()].name.slice(0, 3) }}</span>
+              </div>
+              <div class="event-meta">
+                <div class="event-title">
+                  <span>{{ item.festival.icon }}</span>
+                  <strong>{{ item.festival.hindiName }}</strong>
+                </div>
+                <div class="event-sub">{{ item.festival.name }} • {{ item.day.tithiHindi }}</div>
+              </div>
+              <span class="event-view-link">View Details →</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="no-events-text">No major annual festivals fall in this specific month, but daily Ekadashi, Pradosh, Purnima, and Amavasya rituals proceed as per Panchang.</p>
+      }
+    </div>
+
+  </div>
+</section>
