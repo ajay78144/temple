@@ -19,7 +19,11 @@
             <div class="slide-cta-row">
               <a [routerLink]="slide.primaryCtaLink" class="btn-primary hero-btn">
                 <span class="btn-diya-icon">
-                  <img src="assets/icons/diya-lamp.svg" alt="Puja" class="btn-svg-diya" />
+                  <svg viewBox="0 0 24 24" class="btn-svg-diya" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 2c.8 1.8 2 3.6 2 5.2 0 1.8-1 3-2 3s-2-1.2-2-3c0-1.6 1.2-3.4 2-5.2z" fill="#FFC107" stroke="#FFA000"/>
+                    <path d="M4 14c0 4 3.6 7 8 7s8-3 8-7H4z" fill="#E65100" stroke="#BF360C"/>
+                    <path d="M2 14h20" stroke="#BF360C" stroke-width="2"/>
+                  </svg>
                 </span>
                 <span>{{ slide.primaryCtaText }}</span>
               </a>
@@ -33,7 +37,7 @@
       </div>
     }
 
-    <!-- Carousel Controls (Left & Right Buttons) -->
+    <!-- Carousel Controls -->
     <button class="slider-arrow prev-arrow" (click)="prevSlide()" aria-label="Previous Slide" title="Previous Slide">
       <svg viewBox="0 0 24 24" class="arrow-svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M15 18l-6-6 6-6"/>
@@ -59,17 +63,21 @@
   </div>
 </section>
 
-<!-- LIVE STATUS & QUICK DARSHAN STRIP -->
-<section class="quick-status-strip">
+<!-- SANCTUM STATUS & REAL-TIME DARSHAN STRIP -->
+<section class="sanctum-status-strip">
   <div class="container strip-content">
     
-    <div class="strip-item status-pill-item">
-      <div class="strip-icon-circle">
-        <img src="assets/icons/temple-shikhar.svg" class="strip-icon-svg" alt="Temple Sanctum" />
+    <div class="strip-item">
+      <div class="strip-icon-box">
+        <svg viewBox="0 0 24 24" class="strip-svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M12 2L3 9v11a2 2 0 002 2h14a2 2 0 002-2V9l-9-7z"/>
+          <path d="M9 22V12h6v10"/>
+          <path d="M12 2v4"/>
+        </svg>
       </div>
-      <div>
-        <div class="strip-tag">Temple Status Right Now</div>
-        <div class="strip-val">
+      <div class="strip-text-col">
+        <span class="strip-label">Temple Gates Status</span>
+        <div class="strip-value">
           <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
           <strong>{{ liveStatus().statusText }}</strong>
         </div>
@@ -79,15 +87,18 @@
     <div class="strip-divider"></div>
 
     <div class="strip-item">
-      <div class="strip-icon-circle">
-        <img src="assets/icons/clock-icon.svg" class="strip-icon-svg" alt="Live Time" />
+      <div class="strip-icon-box">
+        <svg viewBox="0 0 24 24" class="strip-svg" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="9"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
       </div>
-      <div>
-        <div class="strip-tag">Sanctum & Local Clock</div>
-        <div class="strip-val mono-clock">
-          <span>🛕 IST: {{ liveStatus().currentTimeStr }}</span>
+      <div class="strip-text-col">
+        <span class="strip-label">Sanctum & Local Clock</span>
+        <div class="strip-value mono-clock">
+          <span class="ist-clock">IST {{ liveStatus().currentTimeStr }}</span>
           @if (selectedCountry().code !== 'IN') {
-            <span class="home-local-clock-tag"> • {{ selectedCountry().flag }} {{ liveStatus().countryTimeStr }}</span>
+            <span class="local-clock-pill">{{ selectedCountry().code }}: {{ liveStatus().countryTimeStr }}</span>
           }
         </div>
       </div>
@@ -96,131 +107,138 @@
     <div class="strip-divider"></div>
 
     <div class="strip-item">
-      <div class="strip-icon-circle">
-        <img src="assets/icons/bell-icon.svg" class="strip-icon-svg" alt="Temple Bell" />
+      <div class="strip-icon-box">
+        <svg viewBox="0 0 24 24" class="strip-svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 01-3.46 0"/>
+        </svg>
       </div>
-      <div>
-        <div class="strip-tag">Next Temple Event</div>
-        <div class="strip-val">
-          {{ liveStatus().nextEvent }} ({{ liveStatus().nextEventTime }} IST)
+      <div class="strip-text-col">
+        <span class="strip-label">Next Sacred Event</span>
+        <div class="strip-value next-event-val">
+          {{ liveStatus().nextEvent }} <span class="event-time-tag">({{ liveStatus().nextEventTime }} IST)</span>
         </div>
       </div>
     </div>
 
     <div class="strip-divider"></div>
 
-    <div class="strip-cta">
-      <a routerLink="/booking" class="btn-gold strip-btn">
-        <img src="assets/icons/diya-lamp.svg" class="btn-icon-svg" alt="Puja" />
-        <span>Book Slot</span>
+    <div class="strip-action">
+      <a routerLink="/booking" class="strip-cta-btn">
+        <svg viewBox="0 0 24 24" class="btn-inline-svg" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2c.8 1.8 2 3.6 2 5.2 0 1.8-1 3-2 3s-2-1.2-2-3c0-1.6 1.2-3.4 2-5.2z" fill="#FFA000"/>
+          <path d="M4 14c0 4 3.6 7 8 7s8-3 8-7H4z" fill="#E65100"/>
+        </svg>
+        <span>Book Darshan Slot</span>
       </a>
     </div>
 
   </div>
 </section>
 
-<!-- TODAY'S HINDU PANCHANG HIGHLIGHT BANNER -->
+<!-- TODAY'S HINDU PANCHANG HIGHLIGHT (CLEAN VEDIC ALTAR STRIP) -->
 @if (todayPanchang(); as p) {
-  <section class="today-panchang-section">
+  <section class="dainik-panchang-section">
     <div class="container">
-      <div class="glass-card panchang-banner-card">
-        <div class="panchang-header-row">
-          <div class="panchang-date-box">
-            <div class="panchang-day-num">{{ p.dayNumber }}</div>
-            <div class="panchang-month-year">{{ liveStatus().currentDateStr }}</div>
+      <div class="panchang-altar-strip">
+        <div class="panchang-main-col">
+          <div class="panchang-date-emblem">
+            <span class="day-large">{{ p.dayNumber }}</span>
+            <span class="month-small">{{ liveStatus().currentDateStr }}</span>
           </div>
 
-          <div class="panchang-tithi-info">
-            <div class="samvat-tag">Vikram Samvat {{ p.vikramSamvat }} • {{ p.hinduMonthHindi }} माह ({{ p.hinduMonth }})</div>
-            <h3 class="tithi-heading">
-              <span class="tithi-paksha">{{ p.pakshaHindi }} ({{ p.paksha }} Paksha)</span> — {{ p.tithiHindi }} ({{ p.tithiName }})
-            </h3>
-            <div class="nakshatra-text">
-              <span>🌟 Nakshatra: <strong>{{ p.nakshatraHindi }} ({{ p.nakshatra }})</strong></span>
-              <span>•</span>
-              <span>☀️ Sunrise: <strong>{{ p.sunrise }}</strong></span>
-              <span>•</span>
-              <span>✨ Shubh Muhurat: <strong>{{ p.abhijitMuhurat }}</strong></span>
+          <div class="panchang-details">
+            <div class="samvat-line">
+              <span class="om-mark">ॐ</span>
+              <span>Vikram Samvat {{ p.vikramSamvat }} • {{ p.hinduMonthHindi }} माह ({{ p.hinduMonth }})</span>
             </div>
-          </div>
-
-          <div class="panchang-action">
-            <a routerLink="/calendar" class="btn-secondary">
-              <span>📅</span> Full Hindu Calendar →
-            </a>
+            <h3 class="tithi-title">
+              {{ p.pakshaHindi }} ({{ p.paksha }} Paksha) — {{ p.tithiHindi }} ({{ p.tithiName }})
+            </h3>
+            <div class="astrological-metrics">
+              <span class="metric-pill">
+                <svg viewBox="0 0 24 24" class="mini-svg" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Nakshatra: <strong>{{ p.nakshatraHindi }} ({{ p.nakshatra }})</strong>
+              </span>
+              <span class="metric-pill">
+                <svg viewBox="0 0 24 24" class="mini-svg" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+                Sunrise: <strong>{{ p.sunrise }}</strong>
+              </span>
+              <span class="metric-pill highlight-muhurat">
+                <svg viewBox="0 0 24 24" class="mini-svg" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg>
+                Shubh Muhurat: <strong>{{ p.abhijitMuhurat }}</strong>
+              </span>
+            </div>
           </div>
         </div>
 
-        @if (p.festivals.length > 0) {
-          <div class="today-festivals-row">
-            <span class="fest-label">Today's Sacred Auspiciousness:</span>
-            <div class="fest-chips">
+        <div class="panchang-side-col">
+          @if (p.festivals.length > 0) {
+            <div class="fest-banner-row">
+              <span class="fest-tag-label">Auspicious:</span>
               @for (f of p.festivals; track f.name) {
-                <span class="fest-chip">
-                  <span>{{ f.icon }}</span>
+                <span class="fest-pill">
                   <strong>{{ f.hindiName }}</strong> ({{ f.name }})
                 </span>
               }
             </div>
-          </div>
-        }
+          }
+          <a routerLink="/calendar" class="panchang-view-link">
+            <span>Full Mandir Calendar</span>
+            <span class="arrow-glyph">→</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 }
 
-<!-- SACRED SERVICES SECTION -->
+<!-- SACRED SERVICES & PUJAS (ARCHITECTURAL SACRED GALLERY) -->
 <section class="section-padding services-section" id="services">
   <div class="container">
     
-    <div class="text-center section-intro">
-      <span class="section-subtitle">🕉️ Sacred Offerings & Consultations</span>
-      <h2 class="section-title">Temple Services & Divine Rites</h2>
-      <p class="section-desc">
-        Click on any sacred service card below to view complete scriptural significance, step-by-step Vidhi, included samagri, and direct booking for personalized ceremonies.
+    <div class="text-center section-header-area">
+      <div class="sacred-crest-symbol">॥ ॐ नमः शिवाय ॥</div>
+      <h2 class="section-heading-serif">Temple Services & Divine Rites</h2>
+      <p class="section-lead-p">
+        Conducted strictly as per Shastric vidhi by learned Vedic Acharyas. Select any sacred offering to view complete ritual significance, samagri, and personalized scheduling.
       </p>
     </div>
 
-    <div class="services-grid">
+    <div class="sacred-services-grid">
       @for (service of services; track service.id) {
-        <a [routerLink]="['/services', service.slug]" class="glass-card service-card">
-          <div class="service-image-box">
-            <img [src]="service.image" [alt]="service.title" loading="lazy" />
-            <div class="service-badge-pill">{{ service.badge }}</div>
-            <div class="service-icon-floating">
-              @if (service.id === 'kundali') {
-                <svg viewBox="0 0 24 24" class="svc-svg-emblem" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              } @else if (service.id === 'tarot') {
-                <svg viewBox="0 0 24 24" class="svc-svg-emblem" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-              } @else if (service.id === 'havan') {
-                <img src="assets/icons/diya-lamp.svg" alt="Havan" class="svc-img-emblem" />
-              } @else if (service.id === 'tarpan') {
-                <svg viewBox="0 0 24 24" class="svc-svg-emblem" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-              } @else {
-                <img src="assets/icons/temple-shikhar.svg" alt="Puja" class="svc-img-emblem" />
-              }
-            </div>
+        <a [routerLink]="['/services', service.slug]" class="sacred-service-item">
+          <div class="service-media-wrap">
+            <img [src]="service.image" [alt]="service.title" loading="lazy" class="service-media-img" />
+            <div class="service-category-badge">{{ service.badge }}</div>
           </div>
 
-          <div class="service-content">
-            <div class="service-hindi-title">{{ service.hindiTitle }}</div>
-            <h3 class="service-card-title">{{ service.title }}</h3>
-            <p class="service-subtitle-text">{{ service.subtitle }}</p>
-            <p class="service-short-desc">{{ service.shortDesc }}</p>
+          <div class="service-body">
+            <span class="service-hindi-lead">{{ service.hindiTitle }}</span>
+            <h3 class="service-title-serif">{{ service.title }}</h3>
+            <p class="service-subtitle-line">{{ service.subtitle }}</p>
+            <p class="service-excerpt">{{ service.shortDesc }}</p>
 
-            <div class="service-meta-row">
-              <div class="meta-item">
-                <span class="meta-icon">⏱️</span>
+            <div class="service-specs-row">
+              <div class="spec-unit">
+                <svg viewBox="0 0 24 24" class="spec-svg" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <circle cx="12" cy="12" r="9"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
                 <span>{{ service.duration }}</span>
               </div>
-              <div class="meta-item">
-                <span class="meta-icon">🪔</span>
+              <div class="spec-unit">
+                <svg viewBox="0 0 24 24" class="spec-svg" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 2c.8 1.8 2 3.6 2 5.2 0 1.8-1 3-2 3s-2-1.2-2-3c0-1.6 1.2-3.4 2-5.2z" fill="#D4AF37"/>
+                  <path d="M4 14c0 4 3.6 7 8 7s8-3 8-7H4z" stroke="#D4AF37"/>
+                </svg>
                 <span>{{ service.dakshinaSuggested }}</span>
               </div>
             </div>
 
-            <div class="service-card-footer">
-              <span class="view-vidhi-text">View Full Vidhi & Details →</span>
+            <div class="service-bottom-action">
+              <span class="explore-link-text">View Vidhi & Details</span>
+              <span class="action-arrow">→</span>
             </div>
           </div>
         </a>
@@ -230,192 +248,307 @@
   </div>
 </section>
 
-<!-- ABOUT SAKOON TEMPLE TEASER -->
-<section class="section-padding about-teaser-section">
-  <div class="container about-grid">
+<!-- ABOUT SAKOON TEMPLE (TRANQUIL SANCTUM STORY) -->
+<section class="section-padding about-sanctum-section">
+  <div class="container">
+    <div class="about-sanctum-layout">
+      
+      <div class="about-visual-column">
+        <div class="sanctum-frame">
+          <img src="assets/images/sanctum.jpg" alt="Inner Sanctum of Sakoon Temple" class="sanctum-photo" />
+          <div class="sanctum-provenance-box">
+            <span class="provenance-mantra">॥ शान्तिः प्रशान्तिः परमात्मयोगः ॥</span>
+            <span class="provenance-detail">108+ Daily Vedic Mantras & Prarthanas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-narrative-column">
+        <div class="narrative-crest">
+          <span class="crest-prefix">Sanatan Heritage</span>
+        </div>
+        <h2 class="narrative-heading">Experience the Deep Tranquility of Sakoon</h2>
+        <p class="narrative-paragraph">
+          In an era of relentless hurry and digital distraction, <strong>Sakoon Temple</strong> was consecrated as a divine refuge where the human spirit can quieten, breathe, and immerse in authentic Sanatana peace.
+        </p>
+        <p class="narrative-paragraph">
+          Our sanctum is alive with the resonant vibrations of Vedic chanting, aromatic camphor, brass bell resonances, and uninterrupted traditional aartis. Whether you seek quiet meditation, accurate Vedic astrological guidance, or holy samskaras, Sakoon welcomes you with sacred grace.
+        </p>
+
+        <div class="sanctum-values-list">
+          <div class="value-item">
+            <div class="value-icon-circle">
+              <svg viewBox="0 0 24 24" class="value-svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div class="value-text-block">
+              <h4 class="value-title">Vedic Authenticity</h4>
+              <p class="value-desc">Every havan, archana, and puja is executed strictly per authentic Shastric vidhi.</p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-icon-circle">
+              <svg viewBox="0 0 24 24" class="value-svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 2a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9s-9-4.03-9-9a9 9 0 0 1 9-9z"/>
+                <path d="M12 7v5l3 3"/>
+              </svg>
+            </div>
+            <div class="value-text-block">
+              <h4 class="value-title">Meditative Stillness</h4>
+              <p class="value-desc">A serene temple sanctum designed for deep Dhyana, prayer, and personal reflection.</p>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <div class="value-icon-circle">
+              <svg viewBox="0 0 24 24" class="value-svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <div class="value-text-block">
+              <h4 class="value-title">Devotee Seva & Anna Daan</h4>
+              <p class="value-desc">Pure sanctified Prasad, Goshala cow seva, and spiritual solace for all pilgrims.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="narrative-actions">
+          <a routerLink="/about" class="btn-primary">Our Sacred Heritage</a>
+          <a routerLink="/timings" class="btn-secondary">Aarti Guidelines</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLE DARSHAN & AARTI TIMINGS (UNIFIED SACRED SCHEDULE) -->
+<section class="section-padding timings-schedule-section">
+  <div class="container">
     
-    <div class="about-image-wrapper">
-      <div class="about-image-frame glass-card">
-        <img src="assets/images/sanctum.jpg" alt="Inner Sanctum of Sakoon Temple" class="about-main-img" />
-        <div class="about-stat-badge">
-          <span class="stat-num">108+</span>
-          <span class="stat-text">Daily Vedic Mantras & Prayers</span>
-        </div>
-      </div>
+    <div class="text-center section-header-area">
+      <span class="sacred-crest-symbol">॥ नित्य आरती तालिका ॥</span>
+      <h2 class="section-heading-serif">Temple Darshan & Aarti Schedule</h2>
+      <p class="section-lead-p">
+        Join the sanctum during the five uplifting aartis of the day. All timings are observed according to Indian Standard Time (IST).
+      </p>
     </div>
 
-    <div class="about-text-content">
-      <span class="section-subtitle">🛕 The Abode of Solace</span>
-      <h2 class="section-title">Experience the Deep Tranquility of Sakoon</h2>
-      <p class="about-p">
-        In an era of relentless hurry and digital distractions, <strong>Sakoon Temple</strong> was envisioned as a celestial sanctuary where the soul can pause, breathe, and reconnect with timeless Sanatana peace.
-      </p>
-      <p class="about-p">
-        Our sanctum houses sacred consecrated deities, resonant Vedic vibrations, and an uninterrupted tradition of morning and evening aartis. Whether seeking solace through meditation, guidance via genuine Vedic astrology, or sacred family samskaras, Sakoon welcomes every devotee with open arms.
-      </p>
-
-      <div class="about-pillars">
-        <div class="pillar-item">
-          <div class="pillar-icon">🪷</div>
-          <div>
-            <h4>Vedic Authenticity</h4>
-            <p>Every havan, archana, and puja is executed as per authentic Shastric vidhi.</p>
+    <div class="schedule-timetable-wrapper">
+      
+      <!-- Morning Section -->
+      <div class="schedule-period-block">
+        <div class="period-header">
+          <div class="period-title-wrap">
+            <span class="period-badge morning-badge">Pratah Kaal</span>
+            <h3 class="period-name">Morning Darshan & Aartis</h3>
           </div>
+          <span class="period-span">05:30 AM — 12:30 PM</span>
         </div>
 
-        <div class="pillar-item">
-          <div class="pillar-icon">🧘</div>
-          <div>
-            <h4>Meditative Peace</h4>
-            <p>Tranquil sanctum designed for deep dhyana, quiet contemplation, and inner healing.</p>
+        <div class="period-events-list">
+          <div class="event-row">
+            <div class="event-time-col">05:30 AM</div>
+            <div class="event-desc-col">
+              <strong>Suprabhatam & Temple Gates Open</strong>
+              <span>Morning conch blowing and waking of the deities</span>
+            </div>
           </div>
-        </div>
-
-        <div class="pillar-item">
-          <div class="pillar-icon">🤝</div>
-          <div>
-            <h4>Devotee Seva</h4>
-            <p>Anna Daan, holy cow seva (Goshala), and spiritual counseling for all pilgrims.</p>
+          <div class="event-row highlight-row">
+            <div class="event-time-col">06:00 AM</div>
+            <div class="event-desc-col">
+              <strong>Mangala Aarti (Ghee Lamp)</strong>
+              <span>First sacred flame offering of the day with Vedic stotras</span>
+            </div>
+          </div>
+          <div class="event-row">
+            <div class="event-time-col">08:30 AM</div>
+            <div class="event-desc-col">
+              <strong>Morning Archana & Panchamrit Abhishek</strong>
+              <span>Holy milk, honey, and sacred water offering at the sanctum</span>
+            </div>
+          </div>
+          <div class="event-row">
+            <div class="event-time-col">12:00 PM</div>
+            <div class="event-desc-col">
+              <strong>Rajbhog Aarti & Naivedyam Bhog</strong>
+              <span>Midday culinary offering and consecrated sweet bhog distribution</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="about-actions">
-        <a routerLink="/about" class="btn-primary">Learn About Our Heritage</a>
-        <a routerLink="/timings" class="btn-secondary">View Aarti Timings</a>
+      <!-- Vishram Section -->
+      <div class="schedule-period-block vishram-block">
+        <div class="period-header vishram-header">
+          <div class="period-title-wrap">
+            <span class="period-badge vishram-badge">Madhyahna Vishram</span>
+            <h3 class="period-name">Sanctum Vishram (Gates Closed)</h3>
+          </div>
+          <span class="period-span">12:30 PM — 04:30 PM</span>
+        </div>
+        <div class="vishram-explanation">
+          <p>The inner sanctum remains closed for the deities' quiet repose. Devotees are invited to spend meditative time in the courtyard, outer garden, or library hall.</p>
+        </div>
       </div>
+
+      <!-- Evening Section -->
+      <div class="schedule-period-block">
+        <div class="period-header">
+          <div class="period-title-wrap">
+            <span class="period-badge evening-badge">Sandhya Kaal</span>
+            <h3 class="period-name">Evening Darshan & Shayan</h3>
+          </div>
+          <span class="period-span">04:30 PM — 09:30 PM</span>
+        </div>
+
+        <div class="period-events-list">
+          <div class="event-row">
+            <div class="event-time-col">04:30 PM</div>
+            <div class="event-desc-col">
+              <strong>Evening Sanctum Gates Reopen</strong>
+              <span>Sanctum doors open for evening visitors and personal prayers</span>
+            </div>
+          </div>
+          <div class="event-row highlight-row">
+            <div class="event-time-col">07:00 PM</div>
+            <div class="event-desc-col">
+              <strong>Maha Sandhya Aarti</strong>
+              <span>Grand evening lamp celebration with ringing brass bells & dhoop</span>
+            </div>
+          </div>
+          <div class="event-row">
+            <div class="event-time-col">08:00 PM</div>
+            <div class="event-desc-col">
+              <strong>Bhajan & Keertan Satsang</strong>
+              <span>Devotional chorus and sacred singing in the central mandap</span>
+            </div>
+          </div>
+          <div class="event-row">
+            <div class="event-time-col">09:15 PM</div>
+            <div class="event-desc-col">
+              <strong>Shayan Aarti & Night Vishram</strong>
+              <span>Concluding lullaby prayer and closing of the sanctum gates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center schedule-footer-link">
+      <a routerLink="/timings" class="btn-secondary">View Detailed Guidelines & Special Darshan →</a>
     </div>
 
   </div>
 </section>
 
-<!-- TEMPLE TIMINGS QUICK OVERVIEW -->
-<section class="section-padding timings-quick-section">
+<!-- CALENDLY APPOINTMENT BANNER (ELEGANT SACRED INVITATION) -->
+<section class="sanctum-booking-invitation">
   <div class="container">
-    <div class="text-center section-intro">
-      <span class="section-subtitle">⏰ Sacred Schedule</span>
-      <h2 class="section-title">Temple Darshan & Aarti Timings</h2>
-      <p class="section-desc">
-        Plan your divine visit to Sakoon Temple. Experience the uplifting vibrations of the five sacred aartis.
-      </p>
-    </div>
-
-    <div class="timings-grid">
-      <div class="glass-card timing-feature-card">
-        <div class="timing-badge morning">🌅 Morning Darshan</div>
-        <div class="timing-hours">05:30 AM — 12:30 PM</div>
-        <ul class="timing-events">
-          <li><span>Suprabhatam & Gates Open</span> <strong>05:30 AM</strong></li>
-          <li><span>Mangala Aarti (Ghee Lamp)</span> <strong>06:00 AM</strong></li>
-          <li><span>Morning Archana & Puja</span> <strong>08:30 AM</strong></li>
-          <li><span>Rajbhog Aarti & Bhog</span> <strong>12:00 PM</strong></li>
-        </ul>
-      </div>
-
-      <div class="glass-card timing-feature-card highlight-vishram">
-        <div class="timing-badge vishram">☀️ Temple Vishram (Closed)</div>
-        <div class="timing-hours">12:30 PM — 04:30 PM</div>
-        <p class="vishram-note">
-          The inner sanctum gates remain closed for deities' afternoon rest. Devotees may spend quiet meditative time in the outer gardens and fountain courtyard.
+    <div class="booking-altar-box">
+      <div class="altar-info-col">
+        <span class="altar-badge">Personalized Vedic Consultations & Pujas</span>
+        <h2 class="altar-title">Reserve Your Darshan or Acharya Consultation</h2>
+        <p class="altar-description">
+          Select your auspicious date, morning or evening slot, and specialized ritual. Immediate confirmation pass provided with step-by-step samagri list.
         </p>
       </div>
-
-      <div class="glass-card timing-feature-card">
-        <div class="timing-badge evening">🌙 Evening Darshan</div>
-        <div class="timing-hours">04:30 PM — 09:30 PM</div>
-        <ul class="timing-events">
-          <li><span>Evening Gates Reopening</span> <strong>04:30 PM</strong></li>
-          <li><span>Maha Sandhya Aarti</span> <strong>07:00 PM</strong></li>
-          <li><span>Bhajan & Keertan Circle</span> <strong>08:00 PM</strong></li>
-          <li><span>Shayan Aarti & Night Vishram</span> <strong>09:15 PM</strong></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="text-center timings-cta-box">
-      <a routerLink="/timings" class="btn-secondary">View Complete Darshan Guidelines →</a>
-    </div>
-  </div>
-</section>
-
-<!-- CALENDLY BOOKING CTA SECTION -->
-<section class="booking-cta-section">
-  <div class="container">
-    <div class="glass-card booking-cta-card">
-      <div class="cta-card-content">
-        <div class="cta-icon-box">
-          <span>🗓️</span>
-        </div>
-        <div class="cta-text-box">
-          <span class="cta-badge">Easy Online Appointment System</span>
-          <h2 class="cta-heading">Book Your Sacred Puja or Consultation Slot</h2>
-          <p class="cta-p">
-            Choose your preferred date, morning/evening time slot, and Vedic Acharya. Instant confirmation and booking pass for Kundali, Tarot, Vedic Havan, Tarpan, or Family & Vehicle Puja.
-          </p>
-        </div>
-        <div class="cta-button-box">
-          <a routerLink="/booking" class="btn-gold cta-action-btn">
-            <span>🪔</span> Book Your Slot Now
-          </a>
-        </div>
+      <div class="altar-action-col">
+        <a routerLink="/booking" class="btn-gold-large">
+          <svg viewBox="0 0 24 24" class="btn-gold-svg" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span>Book Appointment Slot</span>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DEVOTEE EXPERIENCES / TESTIMONIALS -->
-<section class="section-padding testimonials-section">
+<!-- DEVOTEE REFLECTIONS (AUTHENTIC TESTIMONIALS) -->
+<section class="section-padding devotee-reflections-section">
   <div class="container">
-    <div class="text-center section-intro">
-      <span class="section-subtitle">🌸 Devotee Reflections</span>
-      <h2 class="section-title">Words of Peace from Devotees</h2>
-      <p class="section-desc">
-        Heartfelt reflections from families and pilgrims who discovered solace, clarity, and blessings at Sakoon Temple.
+    
+    <div class="text-center section-header-area">
+      <span class="sacred-crest-symbol">॥ साधक अनुभव ॥</span>
+      <h2 class="section-heading-serif">Devotee Reflections & Solace</h2>
+      <p class="section-lead-p">
+        Heartfelt experiences from pilgrims and families who discovered peace, spiritual clarity, and blessings at Sakoon Temple.
       </p>
     </div>
 
-    <div class="testimonials-grid">
-      <div class="glass-card testimonial-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">
-          "The Maha Mrityunjaya Havan conducted at Sakoon Temple gave our family immense mental peace during my father's surgery. The priests chanted with such Vedic precision and purity."
+    <div class="reflections-grid">
+      <div class="reflection-quote-card">
+        <div class="quote-symbol">“</div>
+        <div class="golden-stars-row">
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="reflection-quote-text">
+          The Maha Mrityunjaya Havan conducted at Sakoon Temple gave our family immense mental peace during my father's surgery. The priests chanted with such Vedic precision and purity.
         </p>
-        <div class="testi-author">
-          <div class="author-avatar">🕉️</div>
-          <div>
-            <div class="author-name">Rajesh & Sunita Sharma</div>
-            <div class="author-city">New Delhi</div>
+        <div class="devotee-profile-row">
+          <div class="devotee-monogram">RS</div>
+          <div class="devotee-meta">
+            <span class="devotee-name">Rajesh & Sunita Sharma</span>
+            <span class="devotee-city">New Delhi</span>
           </div>
         </div>
       </div>
 
-      <div class="glass-card testimonial-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">
-          "The Kundali Jyotish paramarsh provided genuine Vedic guidance without inducing fear. The gemstone and mantra suggestions have genuinely brought harmony into my career."
+      <div class="reflection-quote-card">
+        <div class="quote-symbol">“</div>
+        <div class="golden-stars-row">
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="reflection-quote-text">
+          The Kundali Jyotish paramarsh provided genuine Vedic guidance without inducing fear. The gemstone and mantra suggestions have genuinely brought harmony into my career.
         </p>
-        <div class="testi-author">
-          <div class="author-avatar">✨</div>
-          <div>
-            <div class="author-name">Ananya Deshmukh</div>
-            <div class="author-city">Pune, Maharashtra</div>
+        <div class="devotee-profile-row">
+          <div class="devotee-monogram">AD</div>
+          <div class="devotee-meta">
+            <span class="devotee-name">Ananya Deshmukh</span>
+            <span class="devotee-city">Pune, Maharashtra</span>
           </div>
         </div>
       </div>
 
-      <div class="glass-card testimonial-card">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">
-          "We performed our new car Vahan Pujan and birthday archana here. The temple courtyard with flower decorations and peaceful priests made the celebration feel truly divine."
+      <div class="reflection-quote-card">
+        <div class="quote-symbol">“</div>
+        <div class="golden-stars-row">
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24" class="star-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="reflection-quote-text">
+          We performed our new car Vahan Pujan and birthday archana here. The temple courtyard with flower decorations and peaceful priests made the celebration feel truly divine.
         </p>
-        <div class="testi-author">
-          <div class="author-avatar">🎉</div>
-          <div>
-            <div class="author-name">Vikas & Meera Kapoor</div>
-            <div class="author-city">Chandigarh</div>
+        <div class="devotee-profile-row">
+          <div class="devotee-monogram">VK</div>
+          <div class="devotee-meta">
+            <span class="devotee-name">Vikas & Meera Kapoor</span>
+            <span class="devotee-city">Chandigarh</span>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
