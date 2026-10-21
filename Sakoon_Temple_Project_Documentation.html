@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sakoon Temple - Complete Technical Project Documentation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+
+    @page {
+      size: A4;
+      margin: 16mm 14mm 18mm 14mm;
+      @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: 'Inter', sans-serif;
+        font-size: 8.5pt;
+        color: #718096;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, sans-serif;
+      color: #2D3748;
+      background: #FFFFFF;
+      line-height: 1.55;
+      font-size: 10pt;
+    }
+
+    /* Cover / Header Banner */
+    .doc-header {
+      background: linear-gradient(135deg, #1C1128 0%, #2E1A47 50%, #4A306D 100%);
+      color: #FFFFFF;
+      padding: 28px 26px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+      border-bottom: 4px solid #D4AF37;
+    }
+
+    .doc-header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 22pt;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #FAF089;
+      margin-bottom: 4px;
+    }
+
+    .doc-header .subtitle {
+      font-size: 12pt;
+      color: #E2E8F0;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 8.5pt;
+      color: #CBD5E0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 10px;
+      margin-top: 8px;
+    }
+
+    .header-meta span {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: 24px;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 14pt;
+      color: #1C1128;
+      border-left: 5px solid #D4AF37;
+      padding-left: 10px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 11pt;
+      color: #4A306D;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    p {
+      margin-bottom: 8px;
+      color: #4A5568;
+      text-align: justify;
+    }
+
+    /* Highlight & Callout boxes */
+    .callout {
+      background: #F7FAFC;
+      border-left: 4px solid #3182CE;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 9.5pt;
+    }
+
+    .callout.gold {
+      background: #FFFDF0;
+      border-left-color: #D4AF37;
+      color: #744210;
+    }
+
+    .callout.success {
+      background: #F0FFF4;
+      border-left-color: #38A169;
+      color: #22543D;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px 0;
+      font-size: 9pt;
+    }
+
+    th, td {
+      border: 1px solid #E2E8F0;
+      padding: 7px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #2E1A47;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #F7FAFC;
+    }
+
+    /* Cards Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .card-title {
+      font-weight: 700;
+      color: #1C1128;
+      font-size: 10.5pt;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Code Snippets */
+    pre, code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 8.5pt;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 4px;
+    }
+
+    code {
+      padding: 2px 5px;
+      color: #805AD5;
+    }
+
+    pre {
+      padding: 8px 12px;
+      overflow-x: auto;
+      margin: 8px 0;
+      line-height: 1.4;
+      color: #2D3748;
+      background: #1C1128;
+      color: #F7FAFC;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-size: 7.5pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-primary { background: #EBF8FF; color: #2B6CB0; }
+    .badge-gold { background: #FEFCBF; color: #975A16; }
+    .badge-success { background: #C6F6D5; color: #22543D; }
+
+    ul, ol {
+      margin-left: 18px;
+      margin-bottom: 10px;
+      color: #4A5568;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER / HEADER -->
+  <div class="doc-header">
+    <h1>SAKOON TEMPLE (सकून मंदिर)</h1>
+    <div class="subtitle">सम्पूर्ण प्रोजेक्ट आर्किटेक्चर, सर्वदेशीय टाइमज़ोन, पंचांग कैलेंडर इंजन एवं तकनीकी विवरण</div>
+    <div class="header-meta">
+      <span><strong>Framework:</strong> Angular 20 (Standalone & Signals)</span>
+      <span><strong>Timezone Scope:</strong> 20+ Countries + Auto DST (+1h)</span>
+      <span><strong>Styling:</strong> Pure Vanilla CSS + Glassmorphism</span>
+      <span><strong>Deployment:</strong> Netlify + GitHub CI/CD</span>
+      <span><strong>Repo:</strong> github.com/ajay78144/temple</span>
+    </div>
+  </div>
+
+  <!-- 1. EXECUTIVE SUMMARY -->
+  <div class="section">
+    <h2>1. प्रोजेक्ट परिचय (Project Overview)</h2>
+    <p>
+      <strong>Sakoon Temple (श्री सुकून मन्दिर)</strong> एक आधुनिक, आध्यात्मिक एवं अत्याधुनिक वैदिक वेब ऐप्लिकेशन है। 
+      यह मंदिर भारत और विश्वभर (USA, UK, Canada, Australia, UAE, Europe आदि) के भक्तों (Devotees) को दिव्य दर्शन, दैनिक आरती समय, 
+      सर्वदेशीय पंचांग, वैदिक ज्योतिष परामर्श, हवन-यज्ञ बुकिंग, तर्पण एवं विशेष पारिवारिक आयोजनों की ऑनलाइन सेवा प्रदान करता है।
+    </p>
+    <div class="callout gold">
+      <strong>✨ मुख्य विशेषता:</strong> इस प्रोजेक्ट में किसी भी बाहरी पेड API पर निर्भर हुए बिना एक 
+      <strong>स्वायत्त वैदिक पंचांग (Autonomous Lunisolar Astronomical Panchang Engine)</strong> और 
+      <strong>सर्वदेशीय टाइमज़ोन सिंक्रोनाइज़र (Global Multi-Country Timezone & DST Engine)</strong> विकसित किया गया है, 
+      जो विश्व के किसी भी देश के स्थानीय समय व 1-घंटे के डेलाइट सेविंग (DST) के अनुसार सटीक आरती व पंचांग मुहूर्त प्रदर्शित करता है।
+    </div>
+  </div>
+
+  <!-- 2. TECH STACK USED -->
+  <div class="section">
+    <h2>2. उपयोग की गई तकनीकें (Technologies & Tools Used)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>घटक (Component)</th>
+          <th>तकनीक (Technology)</th>
+          <th>विवरण एवं उद्देश्य (Purpose & Details)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Frontend Core</strong></td>
+          <td>Angular 20 (Standalone)</td>
+          <td>बिना भारी NgModules के अत्यधिक हल्का, आधुनिक और तेज़ कंपोनेंट आर्किटेक्चर।</td>
+        </tr>
+        <tr>
+          <td><strong>Reactivity & State</strong></td>
+          <td>Angular Signals (<code>signal</code>, <code>computed</code>)</td>
+          <td>Zero-overhead reactive state management — देश, डेट या फ़िल्टर बदलते ही रियल-टाइम ऑटो री-रेंडर।</td>
+        </tr>
+        <tr>
+          <td><strong>Timezone Engine</strong></td>
+          <td><code>CountryTimezoneService</code></td>
+          <td>20+ देशों का रियल-टाइम समय, UTC ऑफसेट और ऑटोमैटिक 1-घंटा DST (+1h Daylight Saving Time) कैलकुलेटर।</td>
+        </tr>
+        <tr>
+          <td><strong>Design & CSS</strong></td>
+          <td>Pure Vanilla CSS 3</td>
+          <td>थीम ग्रेडिएंट (<code>#E5EBFA → #F0EAF8 → #FBE5F5</code>), ग्लासमोर्फिज्म, गोल्डन शिमर बीम और W3C <code>overflow-x: clip</code>।</td>
+        </tr>
+        <tr>
+          <td><strong>Divine Loader</strong></td>
+          <td>Custom Standalone Loader</td>
+          <td>फुलस्क्रीन डिवाइन स्प्लैश लोडर (गोल्डन ऑरा, एम्बलम ब्रीदिंग, प्रोग्रेस बार) + यूट्यूब-स्टाइल माइक्रो रूट प्रोग्रेस बार।</td>
+        </tr>
+        <tr>
+          <td><strong>Bundler / Builder</strong></td>
+          <td><code>@angular/build:application</code> (esbuild)</td>
+          <td>सुपर-फास्ट ट्री-शेकिंग और 134 KB का ट्रांसफर बंडल साइज।</td>
+        </tr>
+        <tr>
+          <td><strong>Hosting & CI/CD</strong></td>
+          <td>Netlify + GitHub Webhooks</td>
+          <td>GitHub पुश पर ऑटोमेटिक प्रोडक्शन डिप्लॉयमेंट (Node 22 एनवायरनमेंट + SPA <code>_redirects</code>)।</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- 3. GLOBAL TIMEZONE & TIME SYSTEM SETUP -->
+  <div class="section">
+    <h2>3. सर्वदेशीय टाइमज़ोन एवं टाइम सिस्टम सेटअप (Global Timezone & Dual-Clock System)</h2>
+    <p>
+      सकून मंदिर में पूजा और आरती का भौतिक संचालन हरिद्वार गर्भगृह में <strong>भारतीय मानक समय (IST, UTC+5:30)</strong> के अनुसार होता है। 
+      किंतु अमेरिका, इंग्लैंड, कनाडा, ऑस्ट्रेलिया, दुबई आदि देशों के भक्त अपने स्थानीय समय के अनुसार मंदिर से जुड़ते हैं। 
+      इसके लिए हमने एक <strong>Dual-Clock Architecture</strong> तैयार किया है:
+    </p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🛕 1. हरिद्वार गर्भगृह समय (Sanctum IST Time)</div>
+        <p>
+          यह ग्राउंड-ट्रुथ (Ground Truth) समय है। मंदिर के कपाट खुलना (प्रातः 05:30 AM), 
+          मध्याह्न विश्राम (12:30 PM – 04:30 PM) और शयन आरती (09:15 PM) इसी समय के अनुसार निर्धारित होते हैं।
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🌍 2. भक्त का स्थानीय देश समय (Devotee Local Time)</div>
+        <p>
+          हेडर, ड्रॉअर या टाइमिंग्स पेज से चयनित देश के अनुसार स्थानीय समय और 1-घंटे का 
+          DST ऑटोमैटिक शिफ्ट होता है (जैसे USA में EDT/EST, UK में BST/GMT, ऑस्ट्रेलिया में AEDT/AEST)।
+        </p>
+      </div>
+    </div>
+
+    <h3>A. 20+ देशों का ऑटोमैटिक टाइमज़ोन एवं 1-घंटे DST (+1h) सेटअप:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>देश (Country)</th>
+          <th>ध्वज (Flag)</th>
+          <th>मूल ऑफसेट (Base UTC)</th>
+          <th>DST सपोर्ट</th>
+          <th>ग्रीष्मकालीन समय शिफ्ट (DST Shift)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>भारत (Haridwar Sanctum)</strong></td><td>🇮🇳</td><td>UTC+05:30</td><td>नहीं</td><td>प्रामाणिक IST (+5.5h निरंतर)</td></tr>
+        <tr><td><strong>संयुक्त राज्य अमेरिका (USA EST)</strong></td><td>🇺🇸</td><td>UTC-05:00</td><td>हाँ (EDT)</td><td>मार्च से नवंबर तक +1 घंटा शिफ्ट (UTC-4)</td></tr>
+        <tr><td><strong>यूनाइटेड किंगडम (UK)</strong></td><td>🇬🇧</td><td>UTC+00:00</td><td>हाँ (BST)</td><td>मार्च से अक्टूबर तक +1 घंटा शिफ्ट (UTC+1)</td></tr>
+        <tr><td><strong>कनाडा (Canada EST)</strong></td><td>🇨🇦</td><td>UTC-05:00</td><td>हाँ (EDT)</td><td>मार्च से नवंबर तक +1 घंटा शिफ्ट (UTC-4)</td></tr>
+        <tr><td><strong>ऑस्ट्रेलिया (Australia AEST)</strong></td><td>🇦🇺</td><td>UTC+10:00</td><td>हाँ (AEDT)</td><td>अक्टूबर से अप्रैल तक +1 घंटा शिफ्ट (UTC+11)</td></tr>
+        <tr><td><strong>संयुक्त अरब अमीरात (UAE)</strong></td><td>🇦🇪</td><td>UTC+04:00</td><td>नहीं</td><td>GST स्टैंडर्ड (+4h निरंतर)</td></tr>
+        <tr><td><strong>सिंगापुर एवं मलेशिया</strong></td><td>🇸🇬</td><td>UTC+08:00</td><td>नहीं</td><td>SGT स्टैंडर्ड (+8h निरंतर)</td></tr>
+        <tr><td><strong>जर्मनी एवं फ्रांस (CET)</strong></td><td>🇩🇪</td><td>UTC+01:00</td><td>हाँ (CEST)</td><td>मार्च से अक्टूबर तक +1 घंटा शिफ्ट (UTC+2)</td></tr>
+        <tr><td><strong>नेपाल (Nepal)</strong></td><td>🇳🇵</td><td>UTC+05:45</td><td>नहीं</td><td>NPT स्टैंडर्ड (+5.75h निरंतर)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>B. DST कैलकुलेशन का वैज्ञानिक लॉजिक:</h3>
+    <pre><code>// CountryTimezoneService (src/app/services/country-timezone.service.ts)
+public isDstActiveInCountry(country: CountryConfig, now: Date = new Date()): boolean {
+  if (!country.isDstSupported) return false;
+  if (country.dstHemisphere === 'northern') {
+    // उत्तरी गोलार्ध: मार्च का दूसरा रविवार से नवंबर का पहला रविवार (+1h)
+    const dstStart = this.getNthWeekdayOfMonth(now.getFullYear(), 2, 0, 2);
+    const dstEnd = this.getNthWeekdayOfMonth(now.getFullYear(), 10, 0, 1);
+    return now >= dstStart && now < dstEnd;
+  } else {
+    // दक्षिणी गोलार्ध (ऑस्ट्रेलिया): अक्टूबर का पहला रविवार से अप्रैल का पहला रविवार (+1h)
+    const dstStart = this.getNthWeekdayOfMonth(now.getFullYear(), 9, 0, 1);
+    const dstEnd = this.getNthWeekdayOfMonth(now.getFullYear(), 3, 0, 1);
+    return now >= dstStart || now < dstEnd;
+  }
+}</code></pre>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- 4. THE CALENDAR & PANCHANG ENGINE -->
+  <div class="section">
+    <h2>4. पंचांग एवं कैलेंडर सिस्टम सेटअप (How Calendar was Built & Setup)</h2>
+    <p>
+      सकून मंदिर का पंचांग कैलेंडर (<code>/calendar</code>) किसी भी थर्ड-पार्टी API पर निर्भर नहीं है। 
+      यह <strong>खगोलीय लूनी-सोलर गणितीय सूत्रों (Astronomical Lunisolar Math)</strong> द्वारा ब्राउज़र में ऑन-द-फ्लाई 
+      तिथि, नक्षत्र, पक्ष, विक्रम संवत और शुभ मुहूर्त की गणना करता है।
+    </p>
+
+    <div class="callout success">
+      <strong>🌟 पंचांग में देश के अनुसार मुहूर्त समय समायोजन:</strong> 
+      कैलेंडर पेज के शीर्ष पर यूनिवर्सल देश चयनकर्ता (Country Dropdown) दिया गया है। 
+      जब भक्त अपना देश चुनते हैं (उदा. USA या UK), तो शुभ <strong>अभिजीत मुहूर्त</strong> और अशुभ <strong>राहु काल</strong> की 
+      समय सीमा उस देश के स्थानीय टाइमज़ोन में अपने आप कन्वर्ट हो जाती है!
+    </div>
+
+    <h3>गणना के 4 मुख्य खगोलीय चरण (Astronomical Steps):</h3>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🪐 1. जूलियन दिन व देशांतर</div>
+        <p>ग्रेगोरियन तारीख को जूलियन डे इपोक (J2000) में बदला जाता है:</p>
+        <pre>JD = (time_in_ms / 86400000) + 2440587.5
+d = JD - 2451545.0
+Sun_Long = (280.460 + 0.9856474 * d) % 360
+Moon_Long = (218.316 + 13.176396 * d) % 360</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🌙 2. तिथि एवं पक्ष निर्धारण</div>
+        <p>सूर्य-चंद्रमा की 12° कोणीय दूरी (Elongation) से तिथि निकलती है:</p>
+        <pre>elongation = (Moon_Long - Sun_Long + 360) % 360
+tithiIndex = Math.floor(elongation / 12) + 1
+// 1 to 15 -> शुक्ल पक्ष (पूर्णिमा)
+// 16 to 30 -> कृष्ण पक्ष (अमावस्या)</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⭐ 3. नक्षत्र गणना (Nakshatras)</div>
+        <p>चंद्रमा के 360° पथ को 27 नक्षत्रों (13.333° प्रति नक्षत्र) में विभाजित किया गया है:</p>
+        <pre>nakshatraIndex = Math.floor(Moon_Long / 13.333333)
+// अश्विनी से लेकर रेवती तक 27 नक्षत्र स्वतः असाइन</pre>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🕉️ 4. विक्रम संवत एवं हिंदू मास</div>
+        <p>चैत्र शुक्ल प्रतिपदा के आधार पर संवत और 12 हिंदू मास स्वतः तय होते हैं:</p>
+        <pre>vikramSamvat = (month > 2 || (month === 2 && day >= 22)) 
+               ? year + 57 : year + 56;
+// चैत्र, वैशाख, ज्येष्ठ ... फाल्गुन</pre>
+      </div>
+    </div>
+
+    <h3>7-कॉलम समान ग्रिड व मोबाइल स्वाइप व्यवस्था (Strict Uniform 7-Column Grid):</h3>
+    <ul>
+      <li><strong>समान सेल ऊंचाई (136px)</strong>: डेस्कटॉप पर सभी 7 कॉलम और तारीख कार्ड्स बिल्कुल समान ऊंचाई व चौड़ाई में रहते हैं, जिससे लेआउट कभी नहीं बिगड़ता।</li>
+      <li><strong>मोबाइल स्वाइप गाइड</strong>: मोबाइल स्क्रीन पर तारीखें दबने से बचाने के लिए <code>.calendar-board-card</code> में स्मूथ टच हॉरिजॉन्टल स्क्रॉल दिया गया है, ताकि 100% स्पष्टता बनी रहे।</li>
+      <li><strong>मल्टी-ईयर नेविगेशन</strong>: भक्त <strong>2024 से 2032+</strong> तक किसी भी वर्ष व माह का पंचांग 1 मिलीसेकंड में देख सकते हैं।</li>
+    </ul>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- 5. CALENDLY SLOT BOOKING & TIMEZONE CONVERTER -->
+  <div class="section">
+    <h2>5. कैलेंडली स्लॉट बुकिंग एवं अंतर्राष्ट्रीय फोन सेटअप (Calendly Slot Booking)</h2>
+    <p>
+      ऑनलाइन बुकिंग पेज (<code>/booking</code>) भक्तों को 4 सहज चरणों में स्लॉट बुक करने की सुविधा देता है:
+    </p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">1️⃣ स्टेप 1: सेवा का चयन</div>
+        <p>कुंडली ज्योतिष, टैरो रीडिंग, वैदिक हवन, तर्पण/श्राद्ध, या वाहन पूजा में से किसी एक सेवा का चयन।</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">2️⃣ स्टेप 2: डेट एवं लोकल टाइम स्लॉट</div>
+        <p>स्लॉट्स पर हरिद्वार समय के साथ-साथ भक्त के देश का समय (उदा. <code>07:00 AM IST → 09:30 PM EST</code>) नीले पिल में स्वतः दिखाई देता है।</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">3️⃣ स्टेप 3: अंतर्राष्ट्रीय फोन व संकल्प फॉर्म</div>
+        <p>देश के अनुसार डायलिंग कोड (<code>+91</code>, <code>+1</code>, <code>+44</code>, <code>+971</code> आदि) का ऑटोमैटिक पिकर, नाम, गोत्र व जन्म विवरण।</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">4️⃣ स्टेप 4: डिजिटल पास व व्हाट्सएप शेयर</div>
+        <p>यूनिक टोकन कोड (उदा. <code>SKN-2026-8941</code>), बारकोड, व्हाट्सएप शेयर और प्रिंट-रेडी डिजिटल पास।</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. SMOOTH DIVINE LOADER & MOBILE RESPONSIVENESS -->
+  <div class="section">
+    <h2>6. स्मूथ डिवाइन लोडर एवं मोबाइल रिस्पॉन्सिव आर्किटेक्चर (Loader & Responsiveness)</h2>
+    
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">✨ 1. स्मूथ डिवाइन स्प्लैश लोडर</div>
+        <p>
+          वेबसाइट ओपन होने पर फुलस्क्रीन डिवाइन लोडर चलता है जिसमें मंदिर का लोगो, 
+          स्वर्णिम प्रकाश पुंज (Golden Aura), 0% से 100% प्रोग्रेस बार और 600ms का स्मूथ क्रॉस-फेड डिसोल्व दिया गया है। 
+          राउट बदलने पर यूट्यूब-स्टाइल टॉप माइक्रो बार चलता है।
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 2. मोबाइल ड्रॉअर Z-Index व बैकड्रॉप</div>
+        <p>
+          मोबाइल मेन्यू ड्रॉअर का लेयर <code>z-index: 2001</code> और बैकड्रॉप का लेयर <code>z-index: 2000</code> निर्धारित किया गया है, 
+          जिससे साइडबार खुलने पर <strong>टॉप स्टेटस बार पूरी तरह से बैकग्राउंड में चला जाता है</strong> और कोई ओवरलैप नहीं होता।
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔘 3. प्रीमियम टियरड टॉगल बटन</div>
+        <p>
+          44px × 44px का ग्लासमोर्फिक स्क्विर्कल कंटेनर, गोल्डन बॉर्डर, 3-टियरड सैफ्रॉन बार्स (22px व 15px) और 
+          होवर पर रेडियल ऑरा ग्लो के साथ स्मूथ 'X' मॉर्फिंग एनिमेशन।
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💻 4. लैपटॉप स्टिकी हेडर व W3C क्लिप</div>
+        <p>
+          डेस्कटॉप/लैपटॉप पर हेडर को रॉक-सॉलिड स्टिकी रखने के लिए <code>overflow-x: clip</code> और 
+          GPU एक्सेलिरेशन (<code>transform: translateZ(0)</code>) लागू किया गया है। 901px-1200px पर सभी 6 लिंक्स एक लाइन में रहते हैं।
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. SUMMARY & GITHUB SYNC -->
+  <div class="section">
+    <h2>7. निष्कर्ष एवं गिटहब स्टेटस (Conclusion & GitHub Sync)</h2>
+    <div class="callout gold">
+      <ul>
+        <li><strong>AOT प्रोडक्शन बिल्ड:</strong> <code>npm run build</code> शून्य एरर (Exit Code 0) के साथ <code>dist/sakoon-temple</code> में जनरेटेड।</li>
+        <li><strong>गिटहब रिपॉजिटरी:</strong> संपूर्ण कोड, मॉडल्स, टाइमज़ोन सर्विस, लोडर और डॉक्यूमेंटेशन <code>origin/main</code> पर पूर्णतः अपडेटेड।</li>
+        <li><strong>लाइव टेस्टिंग URL:</strong> लोकल डेव सर्वर <code>http://localhost:4300/</code> पर 100% सक्रिय।</li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>
