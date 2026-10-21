@@ -2,37 +2,35 @@
 <section class="hero-slider-section">
   <div class="slider-wrapper">
     @for (slide of slides; track $index) {
-      @if ($index === currentSlideIndex()) {
-        <div class="slide-item active-slide">
-          <div class="slide-image-backdrop" [style.background-image]="'url(' + slide.image + ')'"></div>
-          <div class="slide-overlay-gradient"></div>
-          
-          <div class="container slide-content-container">
-            <div class="slide-content">
-              <div class="slide-badge-row">
-                <span class="slide-badge">{{ slide.highlightBadge }}</span>
-                <span class="slide-motto">{{ slide.sanskritMotto }}</span>
-              </div>
-              
-              <h1 class="slide-title">{{ slide.title }}</h1>
-              <p class="slide-subtitle">{{ slide.subtitle }}</p>
-              
-              <div class="slide-cta-row">
-                <a [routerLink]="slide.primaryCtaLink" class="btn-primary hero-btn">
-                  <span class="btn-diya-icon">
-                    <img src="assets/icons/diya-lamp.svg" alt="Puja" class="btn-svg-diya" />
-                  </span>
-                  <span>{{ slide.primaryCtaText }}</span>
-                </a>
-                <a [routerLink]="slide.secondaryCtaLink" class="btn-secondary hero-secondary-btn">
-                  <span>{{ slide.secondaryCtaText }}</span>
-                  <span class="cta-arrow">→</span>
-                </a>
-              </div>
+      <div class="slide-item" [class.active-slide]="$index === currentSlideIndex()">
+        <div class="slide-image-backdrop" [style.background-image]="'url(' + slide.image + ')'"></div>
+        <div class="slide-overlay-gradient"></div>
+        
+        <div class="container slide-content-container">
+          <div class="slide-content">
+            <div class="slide-badge-row">
+              <span class="slide-badge">{{ slide.highlightBadge }}</span>
+              <span class="slide-motto">{{ slide.sanskritMotto }}</span>
+            </div>
+            
+            <h1 class="slide-title">{{ slide.title }}</h1>
+            <p class="slide-subtitle">{{ slide.subtitle }}</p>
+            
+            <div class="slide-cta-row">
+              <a [routerLink]="slide.primaryCtaLink" class="btn-primary hero-btn">
+                <span class="btn-diya-icon">
+                  <img src="assets/icons/diya-lamp.svg" alt="Puja" class="btn-svg-diya" />
+                </span>
+                <span>{{ slide.primaryCtaText }}</span>
+              </a>
+              <a [routerLink]="slide.secondaryCtaLink" class="btn-secondary hero-secondary-btn">
+                <span>{{ slide.secondaryCtaText }}</span>
+                <span class="cta-arrow">→</span>
+              </a>
             </div>
           </div>
         </div>
-      }
+      </div>
     }
 
     <!-- Carousel Controls (Left & Right Buttons) -->
@@ -85,8 +83,13 @@
         <img src="assets/icons/clock-icon.svg" class="strip-icon-svg" alt="Live Time" />
       </div>
       <div>
-        <div class="strip-tag">Current Running Time</div>
-        <div class="strip-val mono-clock">{{ liveStatus().currentTimeStr }}</div>
+        <div class="strip-tag">Sanctum & Local Clock</div>
+        <div class="strip-val mono-clock">
+          <span>🛕 IST: {{ liveStatus().currentTimeStr }}</span>
+          @if (selectedCountry().code !== 'IN') {
+            <span class="home-local-clock-tag"> • {{ selectedCountry().flag }} {{ liveStatus().countryTimeStr }}</span>
+          }
+        </div>
       </div>
     </div>
 
@@ -98,7 +101,9 @@
       </div>
       <div>
         <div class="strip-tag">Next Temple Event</div>
-        <div class="strip-val">{{ liveStatus().nextEvent }} ({{ liveStatus().nextEventTime }})</div>
+        <div class="strip-val">
+          {{ liveStatus().nextEvent }} ({{ liveStatus().nextEventTime }} IST)
+        </div>
       </div>
     </div>
 
@@ -297,18 +302,18 @@
 
     <div class="timings-grid">
       <div class="glass-card timing-feature-card">
-        <div class="timing-badge morning">Morning Darshan</div>
+        <div class="timing-badge morning">🌅 Morning Darshan</div>
         <div class="timing-hours">05:30 AM — 12:30 PM</div>
         <ul class="timing-events">
-          <li><strong>05:30 AM:</strong> Suprabhatam & Gates Open</li>
-          <li><strong>06:00 AM:</strong> Mangala Aarti (Ghee Lamp)</li>
-          <li><strong>08:30 AM:</strong> Morning Archana & Abhishekam</li>
-          <li><strong>12:00 PM:</strong> Rajbhog Aarti & Bhog Offering</li>
+          <li><span>Suprabhatam & Gates Open</span> <strong>05:30 AM</strong></li>
+          <li><span>Mangala Aarti (Ghee Lamp)</span> <strong>06:00 AM</strong></li>
+          <li><span>Morning Archana & Puja</span> <strong>08:30 AM</strong></li>
+          <li><span>Rajbhog Aarti & Bhog</span> <strong>12:00 PM</strong></li>
         </ul>
       </div>
 
       <div class="glass-card timing-feature-card highlight-vishram">
-        <div class="timing-badge vishram">Temple Vishram (Closed)</div>
+        <div class="timing-badge vishram">☀️ Temple Vishram (Closed)</div>
         <div class="timing-hours">12:30 PM — 04:30 PM</div>
         <p class="vishram-note">
           The inner sanctum gates remain closed for deities' afternoon rest. Devotees may spend quiet meditative time in the outer gardens and fountain courtyard.
@@ -316,13 +321,13 @@
       </div>
 
       <div class="glass-card timing-feature-card">
-        <div class="timing-badge evening">Evening Darshan</div>
+        <div class="timing-badge evening">🌙 Evening Darshan</div>
         <div class="timing-hours">04:30 PM — 09:30 PM</div>
         <ul class="timing-events">
-          <li><strong>04:30 PM:</strong> Evening Gates Reopening</li>
-          <li><strong>07:00 PM:</strong> Maha Sandhya Aarti & Deep Daan</li>
-          <li><strong>08:00 PM:</strong> Bhajan & Keertan Circle</li>
-          <li><strong>09:15 PM:</strong> Shayan Aarti & Night Vishram</li>
+          <li><span>Evening Gates Reopening</span> <strong>04:30 PM</strong></li>
+          <li><span>Maha Sandhya Aarti</span> <strong>07:00 PM</strong></li>
+          <li><span>Bhajan & Keertan Circle</span> <strong>08:00 PM</strong></li>
+          <li><span>Shayan Aarti & Night Vishram</span> <strong>09:15 PM</strong></li>
         </ul>
       </div>
     </div>

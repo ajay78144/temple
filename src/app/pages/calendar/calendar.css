@@ -7,6 +7,109 @@
   background: linear-gradient(180deg, rgba(240, 234, 248, 0.7) 0%, transparent 100%);
 }
 
+/* Calendar Country & Timezone Banner */
+.calendar-country-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.6rem;
+  margin-bottom: 1.4rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 248, 238, 0.95) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 20px rgba(74, 48, 109, 0.06);
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.cal-country-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cal-globe-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.cal-banner-heading {
+  font-size: 1.05rem;
+  color: var(--divine-purple-deep);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cal-dst-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #FF6F00;
+  color: #FFF;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.cal-banner-desc {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+.cal-country-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cal-selector-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--divine-purple-deep);
+  white-space: nowrap;
+}
+
+.cal-country-dropdown {
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  background: #FFFFFF;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--divine-purple-deep);
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.cal-country-dropdown:focus {
+  border-color: var(--sacred-saffron);
+}
+
+.metric-local-tag {
+  display: block;
+  font-size: 0.78rem;
+  color: #1565C0;
+  background: rgba(21, 101, 192, 0.08);
+  border: 1px solid rgba(21, 101, 192, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.35rem;
+}
+
+.metric-local-tag.shubh-tag {
+  color: #2E7D32;
+  background: rgba(46, 125, 50, 0.08);
+  border-color: rgba(46, 125, 50, 0.25);
+}
+
+.metric-local-tag.rahu-tag {
+  color: #C62828;
+  background: rgba(198, 40, 40, 0.08);
+  border-color: rgba(198, 40, 40, 0.25);
+}
+
 .calendar-control-card {
   padding: 1.8rem 2rem;
   margin-bottom: 2rem;
@@ -876,9 +979,51 @@
     justify-content: center;
     width: 100%;
   }
+  .calendar-country-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .cal-country-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  .cal-country-selector-box {
+    justify-content: center;
+    width: 100%;
+  }
   .inspector-header {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
+  }
+  .inspector-date-display {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+  }
+  .panchang-inspector-card {
+    padding: 1.35rem 1rem;
+    border-radius: var(--radius-lg);
+  }
+  .inspector-large-num {
+    font-size: 2.8rem;
+  }
+  .inspector-actions {
+    width: 100%;
+    justify-content: center;
+  }
+  .inspector-book-btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .inspector-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
   .events-summary-grid {
     grid-template-columns: 1fr;
@@ -890,32 +1035,57 @@
     padding: 3.5rem 0 1.5rem;
   }
   .current-month-heading {
-    font-size: 1.8rem;
+    font-size: 1.65rem;
+  }
+  .month-title-wrap {
+    min-width: 0;
   }
   .calendar-control-card {
-    padding: 1.2rem 1rem;
+    padding: 1rem 0.85rem;
   }
   .filter-pill {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.78rem;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.76rem;
   }
   .custom-select {
     padding: 0.45rem 0.65rem;
     font-size: 0.82rem;
   }
+  .calendar-board-card {
+    padding: 0.6rem 0.4rem;
+  }
   .calendar-scroll-viewport {
-    min-width: 580px;
+    min-width: 540px;
   }
   .calendar-days-grid {
-    grid-auto-rows: 112px;
-    gap: 5px;
+    grid-auto-rows: 108px;
+    gap: 4px;
   }
   .calendar-day-cell {
-    height: 112px;
-    max-height: 112px;
-    padding: 0.35rem 0.4rem 0.3rem;
+    height: 108px;
+    max-height: 108px;
+    padding: 0.3rem 0.35rem 0.25rem;
   }
   .gregorian-date-num {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+  }
+  .tithi-desi-name {
+    font-size: 0.68rem;
+  }
+  .month-festivals-summary {
+    padding: 1.4rem 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .calendar-control-card {
+    padding: 0.85rem 0.65rem;
+  }
+  .cal-country-dropdown {
+    width: 100%;
+    font-size: 0.82rem;
+  }
+  .calendar-scroll-viewport {
+    min-width: 500px;
   }
 }

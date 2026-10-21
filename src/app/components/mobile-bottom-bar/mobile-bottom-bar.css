@@ -7,7 +7,8 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100vw;
+  right: 0;
+  width: 100%;
   height: var(--bottom-bar-height);
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px);

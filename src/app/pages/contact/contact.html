@@ -3,7 +3,7 @@
     <span class="section-subtitle">📍 Reach Us & Pilgrim Assistance</span>
     <h1 class="page-main-title">Contact Sakoon Temple</h1>
     <p class="page-main-desc">
-      We warmly welcome all devotees and pilgrims to Sakoon Temple. Whether seeking darshan timings, scheduling a personalized Vedic ceremony, or inquiring about Goshala and Anna Daan seva, our temple administration and priests are always at your service.
+      We warmly welcome all devotees and pilgrims to Sakoon Temple. Whether seeking darshan timings, scheduling a personalized Vedic ceremony from India or abroad, or inquiring about Goshala and Anna Daan seva, our priests and administration are always here for you.
     </p>
 
     <!-- QUICK CALL & ACTION BUTTONS -->
@@ -26,11 +26,11 @@
     
     <div class="contact-grid">
       
-      <!-- LEFT COLUMN: UNIFIED TEMPLE VISITING GUIDE (NO EXTRA CLUTTERED CARDS) -->
+      <!-- LEFT COLUMN: TEMPLE VISITING GUIDE & SANCTUM INFO -->
       <div class="contact-info-col">
         <h2 class="col-heading-lg">Temple Visiting & Sanctum Guide</h2>
         <p class="col-desc">
-          Situated by the sacred banks of Mother Ganga in holy Haridwar, enveloped in mountain breezes and tranquil spiritual vibrations.
+          Situated on the sacred banks of Mother Ganga in holy Haridwar, enveloped in Himalayan breezes and divine spiritual vibrations.
         </p>
 
         <div class="temple-unified-info-box glass-card">
@@ -56,6 +56,17 @@
               <div class="info-timing-tag">
                 <span>⏰ Open Daily: 05:30 AM — 12:30 PM & 04:30 PM — 09:30 PM IST</span>
               </div>
+            </div>
+          </div>
+
+          <!-- International Devotee Support -->
+          <div class="info-row-item international-highlight-box">
+            <div class="info-row-icon">🌍</div>
+            <div class="info-row-content">
+              <h4>Global & NRI Devotee Care</h4>
+              <p class="info-route-text">
+                Devotees from USA, UK, Canada, Australia, UAE & worldwide can attend Pujas via live private video stream with Gotra Sankalpa and Prasad courier.
+              </p>
             </div>
           </div>
 
@@ -86,21 +97,23 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: QUERY & PRAYER REQUEST FORM -->
-      <div class="contact-form-col" id="devotee-inquiry-box">
-        <div class="glass-card form-card">
+      <!-- RIGHT COLUMN: STREAMLINED SIMPLE & ATTRACTIVE CONTACT CARD -->
+      <div class="contact-form-col" id="simple-contact-card">
+        <div class="glass-card simple-form-card">
+          
           <div class="form-header-box">
             <div class="form-header-top">
-              <span class="form-badge">Devotee Assistance Desk</span>
-              <span class="instant-reply-tag">⚡ Fast Response within 24h</span>
+              <span class="form-badge">🕉️ Devotee Help Desk</span>
+              <span class="instant-reply-tag">⚡ Fast Response in 24h</span>
             </div>
-            <h3 class="form-title">Send a Devotee Query / Sankalpa</h3>
+            <h3 class="form-title">Send a Devotee Inquiry</h3>
             <p class="form-sub">
-              Have questions about rituals, Jyotish consultation, Havan dates, or personal Gotra sankalpa? Submit below and our temple priest desk will attend to you with reverence.
+              Have questions regarding Pujas, Kundali consultation, or temple visits? Fill this quick form and our priest desk will reach back with reverence.
             </p>
           </div>
 
           @if (isSubmitted()) {
+            <!-- GLOWING TRANQUIL CONFIRMATION SCREEN -->
             <div class="submit-success-card">
               <div class="success-header-emblem">
                 <div class="success-om-ring">
@@ -108,13 +121,13 @@
                 </div>
                 <div class="success-blessing-text">
                   <h4 class="success-title">॥ ॐ नमः शिवाय • जय श्री राम ॥</h4>
-                  <p class="success-subtitle">Your Sankalpa & Inquiry Has Been Received</p>
+                  <p class="success-subtitle">Your Message Has Been Received</p>
                 </div>
               </div>
 
               <div class="success-content-body">
                 <p class="success-msg">
-                  Blessed Greetings, respected devotee <strong>{{ name }}</strong>. Your inquiry has been registered with the Temple Administration and Priest Desk.
+                  Blessed Greetings, respected devotee <strong>{{ name }}</strong>. Your inquiry has been logged with our Priest Desk.
                 </p>
 
                 <!-- Ticket Badge with Copy Button -->
@@ -140,28 +153,14 @@
                   </div>
                   <div class="summary-row">
                     <span class="summary-lbl">Contact Number:</span>
-                    <strong class="summary-val">{{ phone }}</strong>
+                    <strong class="summary-val">{{ phoneCode }} {{ phone }}</strong>
                   </div>
                   <div class="summary-row">
-                    <span class="summary-lbl">Inquiry Topic:</span>
-                    <span class="summary-val">{{ queryType }}</span>
-                  </div>
-                  @if (gotra) {
-                    <div class="summary-row">
-                      <span class="summary-lbl">Devotee Gotra:</span>
-                      <span class="summary-val">{{ gotra }}</span>
-                    </div>
-                  }
-                  <div class="summary-row">
-                    <span class="summary-lbl">Preferred Slot:</span>
-                    <span class="summary-val">{{ preferredTime }} {{ preferredDate ? '(' + preferredDate + ')' : '' }}</span>
+                    <span class="summary-lbl">Topic:</span>
+                    <span class="summary-val">{{ queryTopic }}</span>
                   </div>
                   <div class="summary-row">
-                    <span class="summary-lbl">Contact Channel:</span>
-                    <span class="summary-val highlight-channel">Via {{ contactMethod }}</span>
-                  </div>
-                  <div class="summary-row">
-                    <span class="summary-lbl">Registered At:</span>
+                    <span class="summary-lbl">Received At:</span>
                     <span class="summary-val">{{ submittedAt() }}</span>
                   </div>
                 </div>
@@ -172,44 +171,61 @@
                     <span>💬</span> Connect on WhatsApp Now
                   </a>
                   <button type="button" class="btn-secondary new-query-btn" (click)="resetForm()">
-                    Send Another Inquiry
+                    Send Another Message
                   </button>
                 </div>
               </div>
             </div>
           } @else {
-            <form (ngSubmit)="onSubmit()" class="query-form" novalidate>
+            <!-- SIMPLE & ATTRACTIVE FORM -->
+            <form (ngSubmit)="onSubmit()" class="simple-query-form" novalidate>
               
-              <!-- Row 1: Full Name & WhatsApp/Phone -->
-              <div class="form-row-dual">
-                <div class="form-group" [class.has-error]="touched().name && !isNameValid()">
-                  <label class="field-label" for="contact-name">
-                    Full Name <span class="req-star">*</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">👤</span>
-                    <input 
-                      id="contact-name"
-                      type="text" 
-                      [(ngModel)]="name" 
-                      (blur)="markTouched('name')"
-                      name="name" 
-                      required 
-                      placeholder="e.g. Ramesh Chandra Sharma" 
-                      class="form-input with-prefix" 
-                    />
-                  </div>
-                  @if (touched().name && !isNameValid()) {
-                    <span class="field-error-msg">⚠️ Please enter devotee name (minimum 3 characters).</span>
-                  }
+              <!-- Devotee Full Name -->
+              <div class="form-group" [class.has-error]="touched().name && !isNameValid()">
+                <label class="field-label" for="contact-name">
+                  Devotee Full Name <span class="req-star">*</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">👤</span>
+                  <input 
+                    id="contact-name"
+                    type="text" 
+                    [(ngModel)]="name" 
+                    (blur)="markTouched('name')"
+                    name="name" 
+                    required 
+                    placeholder="Enter your full name" 
+                    class="form-input with-prefix" 
+                  />
                 </div>
+                @if (touched().name && !isNameValid()) {
+                  <span class="field-error-msg">⚠️ Please enter devotee name (minimum 2 characters).</span>
+                }
+              </div>
 
-                <div class="form-group" [class.has-error]="touched().phone && !isPhoneValid()">
-                  <label class="field-label" for="contact-phone">
-                    WhatsApp / Phone Number <span class="req-star">*</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-badge">+91</span>
+              <!-- Country & Phone Group -->
+              <div class="form-group" [class.has-error]="touched().phone && !isPhoneValid()">
+                <label class="field-label" for="contact-phone">
+                  Country & Mobile / WhatsApp Number <span class="req-star">*</span>
+                </label>
+                <div class="phone-country-input-group">
+                  <!-- Country Selector -->
+                  <div class="country-picker-select">
+                    <select 
+                      [ngModel]="selectedCountryCode" 
+                      (ngModelChange)="onCountrySelectChange($event)"
+                      name="selectedCountryCode"
+                      class="country-dial-select">
+                      @for (c of allCountries; track c.code) {
+                        <option [value]="c.code">
+                          {{ c.flag }} {{ c.phoneCode }} ({{ c.name }})
+                        </option>
+                      }
+                    </select>
+                  </div>
+
+                  <!-- Phone Number -->
+                  <div class="input-icon-wrap phone-input-box">
                     <input 
                       id="contact-phone"
                       type="tel" 
@@ -217,187 +233,97 @@
                       (blur)="markTouched('phone')"
                       name="phone" 
                       required 
-                      placeholder="98765 43210" 
-                      class="form-input with-country-prefix" 
+                      placeholder="e.g. 9876543210" 
+                      class="form-input phone-number-field" 
                     />
                   </div>
-                  @if (touched().phone && !isPhoneValid()) {
-                    <span class="field-error-msg">⚠️ Please enter a valid 10-digit mobile number.</span>
-                  }
                 </div>
+                @if (touched().phone && !isPhoneValid()) {
+                  <span class="field-error-msg">⚠️ Please enter a valid mobile number (min 7 digits).</span>
+                }
               </div>
 
-              <!-- Row 2: Email & City/State -->
-              <div class="form-row-dual">
-                <div class="form-group" [class.has-error]="touched().email && !isEmailValid()">
-                  <label class="field-label" for="contact-email">
-                    Email Address <span class="opt-tag">(Optional)</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">✉️</span>
-                    <input 
-                      id="contact-email"
-                      type="email" 
-                      [(ngModel)]="email" 
-                      (blur)="markTouched('email')"
-                      name="email" 
-                      placeholder="devotee@example.com" 
-                      class="form-input with-prefix" 
-                    />
-                  </div>
-                  @if (touched().email && !isEmailValid()) {
-                    <span class="field-error-msg">⚠️ Please enter a valid email address.</span>
-                  }
+              <!-- Email Address (Optional) -->
+              <div class="form-group" [class.has-error]="touched().email && !isEmailValid()">
+                <label class="field-label" for="contact-email">
+                  Email Address <span class="opt-tag">(Optional)</span>
+                </label>
+                <div class="input-icon-wrap">
+                  <span class="input-prefix-icon">✉️</span>
+                  <input 
+                    id="contact-email"
+                    type="email" 
+                    [(ngModel)]="email" 
+                    (blur)="markTouched('email')"
+                    name="email" 
+                    placeholder="devotee@example.com" 
+                    class="form-input with-prefix" 
+                  />
                 </div>
-
-                <div class="form-group">
-                  <label class="field-label" for="contact-city">
-                    City / State <span class="opt-tag">(Optional)</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">📍</span>
-                    <input 
-                      id="contact-city"
-                      type="text" 
-                      [(ngModel)]="city" 
-                      name="city" 
-                      placeholder="e.g. Haridwar, Delhi NCR, Lucknow" 
-                      class="form-input with-prefix" 
-                    />
-                  </div>
-                </div>
+                @if (touched().email && !isEmailValid()) {
+                  <span class="field-error-msg">⚠️ Please enter a valid email address.</span>
+                }
               </div>
 
-              <!-- Row 3: Gotra/Sankalpa Lineage & Inquiry Subject -->
-              <div class="form-row-dual">
-                <div class="form-group">
-                  <label class="field-label" for="contact-gotra">
-                    Devotee Gotra / Lineage <span class="opt-tag">(Optional)</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">🪷</span>
-                    <input 
-                      id="contact-gotra"
-                      type="text" 
-                      [(ngModel)]="gotra" 
-                      name="gotra" 
-                      placeholder="e.g. Kashyap, Vashistha, or Unknown" 
-                      class="form-input with-prefix" 
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="field-label" for="contact-query-type">
-                    Inquiry Subject / Topic <span class="req-star">*</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">🛕</span>
-                    <select id="contact-query-type" [(ngModel)]="queryType" name="queryType" class="form-input with-prefix form-select">
-                      <option value="General Darshan & Aarti Inquiry">General Darshan & Aarti Timings</option>
-                      <option value="Kundali Jyotish Paramarsh Query">Kundali & Jyotish Paramarsh Consultation</option>
-                      <option value="Tarot Prediction Guidance">Tarot Card Prediction Session</option>
-                      <option value="Vedic Havan & Yagya Booking">Vedic Havan, Maha Mrityunjaya & Yagya</option>
-                      <option value="Tarpan / Pitru Shradh Arrangements">Tarpan & Pitru Shradh Rites</option>
-                      <option value="Family / Vahan Vehicle Puja">Family Celebrations & New Car/Vehicle Puja</option>
-                      <option value="Goshala / Anna Daan Donation">Goshala Cow Seva & Anna Daan Trust</option>
-                      <option value="Special Priority Darshan for Elders">Special Assistance / Darshan for Elderly Devotees</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Row 4: Preferred Date & Time Slot -->
-              <div class="form-row-dual">
-                <div class="form-group">
-                  <label class="field-label" for="contact-date">
-                    Preferred Visit / Call Date <span class="opt-tag">(Optional)</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">📅</span>
-                    <input 
-                      id="contact-date"
-                      type="date" 
-                      [(ngModel)]="preferredDate" 
-                      [min]="minDate"
-                      name="preferredDate" 
-                      class="form-input with-prefix" 
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="field-label" for="contact-time">
-                    Preferred Time Slot <span class="req-star">*</span>
-                  </label>
-                  <div class="input-icon-wrap">
-                    <span class="input-prefix-icon">⏰</span>
-                    <select id="contact-time" [(ngModel)]="preferredTime" name="preferredTime" class="form-input with-prefix form-select">
-                      <option value="Morning (07:00 AM — 11:00 AM)">Morning (07:00 AM — 11:00 AM)</option>
-                      <option value="Midday / Bhog Aarti (11:00 AM — 01:30 PM)">Midday / Bhog Aarti (11:00 AM — 01:30 PM)</option>
-                      <option value="Evening Aarti & Darshan (05:00 PM — 08:30 PM)">Evening Aarti & Darshan (05:00 PM — 08:30 PM)</option>
-                      <option value="Any Convenient Time">Any Convenient Time</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Contact Preference Selector -->
+              <!-- Inquiry Subject / Topic Selection -->
               <div class="form-group">
-                <label class="field-label">Preferred Response Method</label>
-                <div class="contact-mode-pills">
-                  <label class="mode-pill-label" [class.mode-selected]="contactMethod === 'WhatsApp'">
-                    <input type="radio" [(ngModel)]="contactMethod" name="contactMethod" value="WhatsApp" class="sr-only" />
-                    <span class="mode-icon">💬</span>
-                    <span>WhatsApp</span>
-                    <span class="mode-badge-rec">Recommended</span>
-                  </label>
-
-                  <label class="mode-pill-label" [class.mode-selected]="contactMethod === 'Phone Call'">
-                    <input type="radio" [(ngModel)]="contactMethod" name="contactMethod" value="Phone Call" class="sr-only" />
-                    <span class="mode-icon">📞</span>
-                    <span>Phone Call</span>
-                  </label>
-
-                  <label class="mode-pill-label" [class.mode-selected]="contactMethod === 'Email'">
-                    <input type="radio" [(ngModel)]="contactMethod" name="contactMethod" value="Email" class="sr-only" />
-                    <span class="mode-icon">✉️</span>
-                    <span>Email</span>
-                  </label>
+                <label class="field-label">
+                  What can we help you with? <span class="req-star">*</span>
+                </label>
+                <div class="topic-pills-wrap">
+                  @for (topic of subjectOptions; track topic.label) {
+                    <button 
+                      type="button" 
+                      class="topic-pill-btn"
+                      [class.active]="queryTopic === topic.label"
+                      (click)="queryTopic = topic.label">
+                      <span class="topic-icon">{{ topic.icon }}</span>
+                      <span class="topic-label">{{ topic.label }}</span>
+                    </button>
+                  }
                 </div>
               </div>
 
-              <!-- Message / Prayer Request -->
+              <!-- Devotee Message / Prayer -->
               <div class="form-group">
                 <label class="field-label" for="contact-message">
-                  Your Message or Prayer Intention (Sankalpa)
+                  Your Message or Special Request <span class="opt-tag">(Optional)</span>
                 </label>
                 <textarea 
                   id="contact-message"
                   [(ngModel)]="message" 
                   name="message" 
-                  rows="4" 
-                  placeholder="Please describe your query, specific Gotra sankalpa details, family names, or any special assistance required..." 
-                  class="form-input textarea-input"
+                  rows="3" 
+                  placeholder="Share any preferred dates, Gotra details, or specific queries..."
+                  class="form-textarea"
                 ></textarea>
               </div>
 
-              <!-- Submit Button -->
-              <button 
-                type="submit" 
-                class="btn-primary form-submit-btn" 
-                [disabled]="isSubmitting()"
-              >
-                @if (isSubmitting()) {
-                  <span class="submit-spinner"></span>
-                  <span>Registering Sankalpa with Temple Desk...</span>
-                } @else {
-                  <span class="btn-diya-icon">
-                    <img src="assets/icons/diya-lamp.svg" alt="Diya" class="btn-svg-diya" />
-                  </span>
-                  <span>Submit Inquiry to Temple Desk</span>
-                }
-              </button>
+              <!-- Glowing Submit Button -->
+              <div class="form-submit-row">
+                <button 
+                  type="submit" 
+                  class="btn-primary submit-form-btn" 
+                  [disabled]="isSubmitting()">
+                  @if (isSubmitting()) {
+                    <span class="submitting-spinner">⏳</span>
+                    <span>Registering Blessed Inquiry...</span>
+                  } @else {
+                    <span class="submit-om-icon">🪔</span>
+                    <span>Send Devotee Inquiry • संदेश भेजें</span>
+                  }
+                </button>
+              </div>
+
+              <!-- Trust & Reassurance Badges -->
+              <div class="form-trust-badges">
+                <span>⚡ 24h Reverent Response</span>
+                <span>•</span>
+                <span>🔒 100% Confidential</span>
+                <span>•</span>
+                <span>🕉️ Free Priest Advice</span>
+              </div>
+
             </form>
           }
 
@@ -406,34 +332,34 @@
 
     </div>
 
+  </div>
+</section>
 
-
-    <!-- FREQUENTLY ASKED QUESTIONS (FAQ) -->
-    <div class="contact-faq-section">
-      <div class="text-center section-intro">
-        <span class="section-subtitle">❓ Pilgrim Guidance</span>
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-desc">
-          Essential information for devotees planning their divine visit to Sakoon Temple.
-        </p>
-      </div>
-
-      <div class="faq-accordion-list">
-        @for (faq of faqs(); track $index) {
-          <div class="glass-card faq-item-card" [class.faq-open]="faq.isOpen">
-            <button type="button" class="faq-question-btn" (click)="toggleFaq($index)">
-              <span class="faq-q-text">{{ faq.q }}</span>
-              <span class="faq-toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
-            </button>
-            @if (faq.isOpen) {
-              <div class="faq-answer-body">
-                <p>{{ faq.a }}</p>
-              </div>
-            }
-          </div>
-        }
-      </div>
+<!-- FREQUENTLY ASKED QUESTIONS SECTION -->
+<section class="section-padding contact-faqs-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-subtitle">❓ Common Devotee Inquiries</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-desc">
+        Quick answers to help you plan your visit or understand temple traditions and international bookings.
+      </p>
     </div>
 
+    <div class="faq-accordion-list">
+      @for (faq of faqs(); track faq.q; let idx = $index) {
+        <div class="glass-card faq-card" [class.faq-open]="faq.isOpen">
+          <button type="button" class="faq-question-btn" (click)="toggleFaq(idx)">
+            <span class="faq-q-text">{{ faq.q }}</span>
+            <span class="faq-chevron" [class.rotated]="faq.isOpen">▾</span>
+          </button>
+          @if (faq.isOpen) {
+            <div class="faq-answer-body">
+              <p>{{ faq.a }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
   </div>
 </section>

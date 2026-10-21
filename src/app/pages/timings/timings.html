@@ -3,23 +3,52 @@
     <span class="section-subtitle">⏰ Daily Temple Routine & Darshan</span>
     <h1 class="page-main-title">Temple Timings & Aarti Schedule</h1>
     <p class="page-main-desc">
-      Sakoon Temple is open daily for devotees. The temple observes morning darshan, afternoon sanctum vishram (gates rest), evening darshan, and five profound daily aartis.
+      Sakoon Temple is open daily for devotees. The temple observes morning darshan, afternoon sanctum vishram (rest period), evening darshan, and five profound daily Vedic aartis.
     </p>
 
-    <!-- LIVE STATUS BADGE BANNER -->
+    <!-- LIVE STATUS BADGE BANNER WITH DUAL CLOCK -->
     <div class="live-status-hero-card glass-card">
       <div class="status-indicator-col">
         <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
         <div>
           <div class="status-title-lg">{{ liveStatus().statusText }}</div>
-          <div class="current-running-time">
-            Live Clock: <strong>{{ liveStatus().currentTimeStr }}</strong> • {{ liveStatus().currentDateStr }}
+          
+          <div class="dual-clock-banner-row">
+            <div class="clock-unit-pill sanctum-pill">
+              <span class="clock-unit-icon">🛕</span>
+              <span>Sanctum IST: <strong>{{ liveStatus().currentTimeStr }}</strong></span>
+            </div>
+            
+            <div class="clock-unit-pill country-pill">
+              <span class="clock-unit-icon">{{ selectedCountry().flag }}</span>
+              <span>Your Time ({{ selectedCountry().name }}): <strong>{{ liveStatus().countryTimeStr }}</strong></span>
+              @if (liveStatus().isDstActive) {
+                <span class="hero-dst-tag">DST +1h</span>
+              }
+            </div>
           </div>
         </div>
       </div>
-      <div class="next-event-col">
-        <span class="event-tag">Next Occurrence:</span>
-        <strong class="event-val">{{ liveStatus().nextEvent }} at {{ liveStatus().nextEventTime }}</strong>
+
+      <!-- Country Switcher Pill -->
+      <div class="timings-country-switch-col">
+        <div class="switch-label-row">
+          <span>🌍 Adjust to your country:</span>
+        </div>
+        <select 
+          [ngModel]="selectedCountry().code" 
+          (ngModelChange)="setCountry($event)" 
+          class="timings-country-select">
+          @for (c of allCountries; track c.code) {
+            <option [value]="c.code">
+              {{ c.flag }} {{ c.name }} ({{ c.timeZoneName }})
+            </option>
+          }
+        </select>
+        <div class="next-event-tag-wrap">
+          <span class="event-tag">Next Event:</span>
+          <strong class="event-val">{{ liveStatus().nextEvent }} at {{ liveStatus().nextEventTime }} IST</strong>
+        </div>
       </div>
     </div>
   </div>
@@ -37,8 +66,23 @@
           [class.vishram-card]="slot.type === 'vishram'">
           
           <div class="slot-time-col">
-            <span class="slot-time-text">{{ slot.timeRange }}</span>
+            <span class="slot-time-text">{{ slot.timeRange }} IST</span>
             <span class="slot-type-badge">{{ slot.type | uppercase }}</span>
+
+            <!-- Converted Local Time for Devotee's Country -->
+            @if (getSlotLocalTime(slot.startHour, slot.startMin, slot.endHour, slot.endMin); as localSlot) {
+              @if (localSlot.isDifferentFromIst) {
+                <div class="slot-local-time-card">
+                  <div class="local-time-head">
+                    <span>{{ selectedCountry().flag }} In {{ selectedCountry().name }}:</span>
+                  </div>
+                  <strong class="local-converted-time">{{ localSlot.localTimeStr }}</strong>
+                  @if (localSlot.dayOffsetNote) {
+                    <span class="local-offset-badge">{{ localSlot.dayOffsetNote }}</span>
+                  }
+                </div>
+              }
+            }
           </div>
 
           <div class="slot-info-col">
@@ -67,7 +111,7 @@
         <div class="rule-icon">👔</div>
         <div>
           <h4>Sacred Dress Code</h4>
-          <p>Traditional Indian attire is encouraged. Devotees are requested to dress modestly. Footwear must be deposited at the free footwear counter.</p>
+          <p>Traditional attire is encouraged. Devotees are requested to dress modestly. Footwear must be deposited at the free footwear counter.</p>
         </div>
       </div>
 
@@ -80,10 +124,10 @@
       </div>
 
       <div class="glass-card rule-box">
-        <div class="rule-icon">🪔</div>
+        <div class="rule-icon">🌍</div>
         <div>
-          <h4>Prasad Distribution</h4>
-          <p>Satvik Charanamrit and blessed dry fruit prasad is distributed after every morning Rajbhog Aarti and evening Sandhya Aarti.</p>
+          <h4>Global Devotees & NRI Care</h4>
+          <p>Devotees outside India can attend morning & evening Aartis live online. All time slots automatically convert to your local timezone.</p>
         </div>
       </div>
     </div>

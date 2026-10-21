@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TempleDataService } from '../../services/temple.service';
+import { CountryTimezoneService } from '../../services/country-timezone.service';
 import { TempleService, PanchangDay } from '../../models/temple.models';
 
 interface HeroSlide {
@@ -25,8 +26,11 @@ interface HeroSlide {
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly templeService = inject(TempleDataService);
+  readonly countryTzService = inject(CountryTimezoneService);
+
   readonly liveStatus = this.templeService.liveStatus;
   readonly services = this.templeService.services;
+  readonly selectedCountry = this.countryTzService.selectedCountry;
 
   // Hero Slides
   readonly slides: HeroSlide[] = [
@@ -107,7 +111,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private startSlideTimer(): void {
     this.slideInterval = setInterval(() => {
       this.nextSlide(false);
-    }, 2000);
+    }, 5500);
   }
 
   private resetSlideTimer(): void {
@@ -135,8 +139,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private loadTodayPanchang(): void {
-    const today = new Date();
-    const days = this.templeService.generatePanchangMonth(today.getFullYear(), today.getMonth());
+    const cDate = this.countryTzService.getCountryCurrentDate();
+    const days = this.templeService.generatePanchangMonth(cDate.year, cDate.month);
     const matched = days.find(d => d.isToday);
     if (matched) {
       this.todayPanchang.set(matched);

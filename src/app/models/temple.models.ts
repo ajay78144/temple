@@ -36,10 +36,20 @@ export interface LiveTempleStatus {
   isOpen: boolean;
   statusText: string;
   statusBadge: string;
-  currentTimeStr: string;
-  currentDateStr: string;
+  currentTimeStr: string; // Haridwar Sanctum Time (IST)
+  currentDateStr: string; // Haridwar Date (IST)
   nextEvent: string;
-  nextEventTime: string;
+  nextEventTime: string; // Haridwar IST
+  // International devotee support
+  countryTimeStr?: string;
+  countryDateStr?: string;
+  countryFlag?: string;
+  countryName?: string;
+  countryCode?: string;
+  countryTzName?: string;
+  timeDiffText?: string;
+  isDstActive?: boolean;
+  nextEventLocalTime?: string;
 }
 
 export interface PanchangFestival {

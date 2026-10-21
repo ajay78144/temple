@@ -3,41 +3,114 @@
   <div class="top-status-bar">
     <div class="container top-bar-content">
       
-      <!-- Left: Live Clock & Dynamic Temple Status -->
+      <!-- Left: Haridwar Sanctum Live Clock & Open/Closed Status -->
       <div class="status-left">
-        <!-- Live Clock -->
-        <div class="live-clock-badge">
-          <span class="clock-icon">
-            <svg viewBox="0 0 24 24" class="svg-inline-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </span>
+        <!-- Live Sanctum Clock -->
+        <div class="live-clock-badge sanctum-clock" title="Sanctum Haridwar Time (IST)">
+          <span class="temple-mini-icon">🛕</span>
+          <span class="clock-label">Haridwar IST:</span>
           <span class="clock-text">{{ liveStatus().currentTimeStr }}</span>
         </div>
 
         <!-- Dynamic Open/Closed Status Badge -->
         <div [ngClass]="liveStatus().isOpen ? 'status-badge-open' : 'status-badge-closed'">
           <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
-          <span class="status-title">{{ liveStatus().statusText }}</span>
+          <span class="status-title desktop-status-text">{{ liveStatus().statusText }}</span>
+          <span class="status-title mobile-status-text">{{ liveStatus().isOpen ? 'Open' : 'Closed' }}</span>
         </div>
       </div>
 
-      <!-- Right: Next Upcoming Event & Quick Helpline -->
+      <!-- Right: Global Country & Timezone Selector + Next Event -->
       <div class="status-right">
-        <div class="next-event-pill">
-          <span class="next-label">Next:</span>
+        
+        <!-- Devotee Country & Timezone Selector -->
+        <div class="country-selector-wrap">
+          <button 
+            type="button" 
+            class="country-selector-btn" 
+            (click)="toggleCountryDropdown($event)"
+            [class.active]="isCountryDropdownOpen()"
+            title="Click to change your country and view local timings">
+            <span class="country-flag-icon">{{ selectedCountry().flag }}</span>
+            <span class="country-text-wrap">
+              @if (selectedCountry().code !== 'IN') {
+                <span class="country-name-lbl desktop-status-text">{{ selectedCountry().name }}:</span>
+                <strong class="country-local-time">{{ liveStatus().countryTimeStr }}</strong>
+              } @else {
+                <span class="country-name-lbl desktop-status-text">Country: <strong>India</strong></span>
+                <span class="country-name-lbl mobile-status-text"><strong>India</strong></span>
+              }
+            </span>
+            @if (liveStatus().isDstActive) {
+              <span class="dst-indicator-badge" title="Daylight Saving Time (+1h shift) active">DST +1h</span>
+            }
+            <span class="dropdown-chevron-icon" [class.rotated]="isCountryDropdownOpen()">▾</span>
+          </button>
+
+          <!-- Dropdown Menu -->
+          @if (isCountryDropdownOpen()) {
+            <div class="country-dropdown-menu glass-card" (click)="$event.stopPropagation()">
+              <div class="dropdown-header">
+                <span class="dropdown-header-title">🌍 Devotee Country & Timezone</span>
+                <span class="dropdown-header-subtitle">Timings & Calendar adjust to your country</span>
+              </div>
+
+              <!-- Search Bar -->
+              <div class="dropdown-search-box">
+                <input 
+                  type="text" 
+                  [ngModel]="countrySearchQuery()" 
+                  (ngModelChange)="countrySearchQuery.set($event)"
+                  placeholder="Search country, city, or time..." 
+                  class="dropdown-search-input"
+                />
+              </div>
+
+              <!-- Countries List -->
+              <div class="dropdown-countries-list">
+                @for (c of filteredCountries; track c.code) {
+                  <button 
+                    type="button" 
+                    class="country-item-btn" 
+                    [class.selected]="c.code === selectedCountry().code"
+                    (click)="selectCountry(c.code)">
+                    <span class="country-item-flag">{{ c.flag }}</span>
+                    <div class="country-item-info">
+                      <div class="country-item-title-row">
+                        <strong class="country-item-name">{{ c.name }}</strong>
+                        @if (c.hindiName) {
+                          <span class="country-item-hi">({{ c.hindiName }})</span>
+                        }
+                      </div>
+                      <div class="country-item-sub-row">
+                        <span class="country-item-tz">{{ c.timeZoneName }}</span>
+                        @if (c.isDstSupported) {
+                          <span class="item-dst-chip">DST 1h</span>
+                        }
+                      </div>
+                    </div>
+                    @if (c.code === selectedCountry().code) {
+                      <span class="selected-checkmark">✓</span>
+                    }
+                  </button>
+                }
+              </div>
+
+              <div class="dropdown-footer-note">
+                <span>⏱️ Automatic 1-hour DST & multi-country timezone alignment</span>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Next Upcoming Aarti Pill -->
+        <div class="next-event-pill" [title]="'In ' + selectedCountry().name + ': ' + liveStatus().nextEventLocalTime">
+          <span class="next-icon">🔔</span>
+          <span class="next-label">Next Aarti:</span>
           <span class="next-name">{{ liveStatus().nextEvent }}</span>
           <span class="next-time">({{ liveStatus().nextEventTime }})</span>
         </div>
-        <div class="helpline-pill">
-          <span class="phone-icon">
-            <svg viewBox="0 0 24 24" class="svg-inline-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-          </span>
-          <span>Temple Helpline: <strong>+91 98765 43210</strong></span>
-        </div>
+
       </div>
 
     </div>
@@ -47,14 +120,14 @@
   <header class="main-header">
     <div class="container header-container">
       
-      <!-- Logo & Brand Name -->
-      <a routerLink="/" class="brand-logo" (click)="closeMobileMenu()">
+      <!-- Logo & Brand Name (Clean, Compact, Professional) -->
+      <a routerLink="/" class="brand-logo" (click)="closeMobileMenu()" title="Sakoon Temple - श्री सुकून मन्दिर">
         <div class="logo-emblem">
-          <img src="assets/icons/temple-logo.svg" alt="Sakoon Temple Official Emblem" class="brand-logo-img" />
+          <img src="assets/icons/temple-logo.svg" alt="Sakoon Temple" class="brand-logo-img" />
         </div>
         <div class="brand-text">
           <span class="brand-name">Sakoon Temple</span>
-          <span class="brand-tagline">श्री सुकून मन्दिर • Vedic Peace & Spiritual Sanctum</span>
+          <span class="brand-tagline">श्री सुकून मन्दिर</span>
         </div>
       </a>
 
@@ -84,14 +157,22 @@
           <span class="btn-diya-icon">
             <img src="assets/icons/diya-lamp.svg" alt="Puja" class="btn-svg-diya" />
           </span>
-          <span>Book Puja / Slot</span>
+          <span>Book Puja</span>
         </a>
 
-        <!-- Mobile Hamburger Button -->
-        <button class="hamburger-btn" (click)="toggleMobileMenu()" aria-label="Toggle Navigation Menu">
-          <span class="bar" [class.bar-open-1]="isMobileMenuOpen()"></span>
-          <span class="bar" [class.bar-open-2]="isMobileMenuOpen()"></span>
-          <span class="bar" [class.bar-open-3]="isMobileMenuOpen()"></span>
+        <!-- Modern Attractive Mobile Navigation Toggle Button -->
+        <button 
+          class="hamburger-btn" 
+          [class.menu-active]="isMobileMenuOpen()" 
+          (click)="toggleMobileMenu()" 
+          aria-label="Toggle Navigation Menu"
+          title="Navigation Menu">
+          <span class="hamburger-glow"></span>
+          <div class="bars-container">
+            <span class="bar bar-top" [class.bar-open-1]="isMobileMenuOpen()"></span>
+            <span class="bar bar-mid" [class.bar-open-2]="isMobileMenuOpen()"></span>
+            <span class="bar bar-bot" [class.bar-open-3]="isMobileMenuOpen()"></span>
+          </div>
         </button>
       </div>
 
@@ -113,23 +194,56 @@
       </div>
       <div>
         <div class="drawer-title">Sakoon Temple</div>
-        <div class="drawer-sub">श्री सुकून मन्दिर • Peace & Devotion</div>
+        <div class="drawer-sub">श्री सुकून मन्दिर</div>
       </div>
     </div>
     <button class="drawer-close-btn" (click)="closeMobileMenu()" aria-label="Close menu">✕</button>
   </div>
 
-  <!-- Live Status in Mobile Drawer -->
+  <!-- Devotee Country & Live Status in Mobile Drawer -->
   <div class="drawer-status-card" [ngClass]="liveStatus().isOpen ? 'drawer-open-status' : 'drawer-closed-status'">
-    <div class="drawer-clock-row">
-      <span>Live Time: <strong>{{ liveStatus().currentTimeStr }}</strong></span>
-      <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
+    
+    <!-- Country Selector in Drawer -->
+    <div class="drawer-country-box">
+      <div class="drawer-country-head">
+        <span class="drawer-country-icon">🌍</span>
+        <span class="drawer-country-title">Devotee Country & Timezone</span>
+      </div>
+      <div class="drawer-select-wrap">
+        <select 
+          [ngModel]="selectedCountry().code" 
+          (ngModelChange)="selectCountry($event)" 
+          class="drawer-country-select">
+          @for (c of allCountries; track c.code) {
+            <option [value]="c.code">
+              {{ c.flag }} {{ c.name }} ({{ c.timeZoneName }})
+            </option>
+          }
+        </select>
+      </div>
     </div>
+
+    <!-- Dual Clock: Devotee Local Time & Sanctum Haridwar Time -->
+    <div class="drawer-dual-clock-grid">
+      <div class="drawer-clock-col">
+        <span class="drawer-clock-lbl">{{ selectedCountry().flag }} Your Country Time:</span>
+        <strong class="drawer-clock-time">{{ liveStatus().countryTimeStr }}</strong>
+        @if (liveStatus().isDstActive) {
+          <span class="drawer-dst-pill">☀️ DST +1h Active</span>
+        }
+      </div>
+      <div class="drawer-clock-col">
+        <span class="drawer-clock-lbl">🛕 Haridwar (IST):</span>
+        <strong class="drawer-clock-time">{{ liveStatus().currentTimeStr }}</strong>
+      </div>
+    </div>
+
     <div class="drawer-status-line">
+      <span [ngClass]="liveStatus().isOpen ? 'pulse-dot-green' : 'pulse-dot-orange'"></span>
       {{ liveStatus().statusText }}
     </div>
     <div class="drawer-next-event">
-      Next: <strong>{{ liveStatus().nextEvent }}</strong> ({{ liveStatus().nextEventTime }})
+      Next: <strong>{{ liveStatus().nextEvent }}</strong> ({{ liveStatus().nextEventTime }} IST)
     </div>
   </div>
 
@@ -169,7 +283,6 @@
       <span>🪔</span> Book Puja / Consultation
     </a>
     <div class="drawer-contact-info">
-      <div>📞 Helpline: +91 98765 43210</div>
       <div>📍 Sakoon Marg, Divine Nagar, Haridwar</div>
     </div>
   </div>

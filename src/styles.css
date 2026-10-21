@@ -80,22 +80,35 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-padding-top: 100px;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 body {
   font-family: var(--font-sans);
   color: var(--text-primary);
   background: var(--bg-gradient);
-  background-attachment: fixed;
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
   position: relative;
 }
 
-/* Subtle sacred aura overlay pattern */
+app-header {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+/* Subtle sacred aura overlay pattern - GPU Accelerated Layer */
 body::before {
   content: "";
   position: fixed;
@@ -108,6 +121,8 @@ body::before {
                     radial-gradient(circle at 85% 70%, rgba(229, 235, 250, 0.5) 0%, transparent 45%),
                     radial-gradient(circle at 50% 50%, rgba(240, 234, 248, 0.3) 0%, transparent 60%);
   z-index: 0;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 /* Headings */
@@ -117,6 +132,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: 0.02em;
   line-height: 1.25;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 a {
@@ -131,6 +148,7 @@ button {
   border: none;
   background: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 
 img {
@@ -149,6 +167,20 @@ img {
   padding-right: 1.5rem;
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 }
 
 /* Layout Utilities */
@@ -360,7 +392,7 @@ img {
   animation: floatGentle 5s ease-in-out infinite;
 }
 
-/* Mobile responsive padding for bottom bar */
+/* Mobile responsive padding for bottom bar and layout */
 @media (max-width: 900px) {
   body {
     padding-bottom: calc(var(--bottom-bar-height) + 12px);
@@ -371,6 +403,44 @@ img {
   }
   .section-title {
     font-size: 1.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-padding {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  .section-title {
+    font-size: 1.65rem;
+    line-height: 1.25;
+  }
+  .section-subtitle {
+    font-size: 0.76rem;
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.12em;
+  }
+  .section-desc {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .btn-primary, .btn-secondary, .btn-gold {
+    padding: 0.75rem 1.45rem;
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .section-padding {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .section-title {
+    font-size: 1.45rem;
+  }
+  .btn-primary, .btn-secondary, .btn-gold {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.88rem;
   }
 }
 

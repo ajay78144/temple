@@ -138,7 +138,10 @@
                   [class.slot-selected]="selectedSlot()?.id === slot.id"
                   [class.slot-disabled]="!slot.available"
                   (click)="selectSlot(slot)">
-                  <span class="slot-time">{{ slot.time }}</span>
+                  <span class="slot-time">{{ slot.time }} IST</span>
+                  @if (selectedCountry().code !== 'IN' && convertSlotTimeToDevotee(slot.time); as localSlot) {
+                    <span class="slot-local-pill">{{ selectedCountry().flag }} {{ localSlot }}</span>
+                  }
                   <div class="slot-footer-info">
                     <span class="slot-period-tag">{{ slot.period }}</span>
                     <span class="slot-seats">{{ slot.seatsLeft }} slots available</span>
@@ -229,25 +232,39 @@
                 }
               </div>
 
-              <!-- Phone / WhatsApp -->
+              <!-- Phone / WhatsApp with International Country Selector -->
               <div class="form-group" [class.has-error]="touched().phone && !isPhoneValid()">
                 <label for="devotee-phone" class="field-label">
                   WhatsApp / Phone Number <span class="req-star">*</span>
                 </label>
-                <div class="input-icon-wrap">
-                  <span class="input-prefix-badge">+91</span>
-                  <input 
-                    id="devotee-phone" 
-                    type="tel" 
-                    name="phone" 
-                    [(ngModel)]="phone" 
-                    (blur)="markTouched('phone')"
-                    placeholder="98765 43210" 
-                    required 
-                    class="form-input with-country-prefix" />
+                <div class="phone-country-input-group">
+                  <div class="country-picker-select">
+                    <select 
+                      [ngModel]="selectedCountryCode" 
+                      (ngModelChange)="onCountryChange($event)"
+                      name="selectedCountryCode"
+                      class="country-dial-select">
+                      @for (c of allCountries; track c.code) {
+                        <option [value]="c.code">
+                          {{ c.flag }} {{ c.phoneCode }} ({{ c.name }})
+                        </option>
+                      }
+                    </select>
+                  </div>
+                  <div class="input-icon-wrap phone-input-box">
+                    <input 
+                      id="devotee-phone" 
+                      type="tel" 
+                      name="phone" 
+                      [(ngModel)]="phone" 
+                      (blur)="markTouched('phone')"
+                      placeholder="e.g. 9876543210" 
+                      required 
+                      class="form-input phone-number-field" />
+                  </div>
                 </div>
                 @if (touched().phone && !isPhoneValid()) {
-                  <span class="field-error-msg">⚠️ Please enter a valid 10-digit mobile number.</span>
+                  <span class="field-error-msg">⚠️ Please enter a valid mobile number (min 7 digits).</span>
                 }
               </div>
 

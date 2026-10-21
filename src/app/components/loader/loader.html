@@ -1,0 +1,42 @@
+<!-- Micro Top Route Navigation Progress Bar -->
+<div class="route-progress-bar" [class.active]="isNavigating()">
+  <div class="route-progress-indicator"></div>
+</div>
+
+<!-- Initial Fullscreen Divine Splash Loader -->
+@if (isInitialLoading()) {
+  <div class="divine-splash-loader" [class.fade-out]="isFadingOut()">
+    <div class="splash-backdrop-glow"></div>
+    <div class="splash-ambient-aura"></div>
+
+    <div class="splash-content">
+      <!-- Sacred Temple Logo Emblem with Golden Radiant Aura -->
+      <div class="splash-logo-wrap">
+        <div class="splash-aura-glow"></div>
+        <div class="splash-emblem-ring">
+          <img src="assets/icons/temple-logo.svg" alt="Sakoon Temple Emblem" class="splash-emblem-img" />
+        </div>
+        <div class="splash-diya-badge">
+          <img src="assets/icons/diya-lamp.svg" alt="Sacred Diya" class="splash-diya-img" />
+        </div>
+      </div>
+
+      <!-- Sacred Brand Titles -->
+      <div class="splash-title-box">
+        <h1 class="splash-brand-title">Sakoon Temple</h1>
+        <div class="splash-brand-sanskrit">॥ श्री सुकून मन्दिर ॥</div>
+        <div class="splash-motto">शांति • समर्पण • साक्षात्कार</div>
+      </div>
+
+      <!-- Smooth Golden Progress Bar -->
+      <div class="splash-progress-track">
+        <div class="splash-progress-bar" [style.width.%]="initialProgress()"></div>
+      </div>
+
+      <div class="splash-meta-row">
+        <span class="splash-status-lbl">Loading Sanctum Experience...</span>
+        <span class="splash-percent-text">{{ initialProgress() }}%</span>
+      </div>
+    </div>
+  </div>
+}

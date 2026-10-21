@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TempleDataService } from '../../services/temple.service';
+import { CountryTimezoneService } from '../../services/country-timezone.service';
 import { TempleService, BookingSlot, BookingRequest } from '../../models/temple.models';
 
 @Component({
@@ -15,9 +16,16 @@ import { TempleService, BookingSlot, BookingRequest } from '../../models/temple.
 export class BookingComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly templeService = inject(TempleDataService);
+  readonly countryTzService = inject(CountryTimezoneService);
 
   readonly services = this.templeService.services;
+  readonly allCountries = this.countryTzService.allCountries;
+  readonly selectedCountry = this.countryTzService.selectedCountry;
   readonly currentStep = signal<1 | 2 | 3 | 4>(1);
+
+  // International Devotee country selection
+  selectedCountryCode = 'IN';
+  phoneCode = '+91';
 
   // Form State
   selectedService = signal<TempleService | null>(null);
@@ -77,6 +85,13 @@ export class BookingComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    // Default country from service
+    const userCountry = this.countryTzService.selectedCountry();
+    if (userCountry) {
+      this.selectedCountryCode = userCountry.code;
+      this.phoneCode = userCountry.phoneCode;
+    }
+
     // Default date to tomorrow
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -104,6 +119,42 @@ export class BookingComponent implements OnInit {
     });
 
     this.recentBookings.set(this.templeService.getRecentBookings());
+  }
+
+  onCountryChange(code: string): void {
+    this.selectedCountryCode = code;
+    const found = this.allCountries.find(c => c.code === code);
+    if (found) {
+      this.phoneCode = found.phoneCode;
+      this.countryTzService.setCountry(code);
+    }
+  }
+
+  convertSlotTimeToDevotee(slotTime: string): string {
+    const country = this.selectedCountry();
+    if (country.code === 'IN') return '';
+    const parts = slotTime.split('-').map(s => s.trim());
+    if (parts.length === 2) {
+      const t1 = this.parseTime(parts[0]);
+      const t2 = this.parseTime(parts[1]);
+      if (t1 && t2) {
+        const c1 = this.countryTzService.convertIstTimeToCountry(t1.hour, t1.min);
+        const c2 = this.countryTzService.convertIstTimeToCountry(t2.hour, t2.min);
+        return `${c1.localTimeStr} – ${c2.localTimeStr} (${country.timeZoneName})`;
+      }
+    }
+    return '';
+  }
+
+  private parseTime(str: string): { hour: number; min: number } | null {
+    const match = str.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!match) return null;
+    let hour = parseInt(match[1], 10);
+    const min = parseInt(match[2], 10);
+    const ampm = match[3].toUpperCase();
+    if (ampm === 'PM' && hour < 12) hour += 12;
+    if (ampm === 'AM' && hour === 12) hour = 0;
+    return { hour, min };
   }
 
   selectService(svc: TempleService): void {

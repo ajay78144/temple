@@ -1,0 +1,292 @@
+/* ==========================================================================
+   SAKOON TEMPLE - SMOOTH DIVINE LOADER STYLES
+   ========================================================================== */
+
+/* 1. Micro Route Navigation Bar (YouTube / GitHub style) */
+.route-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 10005;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  overflow: hidden;
+  background: rgba(230, 81, 0, 0.08);
+}
+
+.route-progress-bar.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.route-progress-indicator {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #E65100 0%, #FFB300 50%, #D4AF37 100%);
+  box-shadow: 0 0 10px rgba(230, 81, 0, 0.7), 0 0 5px rgba(212, 175, 55, 0.9);
+  animation: routeProgressGlide 1.2s infinite ease-in-out;
+  transform-origin: 0% 50%;
+}
+
+@keyframes routeProgressGlide {
+  0% { transform: translateX(-100%) scaleX(0.2); }
+  50% { transform: translateX(0%) scaleX(0.7); }
+  100% { transform: translateX(100%) scaleX(0.3); }
+}
+
+/* 2. Fullscreen Initial Splash Loader */
+.divine-splash-loader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 45%, #FFFFFF 0%, #F5EEFC 55%, #E8EEFA 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1), transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.65s;
+  overflow: hidden;
+}
+
+.divine-splash-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Subtle Sacred Background Glows */
+.splash-backdrop-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(253, 230, 138, 0.35) 0%, rgba(240, 234, 248, 0.2) 50%, transparent 70%);
+  pointer-events: none;
+  animation: pulseBackdrop 4s infinite ease-in-out alternate;
+}
+
+@keyframes pulseBackdrop {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+.splash-ambient-aura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 25%, rgba(230, 81, 0, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 75%, rgba(212, 175, 55, 0.12) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.splash-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  max-width: 440px;
+  width: 90%;
+}
+
+/* Sacred Logo Emblem Wrap */
+.splash-logo-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1.5rem;
+}
+
+.splash-aura-glow {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.45) 0%, rgba(230, 81, 0, 0.2) 50%, transparent 70%);
+  filter: blur(10px);
+  animation: emblemAuraPulse 2.8s infinite ease-in-out alternate;
+}
+
+@keyframes emblemAuraPulse {
+  0% { transform: scale(0.92); opacity: 0.5; }
+  100% { transform: scale(1.18); opacity: 1; }
+}
+
+.splash-emblem-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 100%);
+  border: 2px solid rgba(212, 175, 55, 0.65);
+  box-shadow: 0 8px 30px rgba(74, 48, 109, 0.15), 0 0 20px rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  animation: emblemFloat 3.5s infinite ease-in-out;
+}
+
+@keyframes emblemFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.splash-emblem-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.3));
+}
+
+.splash-diya-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFFFFF 100%);
+  border: 1.5px solid #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.3);
+  padding: 4px;
+  animation: diyaWobble 2s infinite ease-in-out;
+}
+
+@keyframes diyaWobble {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg) scale(1.08); }
+}
+
+.splash-diya-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Titles */
+.splash-title-box {
+  margin-bottom: 1.8rem;
+}
+
+.splash-brand-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--divine-purple-deep);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.3rem;
+  background: linear-gradient(135deg, #2E1A47 0%, #5E35B1 50%, #E65100 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.splash-brand-sanskrit {
+  font-family: var(--font-sanskrit);
+  font-size: 1.15rem;
+  color: var(--sacred-saffron);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.splash-motto {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Progress Track */
+.splash-progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(74, 48, 109, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.splash-progress-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #E65100 0%, #FFB300 50%, #D4AF37 100%);
+  box-shadow: 0 0 12px rgba(230, 81, 0, 0.5);
+  transition: width 0.15s ease-out;
+  position: relative;
+}
+
+.splash-progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: progressGlint 1.2s infinite linear;
+}
+
+@keyframes progressGlint {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.splash-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.splash-status-lbl {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.splash-percent-text {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--sacred-saffron);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 480px) {
+  .splash-content {
+    padding: 1.5rem;
+  }
+  .splash-logo-wrap {
+    width: 82px;
+    height: 82px;
+  }
+  .splash-brand-title {
+    font-size: 1.7rem;
+  }
+  .splash-brand-sanskrit {
+    font-size: 1rem;
+  }
+}

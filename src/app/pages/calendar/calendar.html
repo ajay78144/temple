@@ -11,6 +11,39 @@
 <section class="section-padding calendar-main-section">
   <div class="container">
     
+    <!-- GLOBAL COUNTRY & TIMEZONE SYNC BANNER -->
+    <div class="calendar-country-banner glass-card">
+      <div class="cal-country-info">
+        <span class="cal-globe-icon">🌍</span>
+        <div>
+          <div class="cal-banner-heading">
+            Calendar Synced to Devotee Country: <strong>{{ selectedCountry().flag }} {{ selectedCountry().name }}</strong>
+            @if (countryTzService.isDstActive()) {
+              <span class="cal-dst-pill" title="Daylight Saving Time (1-Hour Shift) active">☀️ 1h DST Active</span>
+            }
+          </div>
+          <div class="cal-banner-desc">
+            Local Time: <strong>{{ countryTzService.countryClock().timeStr }}</strong> ({{ selectedCountry().timeZoneName }}) • {{ countryTzService.timeDifferenceNotice().text }}
+          </div>
+        </div>
+      </div>
+
+      <div class="cal-country-selector-box">
+        <label class="cal-selector-label" for="cal-country-dropdown">Change Country / Zone:</label>
+        <select 
+          id="cal-country-dropdown"
+          [ngModel]="selectedCountry().code" 
+          (ngModelChange)="setCountry($event)" 
+          class="cal-country-dropdown">
+          @for (c of allCountries; track c.code) {
+            <option [value]="c.code">
+              {{ c.flag }} {{ c.name }} ({{ c.timeZoneName }})
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+
     <!-- CALENDAR CONTROLS & HEADER BAR -->
     <div class="glass-card calendar-control-card">
       <div class="calendar-top-row">
@@ -258,8 +291,10 @@
             <span class="metric-icon">☀️</span>
             <div class="metric-content">
               <span class="metric-label">Sun Timings</span>
-              <span class="metric-val">Sunrise: {{ sd.sunrise }}</span>
-              <span class="metric-sub">Sunset: {{ sd.sunset }}</span>
+              <span class="metric-val">Sunrise: {{ sd.sunrise }} • Sunset: {{ sd.sunset }} (IST)</span>
+              @if (selectedCountry().code !== 'IN' && convertSingleTimeToLocal(sd.sunrise); as localSun) {
+                <span class="metric-local-tag">In {{ selectedCountry().name }}: Sunrise ~ {{ localSun }}</span>
+              }
             </div>
           </div>
 
@@ -267,8 +302,11 @@
             <span class="metric-icon">🕉️</span>
             <div class="metric-content">
               <span class="metric-label">Shubh Abhijit Muhurat</span>
-              <span class="metric-val shubh-text">{{ sd.abhijitMuhurat }}</span>
-              <span class="metric-sub">Auspicious for all new beginnings</span>
+              <span class="metric-val shubh-text">{{ sd.abhijitMuhurat }} (IST)</span>
+              @if (selectedCountry().code !== 'IN' && convertRangeToLocal(sd.abhijitMuhurat); as localMuhurat) {
+                <span class="metric-local-tag shubh-tag">In {{ selectedCountry().name }}: <strong>{{ localMuhurat }}</strong></span>
+              }
+              <span class="metric-sub">Auspicious window for all new beginnings</span>
             </div>
           </div>
 
@@ -276,8 +314,11 @@
             <span class="metric-icon">⚠️</span>
             <div class="metric-content">
               <span class="metric-label">Rahu Kaal (Avoid)</span>
-              <span class="metric-val rahu-text">{{ sd.rahuKaal }}</span>
-              <span class="metric-sub">Inauspicious window</span>
+              <span class="metric-val rahu-text">{{ sd.rahuKaal }} (IST)</span>
+              @if (selectedCountry().code !== 'IN' && convertRangeToLocal(sd.rahuKaal); as localRahu) {
+                <span class="metric-local-tag rahu-tag">In {{ selectedCountry().name }}: <strong>{{ localRahu }}</strong></span>
+              }
+              <span class="metric-sub">Inauspicious window according to scriptures</span>
             </div>
           </div>
 

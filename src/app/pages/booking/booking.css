@@ -926,7 +926,7 @@
   color: var(--sacred-saffron);
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 900px) {
   .calendly-dual-wrapper {
     grid-template-columns: 1fr;
@@ -939,9 +939,27 @@
   .attendance-options-grid {
     grid-template-columns: 1fr;
   }
+  
+  /* Compact Mobile Step Tracker (1 - 2 - 3 - 4) */
   .steps-progress-bar {
+    display: flex;
+    justify-content: center;
+    padding: 0 0.5rem;
+    margin: 1.5rem auto 0;
+  }
+  .step-progress-item span:not(.step-num) {
     display: none;
   }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    font-size: 0.78rem;
+  }
+  .step-line {
+    margin: 0 0.4rem;
+    min-width: 24px;
+  }
+
   .pass-header-gold {
     flex-direction: column;
     text-align: center;
@@ -953,24 +971,163 @@
 }
 
 @media (max-width: 600px) {
+  .booking-hero-header {
+    padding: 3.5rem 0 1.8rem;
+  }
+  .box-title {
+    font-size: 1.65rem;
+  }
+  .box-sub {
+    font-size: 0.92rem;
+  }
+  .services-selection-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .calendly-dual-wrapper {
+    padding: 1.2rem 0.85rem;
+    border-radius: var(--radius-md);
+  }
+  .slots-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .period-filter-tabs {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .period-tab {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.74rem;
+  }
+  .slots-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.6rem;
+  }
+  .slot-btn {
+    padding: 0.75rem 0.5rem;
+  }
+  .slot-time {
+    font-size: 0.9rem;
+  }
   .form-wrapper-card {
-    padding: 1.5rem 1.2rem;
+    padding: 1.4rem 1rem;
+    border-radius: var(--radius-md);
   }
   .booking-selection-bar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
   }
   .confirm-submit-btn {
     width: 100%;
-    padding: 1rem;
+    padding: 0.9rem 1.2rem;
+  }
+
+  /* Digital Pass Mobile */
+  .pass-card {
+    border-radius: var(--radius-md);
+  }
+  .pass-header-gold {
+    padding: 1.3rem 1rem;
+  }
+  .pass-title-box h3 {
+    font-size: 1.3rem;
+  }
+  .pass-content-body {
+    padding: 1.3rem 1rem;
+  }
+  .pass-details-table {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .pass-footer-actions {
     flex-direction: column;
+    padding: 1.3rem 1rem;
   }
   .btn-whatsapp-chat,
   .print-btn,
   .new-booking-btn {
     width: 100%;
     text-align: center;
+    justify-content: center;
   }
 }
+
+@media (max-width: 400px) {
+  .country-picker-select {
+    flex: 0 0 110px;
+  }
+  .country-dial-select {
+    padding: 0.75rem 0.25rem;
+    font-size: 0.8rem;
+  }
+  .phone-number-field {
+    padding-left: 0.65rem !important;
+    font-size: 0.88rem;
+  }
+  .slots-grid {
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  }
+  .pass-sankalpa-box {
+    padding: 1rem;
+  }
+}
+
+/* ==========================================================================
+   INTERNATIONAL DEVOTEE COUNTRY SELECTOR & SLOT CONVERTER STYLES
+   ========================================================================== */
+.phone-country-input-group {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.country-picker-select {
+  flex: 0 0 145px;
+  max-width: 42%;
+}
+
+.country-dial-select {
+  width: 100%;
+  height: 100%;
+  padding: 0.8rem 0.55rem;
+  background: #FBF8FD;
+  border: 1.5px solid rgba(74, 48, 109, 0.22);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--divine-purple-deep);
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.country-dial-select:focus {
+  border-color: var(--sacred-saffron);
+}
+
+.phone-input-box {
+  flex: 1;
+}
+
+.phone-number-field {
+  padding-left: 1rem !important;
+}
+
+.slot-local-pill {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1565C0;
+  background: rgba(21, 101, 192, 0.08);
+  border: 1px solid rgba(21, 101, 192, 0.25);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  margin-top: 0.35rem;
+  white-space: normal;
+  line-height: 1.3;
+}
+

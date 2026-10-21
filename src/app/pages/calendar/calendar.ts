@@ -1,18 +1,24 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TempleDataService } from '../../services/temple.service';
+import { CountryTimezoneService } from '../../services/country-timezone.service';
 import { PanchangDay, PanchangFestival } from '../../models/temple.models';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './calendar.html',
   styleUrl: './calendar.css'
 })
 export class CalendarComponent implements OnInit {
   private readonly templeService = inject(TempleDataService);
+  readonly countryTzService = inject(CountryTimezoneService);
+
+  readonly allCountries = this.countryTzService.allCountries;
+  readonly selectedCountry = this.countryTzService.selectedCountry;
 
   // Calendar State
   readonly currentYear = signal(new Date().getFullYear());
@@ -49,6 +55,8 @@ export class CalendarComponent implements OnInit {
 
   // Computed days in current view
   readonly daysInView = computed(() => {
+    // Re-evaluates when currentYear, currentMonth, or country changes
+    this.selectedCountry();
     return this.templeService.generatePanchangMonth(this.currentYear(), this.currentMonth());
   });
 
@@ -82,7 +90,20 @@ export class CalendarComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    // Initialize to user's local country year and month
+    const countryDate = this.countryTzService.getCountryCurrentDate();
+    this.currentYear.set(countryDate.year);
+    this.currentMonth.set(countryDate.month);
+
     // Select today by default
+    const today = this.daysInView().find(d => d.isToday);
+    if (today) {
+      this.selectedDay.set(today);
+    }
+  }
+
+  setCountry(countryCode: string): void {
+    this.countryTzService.setCountry(countryCode);
     const today = this.daysInView().find(d => d.isToday);
     if (today) {
       this.selectedDay.set(today);
@@ -116,9 +137,9 @@ export class CalendarComponent implements OnInit {
   }
 
   jumpToToday(): void {
-    const now = new Date();
-    this.currentYear.set(now.getFullYear());
-    this.currentMonth.set(now.getMonth());
+    const countryDate = this.countryTzService.getCountryCurrentDate();
+    this.currentYear.set(countryDate.year);
+    this.currentMonth.set(countryDate.month);
     const today = this.daysInView().find(d => d.isToday);
     if (today) {
       this.selectedDay.set(today);
@@ -159,5 +180,46 @@ export class CalendarComponent implements OnInit {
       return d.isPurnima || d.isAmavasya;
     }
     return false;
+  }
+
+  // =========================================================================
+  // DUAL TIME CONVERTERS (SANCTUM HARIDWAR IST vs DEVOTEE COUNTRY LOCAL TIME)
+  // =========================================================================
+  convertRangeToLocal(rangeStr: string): string {
+    const country = this.selectedCountry();
+    if (country.code === 'IN') return '';
+    const parts = rangeStr.split('-').map(s => s.trim());
+    if (parts.length === 2) {
+      const t1 = this.parseTimeStr(parts[0]);
+      const t2 = this.parseTimeStr(parts[1]);
+      if (t1 && t2) {
+        const c1 = this.countryTzService.convertIstTimeToCountry(t1.hour, t1.min);
+        const c2 = this.countryTzService.convertIstTimeToCountry(t2.hour, t2.min);
+        return `${c1.localTimeStr} - ${c2.localTimeStr}`;
+      }
+    }
+    return '';
+  }
+
+  convertSingleTimeToLocal(timeStr: string): string {
+    const country = this.selectedCountry();
+    if (country.code === 'IN') return '';
+    const t = this.parseTimeStr(timeStr.trim());
+    if (t) {
+      const c = this.countryTzService.convertIstTimeToCountry(t.hour, t.min);
+      return `${c.localTimeStr}`;
+    }
+    return '';
+  }
+
+  private parseTimeStr(str: string): { hour: number; min: number } | null {
+    const match = str.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!match) return null;
+    let hour = parseInt(match[1], 10);
+    const min = parseInt(match[2], 10);
+    const ampm = match[3].toUpperCase();
+    if (ampm === 'PM' && hour < 12) hour += 12;
+    if (ampm === 'AM' && hour === 12) hour = 0;
+    return { hour, min };
   }
 }

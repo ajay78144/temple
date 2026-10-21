@@ -327,7 +327,7 @@
   color: #FDE68A;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 1024px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
@@ -336,6 +336,20 @@
 }
 
 @media (max-width: 680px) {
+  .shanti-mantra-bar {
+    padding: 1.4rem 0.8rem;
+  }
+  .mantra-sanskrit {
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+  .mantra-meaning {
+    font-size: 0.8rem;
+  }
+  .main-footer {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -346,8 +360,23 @@
   .bottom-row {
     flex-direction: column;
     text-align: center;
+    gap: 0.8rem;
+  }
+  .bottom-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
   }
   .mobile-footer-branding {
     display: flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .mantra-sanskrit {
+    font-size: 0.95rem;
+  }
+  .footer-title {
+    font-size: 1.2rem;
   }
 }

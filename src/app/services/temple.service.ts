@@ -1,10 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { TempleService, TempleTimingSlot, LiveTempleStatus, PanchangDay, PanchangFestival, BookingRequest, BookingSlot } from '../models/temple.models';
+import { CountryTimezoneService } from './country-timezone.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TempleDataService {
+  readonly countryTzService = inject(CountryTimezoneService);
+
   // Live Temple Status Signal
   readonly liveStatus = signal<LiveTempleStatus>({
     isOpen: true,
@@ -13,7 +16,16 @@ export class TempleDataService {
     currentTimeStr: '00:00:00 AM',
     currentDateStr: '',
     nextEvent: 'Rajbhog Aarti',
-    nextEventTime: '12:00 PM'
+    nextEventTime: '12:00 PM',
+    countryTimeStr: '',
+    countryDateStr: '',
+    countryFlag: '🇮🇳',
+    countryName: 'India',
+    countryCode: 'IN',
+    countryTzName: 'IST (UTC+5:30)',
+    timeDiffText: 'Sanctum Live Time (IST)',
+    isDstActive: false,
+    nextEventLocalTime: '12:00 PM IST'
   });
 
   // Services Catalog
@@ -252,15 +264,26 @@ export class TempleDataService {
 
   private updateLiveStatus(): void {
     const now = new Date();
-    const hours = now.getHours();
-    const mins = now.getMinutes();
-    const totalMins = hours * 60 + mins;
 
-    // Time string formatting
-    const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-    const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' });
+    // Get actual Haridwar IST time (Asia/Kolkata) with astronomical accuracy
+    const istParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kolkata',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    }).formatToParts(now);
 
-    // Open ranges:
+    const istHour = parseInt(istParts.find(p => p.type === 'hour')?.value || '0', 10);
+    const istMin = parseInt(istParts.find(p => p.type === 'minute')?.value || '0', 10);
+    const totalMins = istHour * 60 + istMin;
+
+    const istClock = this.countryTzService.templeIstClock();
+    const countryClock = this.countryTzService.countryClock();
+    const selectedCountry = this.countryTzService.selectedCountry();
+    const timeDiff = this.countryTzService.timeDifferenceNotice();
+    const isDstActive = this.countryTzService.isDstActive();
+
+    // Open ranges in Haridwar IST:
     // Morning: 05:30 (330m) to 12:30 (750m)
     // Evening: 16:30 (990m) to 21:30 (1290m)
     const isMorningOpen = totalMins >= 330 && totalMins < 750;
@@ -271,6 +294,8 @@ export class TempleDataService {
     let statusBadge = '';
     let nextEvent = '';
     let nextEventTime = '';
+    let nextEventIstHour = 6;
+    let nextEventIstMin = 0;
 
     if (isMorningOpen) {
       statusText = 'OPEN NOW • Morning Darshan & Blessings';
@@ -278,12 +303,18 @@ export class TempleDataService {
       if (totalMins < 390) {
         nextEvent = 'Mangala Aarti';
         nextEventTime = '06:00 AM';
+        nextEventIstHour = 6;
+        nextEventIstMin = 0;
       } else if (totalMins < 720) {
         nextEvent = 'Rajbhog Aarti & Bhog';
         nextEventTime = '12:00 PM';
+        nextEventIstHour = 12;
+        nextEventIstMin = 0;
       } else {
         nextEvent = 'Afternoon Vishram Closing';
         nextEventTime = '12:30 PM';
+        nextEventIstHour = 12;
+        nextEventIstMin = 30;
       }
     } else if (isEveningOpen) {
       statusText = 'OPEN NOW • Evening Darshan & Meditation';
@@ -291,35 +322,56 @@ export class TempleDataService {
       if (totalMins < 1140) {
         nextEvent = 'Maha Sandhya Aarti';
         nextEventTime = '07:00 PM';
+        nextEventIstHour = 19;
+        nextEventIstMin = 0;
       } else if (totalMins < 1275) {
         nextEvent = 'Shayan Aarti';
         nextEventTime = '09:15 PM';
+        nextEventIstHour = 21;
+        nextEventIstMin = 15;
       } else {
         nextEvent = 'Night Closing';
         nextEventTime = '09:30 PM';
+        nextEventIstHour = 21;
+        nextEventIstMin = 30;
       }
     } else {
       // Closed / Vishram
       statusBadge = 'Closed (Vishram)';
       if (totalMins >= 750 && totalMins < 990) {
-        statusText = 'CLOSED NOW • Afternoon Temple Vishram (Opens at 04:30 PM)';
+        statusText = 'CLOSED NOW • Afternoon Temple Vishram (Opens at 04:30 PM IST)';
         nextEvent = 'Evening Reopening';
         nextEventTime = '04:30 PM';
+        nextEventIstHour = 16;
+        nextEventIstMin = 30;
       } else {
-        statusText = 'CLOSED NOW • Night Vishram (Opens at 05:30 AM)';
+        statusText = 'CLOSED NOW • Night Vishram (Opens at 05:30 AM IST)';
         nextEvent = 'Morning Suprabhatam';
         nextEventTime = '05:30 AM';
+        nextEventIstHour = 5;
+        nextEventIstMin = 30;
       }
     }
+
+    const nextEventLocal = this.countryTzService.convertIstTimeToCountry(nextEventIstHour, nextEventIstMin);
 
     this.liveStatus.set({
       isOpen,
       statusText,
       statusBadge,
-      currentTimeStr: timeStr,
-      currentDateStr: dateStr,
+      currentTimeStr: istClock.timeStr,
+      currentDateStr: istClock.dateStr,
       nextEvent,
-      nextEventTime
+      nextEventTime,
+      countryTimeStr: countryClock.timeStr,
+      countryDateStr: countryClock.dateStr,
+      countryFlag: selectedCountry.flag,
+      countryName: selectedCountry.name,
+      countryCode: selectedCountry.code,
+      countryTzName: selectedCountry.timeZoneName,
+      timeDiffText: timeDiff.text,
+      isDstActive,
+      nextEventLocalTime: nextEventLocal.localTimeStr
     });
   }
 
@@ -329,7 +381,9 @@ export class TempleDataService {
   generatePanchangMonth(year: number, monthIndex: number): PanchangDay[] {
     const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
     const firstDayIndex = new Date(year, monthIndex, 1).getDay(); // 0 = Sun, 1 = Mon ...
-    const today = new Date();
+    
+    // Accurately determine "Today" matching the devotee's local country timezone
+    const today = this.countryTzService.getCountryCurrentDate().fullDate;
 
     const result: PanchangDay[] = [];
 
