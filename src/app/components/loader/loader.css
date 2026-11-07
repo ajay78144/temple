@@ -38,7 +38,7 @@
   100% { transform: translateX(100%) scaleX(0.3); }
 }
 
-/* 2. Fullscreen Initial Splash Loader */
+/* 2. Fullscreen Initial Splash Loader (Lightweight & Smooth) */
 .divine-splash-loader {
   position: fixed;
   inset: 0;
@@ -51,15 +51,30 @@
   background: radial-gradient(circle at 50% 45%, #FFFFFF 0%, #F5EEFC 55%, #E8EEFA 100%);
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1), transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.65s;
+  transition: opacity 0.35s cubic-bezier(0.2, 0, 0.2, 1), transform 0.35s cubic-bezier(0.2, 0, 0.2, 1), visibility 0.35s;
   overflow: hidden;
+  will-change: opacity, transform;
 }
 
 .divine-splash-loader.fade-out {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.04);
+  transform: scale(1.02);
   pointer-events: none;
+}
+
+.splash-pulse-line {
+  width: 160px;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #D4AF37, #FF9933, #D4AF37, transparent);
+  border-radius: 999px;
+  margin-top: 1.2rem;
+  animation: pulseLineWidth 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseLineWidth {
+  0%, 100% { opacity: 0.45; transform: scaleX(0.75); }
+  50% { opacity: 1; transform: scaleX(1.15); }
 }
 
 /* Subtle Sacred Background Glows */

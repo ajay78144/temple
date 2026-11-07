@@ -424,56 +424,67 @@ img {
    Angular adds 'revealed' class via IntersectionObserver in app.ts (or use CSS only below).
    ========================================================================== */
 
-/* Scroll-Reveal base state — hidden before entering viewport */
+/* Scroll-Reveal base state — snappy, lightweight, hardware-accelerated */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translate3d(0, 16px, 0);
   transition:
-    opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
+  backface-visibility: hidden;
 }
 
 [data-reveal="left"] {
-  transform: translateX(-32px);
+  transform: translate3d(-20px, 0, 0);
 }
 
 [data-reveal="right"] {
-  transform: translateX(32px);
+  transform: translate3d(20px, 0, 0);
 }
 
 [data-reveal="scale"] {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
 [data-reveal].revealed {
   opacity: 1;
-  transform: none;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Staggered children delay */
-[data-reveal-delay="1"] { transition-delay: 0.08s; }
-[data-reveal-delay="2"] { transition-delay: 0.16s; }
-[data-reveal-delay="3"] { transition-delay: 0.24s; }
-[data-reveal-delay="4"] { transition-delay: 0.32s; }
-[data-reveal-delay="5"] { transition-delay: 0.40s; }
-[data-reveal-delay="6"] { transition-delay: 0.48s; }
+[data-reveal-delay="1"] { transition-delay: 0.05s; }
+[data-reveal-delay="2"] { transition-delay: 0.10s; }
+[data-reveal-delay="3"] { transition-delay: 0.15s; }
+[data-reveal-delay="4"] { transition-delay: 0.20s; }
+[data-reveal-delay="5"] { transition-delay: 0.25s; }
+[data-reveal-delay="6"] { transition-delay: 0.30s; }
 
 /* ==========================================================================
-   GLOBAL PAGE TRANSITION — smooth fade-in on route change
+   GLOBAL PAGE TRANSITION — ultra-smooth, lightweight fade-in on route change
    ========================================================================== */
 router-outlet + * {
-  animation: pageFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: pageFadeIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
 }
 
 @keyframes pageFadeIn {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

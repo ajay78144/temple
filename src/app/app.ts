@@ -24,12 +24,20 @@ export class App implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.initRevealObserver();
-    // Re-run observer after each route navigation (new page elements)
+    // Instant Scroll-to-Top on every route change & re-run reveal observer
     this.routerSub = this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))
       .subscribe(() => {
-        // Small delay to allow new page DOM to render
-        setTimeout(() => this.observeRevealElements(), 120);
+        if (typeof window !== 'undefined') {
+          // Immediately reset scroll to top (overcoming any smooth-scroll delays on route transition)
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+
+        // Snap reveal elements in new page immediately and after render
+        this.observeRevealElements();
+        setTimeout(() => this.observeRevealElements(), 80);
       });
   }
 

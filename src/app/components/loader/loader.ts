@@ -12,15 +12,14 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 export class LoaderComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
 
-  // Initial Fullscreen Divine Splash Loader
+  // Initial Fullscreen Divine Splash Loader (Lightweight & Smooth)
   readonly isInitialLoading = signal(true);
-  readonly initialProgress = signal(0);
   readonly isFadingOut = signal(false);
 
   // Top Page Route Transition Bar
   readonly isNavigating = signal(false);
 
-  private intervalId?: any;
+  private timeoutIds: any[] = [];
 
   ngOnInit(): void {
     this.runInitialSplash();
@@ -28,27 +27,15 @@ export class LoaderComponent implements OnInit, OnDestroy {
   }
 
   private runInitialSplash(): void {
-    let progress = 10;
-    this.initialProgress.set(progress);
-
-    this.intervalId = setInterval(() => {
-      progress += Math.floor(Math.random() * 15) + 10;
-      if (progress >= 100) {
-        progress = 100;
-        this.initialProgress.set(100);
-        clearInterval(this.intervalId);
-
-        // Smooth fade out delay
-        setTimeout(() => {
-          this.isFadingOut.set(true);
-          setTimeout(() => {
-            this.isInitialLoading.set(false);
-          }, 650);
-        }, 300);
-      } else {
-        this.initialProgress.set(progress);
-      }
-    }, 85);
+    // Lightweight smooth entrance: displays briefly (280ms) then smoothly fades out without blocking
+    const t1 = setTimeout(() => {
+      this.isFadingOut.set(true);
+      const t2 = setTimeout(() => {
+        this.isInitialLoading.set(false);
+      }, 350);
+      this.timeoutIds.push(t2);
+    }, 280);
+    this.timeoutIds.push(t1);
   }
 
   private listenToRouteChanges(): void {
@@ -60,16 +47,15 @@ export class LoaderComponent implements OnInit, OnDestroy {
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        setTimeout(() => {
+        const t = setTimeout(() => {
           this.isNavigating.set(false);
-        }, 300);
+        }, 220);
+        this.timeoutIds.push(t);
       }
     });
   }
 
   ngOnDestroy(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    this.timeoutIds.forEach(id => clearTimeout(id));
   }
 }

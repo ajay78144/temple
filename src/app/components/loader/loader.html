@@ -3,10 +3,9 @@
   <div class="route-progress-indicator"></div>
 </div>
 
-<!-- Initial Fullscreen Divine Splash Loader -->
+<!-- Initial Lightweight Divine Splash Loader -->
 @if (isInitialLoading()) {
   <div class="divine-splash-loader" [class.fade-out]="isFadingOut()">
-    <div class="splash-backdrop-glow"></div>
     <div class="splash-ambient-aura"></div>
 
     <div class="splash-content">
@@ -28,15 +27,8 @@
         <div class="splash-motto">शांति • समर्पण • साक्षात्कार</div>
       </div>
 
-      <!-- Smooth Golden Progress Bar -->
-      <div class="splash-progress-track">
-        <div class="splash-progress-bar" [style.width.%]="initialProgress()"></div>
-      </div>
-
-      <div class="splash-meta-row">
-        <span class="splash-status-lbl">Loading Sanctum Experience...</span>
-        <span class="splash-percent-text">{{ initialProgress() }}%</span>
-      </div>
+      <!-- Sleek Glowing Gold Pulse Line -->
+      <div class="splash-pulse-line"></div>
     </div>
   </div>
 }

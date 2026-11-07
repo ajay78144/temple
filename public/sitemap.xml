@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page -->
+  <url>
+    <loc>https://sakoontemple.com/</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Live Darshan -->
+  <url>
+    <loc>https://sakoontemple.com/live</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Services & Rituals -->
+  <url>
+    <loc>https://sakoontemple.com/services</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Hindu Calendar & Panchang -->
+  <url>
+    <loc>https://sakoontemple.com/calendar</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Temple Timings & Aarti Schedule -->
+  <url>
+    <loc>https://sakoontemple.com/timings</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Online Slot & Puja Booking -->
+  <url>
+    <loc>https://sakoontemple.com/booking</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About Temple & Heritage -->
+  <url>
+    <loc>https://sakoontemple.com/about</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact & Location -->
+  <url>
+    <loc>https://sakoontemple.com/contact</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
