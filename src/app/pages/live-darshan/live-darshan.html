@@ -1,0 +1,422 @@
+<!-- =========================================================================
+     SAKOON TEMPLE — LIVE DARSHAN PAGE
+     ========================================================================= -->
+
+<!-- ── HERO HEADER ─────────────────────────────────────────────────────────── -->
+<section class="darshan-hero">
+  <div class="hero-aura-layer"></div>
+  <div class="hero-mandala-bg"></div>
+  <div class="container hero-content">
+    <div class="hero-emblem-row">
+      <span class="diya-anim">🪔</span>
+      <span class="om-symbol">ॐ</span>
+      <span class="diya-anim diya-right">🪔</span>
+    </div>
+    <div class="section-subtitle hero-subtitle-pill">
+      <span>🛕</span> Sakoon Temple Live
+    </div>
+    <h1 class="hero-title">Live Darshan</h1>
+    <p class="hero-desc">
+      Experience Divine Blessings, Daily Havan, Aarti &amp; Spiritual Celebrations Live.
+    </p>
+    <!-- Live / Offline status pill -->
+    <div class="hero-status-row">
+      @if (isLoading()) {
+        <span class="status-pill status-loading">
+          <span class="loading-dot"></span>
+          Checking Live Status…
+        </span>
+      } @else if (isLive()) {
+        <span class="status-pill status-live">
+          <span class="live-pulse-dot"></span>
+          LIVE NOW
+        </span>
+      } @else if (state().status === 'offline') {
+        <span class="status-pill status-offline">
+          <span class="offline-dot"></span>
+          Currently Offline
+        </span>
+      } @else {
+        <span class="status-pill status-error">
+          <span class="offline-dot"></span>
+          Status Unavailable
+        </span>
+      }
+    </div>
+  </div>
+  <div class="hero-wave-divider">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 48 C360 0 1080 0 1440 48 L1440 48 L0 48Z" fill="var(--page-bg)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── MAIN PLAYER SECTION ──────────────────────────────────────────────────── -->
+<section class="player-section section-padding">
+  <div class="container player-container">
+
+    <!-- ── LIVE STATE ──────────────────────────────────────────────────────── -->
+    @if (isLive()) {
+      <div class="live-wrapper">
+        <!-- Live badge + title -->
+        <div class="live-header-row">
+          <div class="live-badge-group">
+            <span class="live-badge-pill">
+              <span class="live-pulse-dot"></span>
+              LIVE
+            </span>
+            <span class="live-label-text">Live Now – Join Our Divine Darshan</span>
+          </div>
+          @if (state().title) {
+            <p class="broadcast-title">{{ state().title }}</p>
+          }
+        </div>
+
+        <!-- YouTube iFrame Player -->
+        <div class="player-frame-wrap">
+          <div class="player-glow-ring"></div>
+          @if (safeEmbedUrl()) {
+            <iframe
+              class="yt-iframe"
+              [src]="safeEmbedUrl()"
+              title="Sakoon Temple Live Darshan"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          }
+          <!-- Loading skeleton shown while iframe loads -->
+          <div class="iframe-skeleton" aria-hidden="true">
+            <div class="skeleton-shimmer"></div>
+            <div class="skeleton-icon">🛕</div>
+            <div class="skeleton-text">Loading Live Darshan…</div>
+          </div>
+        </div>
+
+        <!-- Watch on YouTube link -->
+        <div class="live-actions-row">
+          <a
+            [href]="youtubeChannelUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-yt-watch">
+            <svg viewBox="0 0 24 24" class="yt-icon" fill="currentColor">
+              <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+            </svg>
+            Watch on YouTube
+          </a>
+          <button class="btn-refresh" (click)="onRefresh()" title="Refresh live status">
+            <svg viewBox="0 0 24 24" class="refresh-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-4.99"/>
+            </svg>
+            Refresh
+          </button>
+        </div>
+
+        <!-- Audio guide tip -->
+        <div class="audio-tip-banner">
+          <span class="tip-icon">🔊</span>
+          <span class="tip-text">
+            <strong>Audio Notice:</strong> Web browsers start autoplay videos muted. Please tap the speaker / volume icon on the player to hear the divine Aarti bhajans &amp; mantras!
+          </span>
+        </div>
+
+        <!-- ── DUMMY LIVE STREAM SWITCHER / PREVIEWER ────────────────────── -->
+        <div class="stream-switcher-card">
+          <div class="switcher-top">
+            <div class="switcher-title">
+              <span class="switcher-om">🪔</span>
+              <span class="switcher-heading">Live Darshan Channels &amp; Test Streams</span>
+            </div>
+            <span class="switcher-badge">
+              <span class="live-pulse-dot-sm"></span>
+              Live Running Preview
+            </span>
+          </div>
+          <p class="switcher-subtitle">
+            Click any sacred live stream below to watch, or paste any YouTube live link or video ID to preview how it appears to devotees.
+          </p>
+
+          <div class="presets-grid">
+            @for (preset of presets; track preset.id) {
+              <button
+                type="button"
+                class="preset-btn"
+                [class.active]="selectedPresetId() === preset.id"
+                (click)="selectPreset(preset)">
+                <span class="preset-icon">{{ preset.icon }}</span>
+                <span class="preset-details">
+                  <span class="preset-hindi">{{ preset.hindiName }}</span>
+                  <span class="preset-sub">{{ preset.name }}</span>
+                </span>
+                @if (selectedPresetId() === preset.id) {
+                  <span class="preset-playing-chip">
+                    <span class="pulse-ring"></span>
+                    Playing Now
+                  </span>
+                }
+              </button>
+            }
+          </div>
+
+          <!-- Custom YouTube URL / ID Input -->
+          <div class="custom-stream-box">
+            <label class="custom-input-label" for="custom-stream-input-field">
+              <span class="label-icon">🔗</span>
+              <span><strong>Custom YouTube Link / Video ID:</strong> (Paste any link e.g. <code>https://www.youtube.com/watch?v=...</code> or ID)</span>
+            </label>
+            <div class="custom-input-group">
+              <input
+                id="custom-stream-input-field"
+                type="text"
+                class="custom-stream-input"
+                placeholder="Paste YouTube Link or Video ID here..."
+                [ngModel]="customUrlInput()"
+                (ngModelChange)="customUrlInput.set($event)"
+                (keyup.enter)="applyCustomStream()" />
+              <button
+                type="button"
+                class="btn-apply-stream"
+                (click)="applyCustomStream()">
+                ▶ Run Video
+              </button>
+            </div>
+            @if (inputError()) {
+              <p class="custom-input-error">⚠️ {{ inputError() }}</p>
+            }
+          </div>
+        </div>
+
+        @if (state().lastChecked) {
+          <p class="last-checked-note">
+            Last checked: {{ formatLastChecked(state().lastChecked) }} IST
+          </p>
+        }
+      </div>
+    }
+
+    <!-- ── LOADING STATE ───────────────────────────────────────────────────── -->
+    @if (isLoading()) {
+      <div class="loading-wrapper">
+        <div class="loading-player-skeleton">
+          <div class="skeleton-shimmer"></div>
+          <div class="loading-center-content">
+            <div class="loading-diya-spin">🪔</div>
+            <p class="loading-text">Connecting to Live Darshan…</p>
+            <div class="loading-dots-row">
+              <span class="ldot"></span><span class="ldot"></span><span class="ldot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ── OFFLINE STATE ───────────────────────────────────────────────────── -->
+    @if (state().status === 'offline') {
+      <div class="offline-wrapper">
+        <div class="offline-visual">
+          <div class="offline-temple-icon">🛕</div>
+          <div class="offline-diya-row">
+            <span class="diya-sm diya-sm-1">🪔</span>
+            <span class="diya-sm diya-sm-2">🪔</span>
+            <span class="diya-sm diya-sm-3">🪔</span>
+          </div>
+        </div>
+        <h2 class="offline-title">We Are Currently Offline</h2>
+        <p class="offline-subtitle">Our Next Divine Live Darshan Is Coming Soon</p>
+        <p class="offline-desc">
+          Sakoon Temple conducts daily Havan, Morning &amp; Evening Aarti, and special spiritual programmes.
+          Please visit our YouTube channel to subscribe and get notified when we go live.
+        </p>
+        <div class="offline-actions">
+          <a [href]="youtubeChannelUrl" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            <svg viewBox="0 0 24 24" class="yt-icon-sm" fill="currentColor">
+              <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+            </svg>
+            Visit YouTube Channel
+          </a>
+          <button class="btn-secondary" (click)="onRefresh()">
+            Check Again
+          </button>
+        </div>
+        @if (state().lastChecked) {
+          <p class="last-checked-note">Last checked: {{ formatLastChecked(state().lastChecked) }} IST</p>
+        }
+      </div>
+    }
+
+    <!-- ── ERROR STATE ─────────────────────────────────────────────────────── -->
+    @if (state().status === 'error') {
+      <div class="error-wrapper">
+        <div class="error-icon">⚠️</div>
+        @if (state().errorType === 'quota_exceeded') {
+          <h2 class="error-title">Live Status Temporarily Unavailable</h2>
+          <p class="error-desc">
+            Our live detection service has reached its daily limit. This resets automatically.
+            Please visit our YouTube channel directly to check if we are live.
+          </p>
+        } @else {
+          <h2 class="error-title">Could Not Reach Live Service</h2>
+          <p class="error-desc">
+            We couldn't connect to our live status service right now.
+            This is likely a temporary issue. Please try again or visit our YouTube channel.
+          </p>
+        }
+        <div class="error-actions">
+          <a [href]="youtubeChannelUrl" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            <svg viewBox="0 0 24 24" class="yt-icon-sm" fill="currentColor">
+              <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+            </svg>
+            Open YouTube Channel
+          </a>
+          <button class="btn-secondary" (click)="onRefresh()">
+            Try Again
+          </button>
+        </div>
+      </div>
+    }
+
+  </div>
+</section>
+
+<!-- ── DAILY SPIRITUAL PROGRAMS ─────────────────────────────────────────────── -->
+<section class="programs-section section-padding">
+  <div class="container">
+    <div class="text-center section-header-block">
+      <span class="section-subtitle"><span>🕉️</span> Daily Programmes</span>
+      <h2 class="section-title">Daily Spiritual Programs</h2>
+      <p class="section-desc">
+        Every day at Sakoon Temple is a celebration of divine presence through sacred rituals,
+        Vedic chanting, and spiritual devotion.
+      </p>
+    </div>
+
+    <div class="programs-grid">
+      @for (p of programs; track p.name) {
+        <div class="program-card glass-card" [class]="p.colorClass">
+          <div class="program-icon-wrap">
+            <span class="program-icon">{{ p.icon }}</span>
+          </div>
+          <div class="program-info">
+            <h3 class="program-name">{{ p.name }}</h3>
+            <p class="program-hindi">{{ p.hindiName }}</p>
+            <span class="program-time-pill">⏰ {{ p.time }}</span>
+            <p class="program-desc">{{ p.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── PREVIOUS LIVE BROADCASTS & SACRED RECORDINGS ────────────────────────── -->
+<section class="recordings-section section-padding">
+  <div class="container">
+    <div class="text-center section-header-block">
+      <span class="section-subtitle"><span>📹</span> Sacred Recordings</span>
+      <h2 class="section-title">Previous Live Broadcasts</h2>
+      <p class="section-desc">
+        Missed today's live Aarti or Havan? All past divine broadcasts are automatically archived on our official YouTube channel for devotion anytime, anywhere.
+      </p>
+    </div>
+
+    <div class="recordings-hub-card glass-card">
+      <div class="recordings-visual-col">
+        <div class="yt-play-shield">
+          <svg viewBox="0 0 24 24" class="yt-shield-icon" fill="currentColor">
+            <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+          </svg>
+        </div>
+        <div class="archive-glow-ring"></div>
+      </div>
+
+      <div class="recordings-details-col">
+        <div class="archive-badge-pill">
+          <span>✨</span> Official YouTube Live Stream Archive
+        </div>
+        <h3 class="archive-heading">Watch Past Havans, Aartis &amp; Special Pujas</h3>
+        <p class="archive-text">
+          Browse our complete video collection on YouTube. Access high-definition full recordings of past Mangala Aartis, Maha Sandhya Aartis, Vedic Yagyas, and special festive celebrations.
+        </p>
+
+        <!-- Recording Category Chips -->
+        <div class="archive-chips-row">
+          <span class="archive-chip">🔥 Past Havans</span>
+          <span class="archive-chip">🌅 Morning Aartis</span>
+          <span class="archive-chip">🌇 Evening Aartis</span>
+          <span class="archive-chip">🪔 Special Festive Pujas</span>
+          <span class="archive-chip">📜 Vedic Mantras</span>
+        </div>
+
+        <div class="archive-cta-row">
+          <a
+            [href]="youtubeChannelUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary archive-btn">
+            <svg viewBox="0 0 24 24" class="yt-icon-sm" fill="currentColor">
+              <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+            </svg>
+            Browse Recorded Broadcasts
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STAY CONNECTED ───────────────────────────────────────────────────────── -->
+<section class="connect-section section-padding">
+  <div class="container">
+    <div class="connect-card glass-card">
+      <div class="connect-diya-row">
+        <span>🪔</span><span>🕉️</span><span>🪔</span>
+      </div>
+      <h2 class="connect-title">Stay Connected with Sakoon Temple</h2>
+      <p class="connect-desc">
+        Subscribe to our YouTube channel and turn on notifications so you never miss a live Havan,
+        Aarti, or special spiritual celebration.
+      </p>
+
+      <!-- Temple Contact & Social Strip -->
+      <div class="connect-social-pills">
+        <a [href]="youtubeChannelUrl" target="_blank" rel="noopener noreferrer" class="social-pill yt-pill" title="Official YouTube Channel">
+          <svg viewBox="0 0 24 24" class="social-svg-icon" fill="currentColor">
+            <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+          </svg>
+          <span>YouTube Live</span>
+        </a>
+        <a href="tel:+919876543210" class="social-pill phone-pill" title="Helpline Contact">
+          <span class="social-emoji">📞</span>
+          <span>+91 98765 43210</span>
+        </a>
+        <a href="mailto:seva@sakoontemple.org" class="social-pill email-pill" title="Email Seva">
+          <span class="social-emoji">✉️</span>
+          <span>seva&#64;sakoontemple.org</span>
+        </a>
+        <a routerLink="/contact" class="social-pill loc-pill" title="Haridwar Sanctum">
+          <span class="social-emoji">📍</span>
+          <span>Haridwar Sanctum</span>
+        </a>
+      </div>
+
+      <div class="connect-actions">
+        <a [href]="youtubeChannelUrl" target="_blank" rel="noopener noreferrer" class="btn-primary connect-btn-yt">
+          <svg viewBox="0 0 24 24" class="yt-icon-sm" fill="currentColor">
+            <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2 31.4 31.4 0 000 12a31.4 31.4 0 00.5 5.8 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31.4 31.4 0 0024 12a31.4 31.4 0 00-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+          </svg>
+          Subscribe on YouTube
+        </a>
+        <a routerLink="/timings" class="btn-secondary">
+          View Aarti Timings
+        </a>
+        <a routerLink="/booking" class="btn-gold">
+          🗓️ Book a Puja
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+

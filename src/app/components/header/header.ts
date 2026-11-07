@@ -25,6 +25,14 @@ export class HeaderComponent implements OnInit {
   readonly isScrolled = signal(false);
   readonly isCountryDropdownOpen = signal(false);
   readonly countrySearchQuery = signal('');
+  readonly isSoundMuted = signal(true);
+  readonly isBellAlertOpen = signal(false);
+
+  // Web Audio Context for sacred ambient chime
+  private audioCtx: AudioContext | null = null;
+  private oscList: OscillatorNode[] = [];
+
+  private isCheckingScroll = false;
 
   get filteredCountries() {
     const q = this.countrySearchQuery().toLowerCase().trim();
@@ -45,7 +53,12 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
-    this.checkScroll();
+    if (this.isCheckingScroll) return;
+    this.isCheckingScroll = true;
+    requestAnimationFrame(() => {
+      this.checkScroll();
+      this.isCheckingScroll = false;
+    });
   }
 
   @HostListener('document:click', ['$event'])
@@ -71,13 +84,68 @@ export class HeaderComponent implements OnInit {
   private checkScroll(): void {
     if (typeof window !== 'undefined') {
       const scrollPos = window.scrollY || document.documentElement.scrollTop || 0;
-      // Scroll Hysteresis: activates at 50px, only deactivates below 15px to prevent oscillation jitter
-      if (scrollPos > 50) {
+      // Scroll threshold with gentle hysteresis for smooth two-way animation
+      if (scrollPos > 32) {
         if (!this.isScrolled()) this.isScrolled.set(true);
-      } else if (scrollPos < 15) {
+      } else if (scrollPos <= 10) {
         if (this.isScrolled()) this.isScrolled.set(false);
       }
     }
+  }
+
+  toggleSound(): void {
+    if (typeof window === 'undefined') return;
+    try {
+      if (!this.audioCtx) {
+        const AudioCtor = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtor) {
+          this.audioCtx = new AudioCtor();
+        }
+      }
+      if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume();
+      }
+
+      if (this.isSoundMuted()) {
+        if (this.audioCtx) {
+          const osc1 = this.audioCtx.createOscillator();
+          const osc2 = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          gain.gain.setValueAtTime(0.04, this.audioCtx.currentTime);
+
+          osc1.type = 'sine';
+          osc1.frequency.setValueAtTime(136.1, this.audioCtx.currentTime); // Sacred OM frequency
+          osc2.type = 'triangle';
+          osc2.frequency.setValueAtTime(272.2, this.audioCtx.currentTime);
+
+          const filter = this.audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(320, this.audioCtx.currentTime);
+
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.audioCtx.destination);
+
+          osc1.start();
+          osc2.start();
+          this.oscList = [osc1, osc2];
+        }
+        this.isSoundMuted.set(false);
+      } else {
+        this.oscList.forEach(osc => {
+          try { osc.stop(); osc.disconnect(); } catch (e) {}
+        });
+        this.oscList = [];
+        this.isSoundMuted.set(true);
+      }
+    } catch (e) {
+      this.isSoundMuted.update(v => !v);
+    }
+  }
+
+  toggleBellAlert(): void {
+    this.isBellAlertOpen.update(v => !v);
   }
 
   toggleCountryDropdown(event?: Event): void {

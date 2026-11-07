@@ -1,0 +1,7 @@
+name = "sakoon-temple-live-darshan"
+main = "live-darshan-worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+YOUTUBE_CHANNEL_ID = "YOUR_CHANNEL_ID_HERE"
+ALLOWED_ORIGIN = "YOUR_WEBSITE_ORIGIN_HERE"

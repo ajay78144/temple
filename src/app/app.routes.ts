@@ -7,9 +7,11 @@ import { BookingComponent } from './pages/booking/booking';
 import { TimingsComponent } from './pages/timings/timings';
 import { AboutComponent } from './pages/about/about';
 import { ContactComponent } from './pages/contact/contact';
+import { LiveDarshanComponent } from './pages/live-darshan/live-darshan';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Sakoon Temple | Peace & Vedic Sanctum' },
+  { path: 'live', component: LiveDarshanComponent, title: 'Live Darshan – Sakoon Temple | Daily Havan & Aarti' },
   { path: 'services', component: ServicesComponent, title: 'Sacred Services & Rites | Sakoon Temple' },
   { path: 'services/:slug', component: ServiceDetailComponent, title: 'Service Details & Vidhi | Sakoon Temple' },
   { path: 'calendar', component: CalendarComponent, title: 'Combined Hindu Panchang & Calendar | Sakoon Temple' },

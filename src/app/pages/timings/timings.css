@@ -371,3 +371,23 @@
     padding: 1.1rem 0.85rem;
   }
 }
+
+/* ==========================================================================
+   SMOOTH HOVER ANIMATIONS — Timings page
+   ========================================================================== */
+.schedule-slot-card {
+  transition:
+    transform  0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s ease;
+  will-change: transform, box-shadow;
+}
+.schedule-slot-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(74, 48, 109, 0.12), 0 0 16px rgba(212, 175, 55, 0.10);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.live-status-hero-card {
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
+}

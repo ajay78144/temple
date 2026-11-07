@@ -148,16 +148,21 @@
           Hindu Panchang
         </a>
         <a routerLink="/timings" routerLinkActive="active" class="nav-link">Temple Timings</a>
+        <!-- Live Darshan nav link with pulsing live dot -->
+        <a routerLink="/live" routerLinkActive="active" class="nav-link nav-link-live">
+          <span class="nav-live-dot"></span>
+          Live Darshan
+        </a>
         <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact</a>
       </nav>
 
       <!-- Header Actions -->
       <div class="header-actions">
-        <a routerLink="/booking" class="btn-primary header-book-btn">
+        <a routerLink="/booking" class="btn-primary header-book-btn" title="Book Puja Online - श्री पूजा बुकिंग">
           <span class="btn-diya-icon">
             <img src="assets/icons/diya-lamp.svg" alt="Puja" class="btn-svg-diya" />
           </span>
-          <span>Book Puja</span>
+          <span class="book-btn-text">Book Puja</span>
         </a>
 
         <!-- Modern Attractive Mobile Navigation Toggle Button -->
@@ -250,6 +255,11 @@
   <nav class="drawer-nav">
     <a routerLink="/" (click)="closeMobileMenu()" class="drawer-link">
       <span class="drawer-icon">🏠</span> Home
+    </a>
+    <a routerLink="/live" (click)="closeMobileMenu()" class="drawer-link drawer-link-live">
+      <span class="drawer-icon">🔴</span>
+      <span class="drawer-live-label">Live Darshan</span>
+      <span class="drawer-live-badge">LIVE</span>
     </a>
     <a routerLink="/about" (click)="closeMobileMenu()" class="drawer-link">
       <span class="drawer-icon">🪷</span> About Sakoon Temple

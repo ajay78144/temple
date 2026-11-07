@@ -79,10 +79,31 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
   font-size: 16px;
   scroll-padding-top: 100px;
   overflow-x: clip;
   max-width: 100%;
+}
+
+/* Smooth Custom Temple Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EEFB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #D4AF37 0%, #4A306D 100%);
+  border-radius: 99px;
+  border: 2px solid #F4EEFB;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #E65100 0%, #D4AF37 100%);
 }
 
 body {
@@ -233,12 +254,17 @@ img {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    transform     0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow    0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color  0.3s ease;
+  will-change: transform, box-shadow;
 }
 
 .glass-card:hover {
+  transform: translateY(-3px);
   border-color: var(--glass-border-gold);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(212, 175, 55, 0.08);
 }
 
 /* Buttons */
@@ -390,6 +416,94 @@ img {
 
 .animate-float {
   animation: floatGentle 5s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   GLOBAL SMOOTH SCROLL-REVEAL SYSTEM
+   Add [data-reveal] on any element in HTML templates to get entrance animation.
+   Angular adds 'revealed' class via IntersectionObserver in app.ts (or use CSS only below).
+   ========================================================================== */
+
+/* Scroll-Reveal base state — hidden before entering viewport */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal="left"] {
+  transform: translateX(-32px);
+}
+
+[data-reveal="right"] {
+  transform: translateX(32px);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.94);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered children delay */
+[data-reveal-delay="1"] { transition-delay: 0.08s; }
+[data-reveal-delay="2"] { transition-delay: 0.16s; }
+[data-reveal-delay="3"] { transition-delay: 0.24s; }
+[data-reveal-delay="4"] { transition-delay: 0.32s; }
+[data-reveal-delay="5"] { transition-delay: 0.40s; }
+[data-reveal-delay="6"] { transition-delay: 0.48s; }
+
+/* ==========================================================================
+   GLOBAL PAGE TRANSITION — smooth fade-in on route change
+   ========================================================================== */
+router-outlet + * {
+  animation: pageFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   GLOBAL HOVER LIFT — apply .hover-lift to any card/button
+   ========================================================================== */
+.hover-lift {
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(74, 48, 109, 0.14);
+}
+
+/* ==========================================================================
+   SMOOTH FOCUS RING — accessible and beautiful
+   ========================================================================== */
+:focus-visible {
+  outline: 2px solid rgba(212, 175, 55, 0.7);
+  outline-offset: 3px;
+  border-radius: 6px;
+  transition: outline 0.2s ease;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Mobile responsive padding for bottom bar and layout */
